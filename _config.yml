@@ -4,10 +4,10 @@
 # ---------------------------------------------------------------
 
 # Site
-title: Blog of whale
+title: NexT
 subtitle:
 description:
-author: whale
+author: John Doe
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: en
 date_format: '%Y-%m-%d'
@@ -151,7 +151,7 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Mist
+scheme: Muse
 #scheme: Mist
 #scheme: Pisces
 
@@ -710,5 +710,3 @@ images: assets/images
 
 # Theme version
 version: 5.1.1
-
-theme: jekyll-theme-hacker
