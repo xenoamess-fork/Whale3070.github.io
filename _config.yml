@@ -3,19 +3,14 @@
 ## Docs: https://jekyllrb.com/docs/configuration/
 # ---------------------------------------------------------------
 
-#  Filtering Content
-show_drafts: null
-limit_posts: 0
-future:      true
-unpublished: false
-
 # Site
-title: Blog of whale
+title: InfoSec Learning
 subtitle:
-description: Infomation security learning 
-author: whalea
+description: aimed at Penetration Pro
+             connectMe:weaponmaster3070@gmail.com
+author: whale
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
-language: en
+language: zh-Hans
 date_format: '%Y-%m-%d'
 
 # URL
@@ -65,7 +60,6 @@ defaults:
     values:
       layout: "post"
       comments: true
-	
 
 # Atom feed
 feed:
@@ -91,7 +85,7 @@ keywords: "Jekyll, NexT"
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss:
+rss: false
 
 # Specify the date when the site was setup
 #since: 2015
@@ -240,7 +234,7 @@ social_icons:
 
 # Sidebar Avatar
 # in directory: /assets/images/avatar.gif
-#avatar:
+avatar: /images/logo.png
 
 
 # Table Of Contents in the Sidebar
@@ -352,8 +346,8 @@ post_copyright:
 #   enabled: [true/false] - Replace with specific image
 #   image: url-of-image   - Images's url
 custom_logo:
-  enabled: true
-  image:/home/backups/backup.git/image/logo.PNG
+  enabled: false
+  image:
 
 
 # Code Highlight theme

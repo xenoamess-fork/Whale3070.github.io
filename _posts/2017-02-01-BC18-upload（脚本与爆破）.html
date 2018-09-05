@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC16-upload（脚本与爆破）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC16-upload（脚本与爆破）</h1>
+        <div class="show-content">
+          <p>题目地址：https://www.ichunqiu.com/battalion</p><p>Hi,CTFer!u should be a fast man</p><p>源代码发现：Please post the ichunqiu what you find</p><p>ｈｔｔｐ响应头，发现ｆｌａｇ经过base64编码。结合以上提示“ｆａｓｔ"，”ｐｏｓｔ",说明要写一个脚本提交获取的ｆｌａｇ。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-17ec69f0e217120a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>我不确定要提交的是flag_is_here: MjY1ODUz，还是只是后面这一小节。经过反复尝试，后面这部分字母每次都会改变的。但是运行脚本以后没有发现任何线索。</p><p>无奈之下去看答案。</p><p>有两个要注意的ｐｏｉｎｔ.</p><p>1.flag_is_here后面的字符串，需要再base64解码一次，得到一个６位数字。</p><p>2.ｐｏｓｔ提交需要字典类型参数，key-value，我知道value就是获得的数字，但是key一直不确定。key就是ichunqiu，提示了”Please post the <b>ichunqiu </b>what you find”</p><hr><p>然后访问获得的一个路径，是一个登录表单</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-627c62b5bdd3fac5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>substr(md5(captcha), 0, 6)=5af6b4，这是一个提示</p><p>搜索下这个函数的用法，substr(<i>string</i>,<i>start</i>,<i>length</i>)，验证码的ＭＤ５值的前六位是5af6b4。</p><p>尝试搜索一下ＭＤ５值，没找到符合的。</p><p>那就写个脚本暴力枚举吧，都知道ＭＤ５值是不可逆算法，于是先将字典中的密码转化为ＭＤ５值，再和前六位对比，如果符合就输出。</p><p><a href="https://wiki.skullsecurity.org/Passwords" target="_blank">弱密码字典</a>可以在这里下载</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-d8bc7b93dbefef34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>但是并没有爆破出任何结果。。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-19a7ddb47282e67a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">dirb枚举目录</div>
+</div><p>访问目录都是４０３ｆｏｒｂｉｄｄｅｎ,如果足够幸运，可以枚举出这个目录。。。</p><p>.svn/wc.db</p><p>My username is md5(HEL1OW10rDEvery0n3)</p><p>....不打算往下做了，目录是爆破的，验证码也是爆破的，密码是弱密码１２３４５６估计也是爆破的。。。没意思，没技术含量。题目难度纯粹是为难人，如果目录设置为.svn/md5(wc.db)我估计题目难度更高。。。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

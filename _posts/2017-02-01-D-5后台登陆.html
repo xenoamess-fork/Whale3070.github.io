@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.5后台登陆</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.5后台登陆</h1>
+        <div class="show-content">
+          <p><a href="http://www.shiyanbar.com/ctf/2036" target="_blank">后台登陆</a>：</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-5061e0892f7b8217.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>知识点一：</p><blockquote>
+<p>mysqli_query(<i>connection,query,resultmode</i>)<i>;</i></p>
+<p><i>connection必需。规定要使用的 MySQL 连接。<br></i></p>
+<p><i>query</i>必需，规定查询字符串。</p>
+<p><i>resultmode</i>可选</p>
+<p>返回值：
+
+针对成功的 SELECT、SHOW、DESCRIBE 或 EXPLAIN 查询，将返回一个 mysqli_result 对象。针对其他成功的查询，将返回 TRUE。如果失败，则返回 FALSE。</p>
+</blockquote><blockquote>
+<p>用法示例：</p>
+<p>mysqli_query($con,"SELECT * FROM websites");</p>
+<p>mysqli_query($con,"INSERT INTO websites (name, url, alexa, country)</p>
+<p>
+
+mysqli_query() 函数执行某个针对数据库的查询。</p>
+</blockquote><p>在这里，mysqli_num_rows($result)的返回值要大于0，才能得出flag。该函数会<b>返回result行的数量</b>。</p><hr><p>知识点二：MD5函数</p><blockquote>
+<p>md5(<i>string</i>,<i>raw</i>)</p>
+<p><i>string</i>必需。规定要计算的字符串。</p>
+<p><i>raw</i>可选。规定十六进制或二进制输出格式：</p>
+<p>TRUE - 原始 16 字符二进制格式</p>
+<p>FALSE - 默认。32 字符十六进制数</p>
+</blockquote><p>$result=mysqli_query($link,$sql);</p><p>这句话的意思是：查询link数据库，用sql语句。</p><p>$sql = "SELECT * FROM admin WHERE username = 'admin' and password = '".md5($password,true)."'";</p><p>而sql语句的意思是：查询表admin中的列admin，并且password等于将$password进行二进制格式的MD5加密。</p><p><a href="http://mslc.ctf.su/wp/leet-more-2010-oh-those-admins-writeup/" target="_blank">参考</a>：总之这个sql语句，后面加or'1'就可以通过验证，因为a or b，只要满足一个条件即可。</p><p>           所以造成了sql注入</p><h4>总结：</h4><p>实验吧里面的web题目偏向源代码审计。</p><p>(⊙﹏⊙)跟我的方向有点不符，以后就不在这做题了。。20180220</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

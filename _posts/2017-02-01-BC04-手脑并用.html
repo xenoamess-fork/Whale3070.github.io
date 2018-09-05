@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC04-手脑并用</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC04-手脑并用</h1>
+        <div class="show-content">
+          <p>题目：求6789！的值末尾有几个零？<br></p><p><br>我的解答，试图求出这个阶乘的结果，再数一数有几个零。很显然，我就是典型用手没用脑的。。</p><p>递归失败，可能这个数太大了 吧</p><p><br></p><div class="image-package">
+<img data-height="417" data-width="572" data-image-slug="4df771784dd34ffa" src="http://upload-images.jianshu.io/upload_images/2883590-4df771784dd34ffa.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-4df771784dd34ffa.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><br><hr><p><br></p><div class="image-package">
+<img data-height="245" data-width="348" data-image-slug="76a3d41cb62fc623" src="http://upload-images.jianshu.io/upload_images/2883590-76a3d41cb62fc623.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-76a3d41cb62fc623.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><p>总结，用递归和循环都能求阶乘，但循环不用考虑一个问题，就是递归用的是栈。</p><p>栈是一种数据结构，就是如何使用内存。函数用到的就是栈结构。digui(10)调用栈，不会立即返回，而是等到digui(1)结束了，再返回digui2 ,digui3....直到递归10，所以当递归函数太大，就内存就不够分配了。<br></p><div class="image-package">
+<img data-height="651" data-width="791" data-image-slug="e700d8d14340bf10" src="http://upload-images.jianshu.io/upload_images/2883590-e700d8d14340bf10.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e700d8d14340bf10.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><hr><p>除了用循环，还有一种方法求6789！的尾数0的个数。</p><p> 思路是，6789！这个数要是除以10能除尽，则有一个0，一直除，直到除不尽。除了几次，就有几个0。而10可以分为5*2，因为所有数里，有一半都有因子2，所以2因子比较多，5因子比较少。</p><p>所以除以10的次数，由比较少的5因子决定。即有几个5因子，就可以除几次10。</p><p>知识点一：/是浮点除法  ， //是整数除法</p><p>所以问题就变成了，就 6789 到 1 的  <b>6789 个数里，有多少个包含5因子？</b>假设有n个</p><p>把n个数取出来，分别除以5，再把这些结果全部加起来，就是答案。<br></p><div class="image-package">
+<img data-height="197" data-width="530" data-image-slug="359635249b7781f5" src="http://upload-images.jianshu.io/upload_images/2883590-359635249b7781f5.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-359635249b7781f5.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

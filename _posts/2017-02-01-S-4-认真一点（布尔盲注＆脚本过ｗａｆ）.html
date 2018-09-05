@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.4.认真一点（布尔盲注＆脚本过ｗａｆ）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">S.4.认真一点（布尔盲注＆脚本过ｗａｆ）</h1>
+        <div class="show-content">
+          <p><a href="http://ctf5.shiyanbar.com/web/earnest/index.php" target="_blank">题目</a>：输入admin </p><p>F12查看，是post提交方式，表单参数是id</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-3b02bd18a1dd4a72.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>输入admin;</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-95acb6e92ad26e9c.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>sqlmap -u "http://ctf5.shiyanbar.com/web/earnest/index.php" --data="id=admin" --dbs --level 3</p><p>检测post注入，all tested parameters appear to be not injectable，貌似不能注入，，</p><p>em..........接下来该怎么办呢？</p><hr><p><a href="https://www.jianshu.com/p/fc1b053ef874" target="_blank">burp检测布尔盲注</a>，可以看到，这个题目跟这篇文章提到的很像，但有所不同的是，该文章中</p><blockquote>
+<p>101                      account number is valid</p>
+<p>666                       Invalid account number</p>
+<p>101 and 1=1        account number is valid</p>
+<p>101 and 1=2         Invalid account number</p>
+</blockquote><p>而在这个题目中，某些字符被检测到了(比如说‘and’字符)，所以需要避免使用这些字符。</p><p>我们需要构造语句如下，才能够获得信息。如果是sql injection detected! 也不知道结果是True还是False</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-2fea0b86dc84af3d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><blockquote>
+<p>1                              ：     you are in </p>
+<p>2                             ：        you are not in</p>
+<p>1  "sql查询语句1"   ：      you are  in</p>
+<p>1  "sql查询语句2"   ：         you are not in</p>
+</blockquote><p>现在看看哪些符号不能用：</p><p>and 不行，#不行，空格键被替换为+，order by不行,  union不行</p><p>单双引号可以，等号可以，大于号小于号可以，or可以，select可以，/**/可以</p><p>tamper脚本：chardoubleencode.py   双url编码      space2comment.py    空格替换为/**/        </p><p>                        randomcase.py随机大小写（大小写绕过无效）              </p><p>                       charunicodeencode.py    (tamper script 'charunicodeencode' is only meant to be run against ASP or ASP.NET web applications)  字符串 unicode 编码        </p><p>                       halfversionedmorekeywords.py关键字前加注释</p><p>                        versionedmorekeywords.py注释绕过             </p><p>sqlmap -u "http://ctf5.shiyanbar.com/web/earnest/index.php" --data="id=1" --dbs --level 3 -v --tamper charunicodeencode.py space2comment.py</p><p>all tested parameters appear to be not injectable.     这个waf真是严格啊，tamper脚本无效</p><hr><p>看writeup，要针对该题目的过滤写个布尔盲注脚本，，本来以为是个sql注入题，结果还是个编程题。</p><p>近200行的脚本，再过一年我可能可以写。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-54a7fd08d70946dd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>2018.3.23更新，学习下怎么写注入脚本。</p><p>第一步，确定手注的payload，再通过代码简化。</p><p>输入1xxxx，反馈you are in说明是字符型注入</p><p>输入1'，反馈you are not in，说明单引号未过滤</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

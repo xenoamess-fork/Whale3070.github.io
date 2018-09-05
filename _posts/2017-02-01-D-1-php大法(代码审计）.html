@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.1.php大法(代码审计）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.1.php大法(代码审计）</h1>
+        <div class="show-content">
+          <div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-c3eddc17dad043ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-c3eddc17dad043ee.png?imageMogr2/auto-orient/strip" data-image-slug="c3eddc17dad043ee" data-width="373" data-height="271"><br><div class="image-caption"></div>
+</div><p><br></p><p>要用到的<b>知识点一</b>，eregi()，字符串对比解析，与大小写无关。</p><p>这个函数对比括号里的“hackerDJ”，与获取到的id值，如果一致，就输出“不被允许”</p><p><b>知识点二</b>，urlencode(),urldecode(),这是转换的函数。</p><p>加密是把中文字符转换为十六进制，然后在每个字符前面加一个标识符%。在上图中是将获取的id值解码，解码后要等于hackerDJ，就能得到flag.</p><p>为了达到这个目的，我们必须将hackerDJ编码,由于网上的编码是基于js的，只能编码一部分，字母是不能转换的，于是我们自己整。</p><p>h的十六进制为68，“%68”就是加密后的h。</p><p><b>知识点三</b>，浏览器会自动将输入到地址栏的非数字字母转换为url编码。</p><p>由于浏览器处理的时候会自动将“%68”解码一次，就是变成了hackerDJ，这样我们会得到“不被允许”</p><p>所以我们再编码一次。这次可以用网上的urlencode自动编码。“%68”编码变成“%2568"</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-1be8a2444832e401.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-81c51d89da528ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-81c51d89da528ab8.png?imageMogr2/auto-orient/strip" data-image-slug="81c51d89da528ab8" data-width="423" data-height="271"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

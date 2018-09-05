@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.4天网管理系统</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.4天网管理系统</h1>
+        <div class="show-content">
+          <p>知识点一：PHP是一门弱类型的语言。弱类型的语言对<i><b>变量的数据类型没有限制</b></i>，你可以在任何地时候将变量赋值给任意的其他类型的变量，同时变量也可以转换成任意地其他类型的数据。</p><p>在php里，0e12345=0e7777777777777777777,返回true.（因为0的任何次方都为0，所以左边等于右边的）<br>这种'0e'加‘数字’的，被看作0的多少次方。参考文章D.2对科学计数法的介绍。</p><p>知识点二：MD5</p><p>Message Digest Algorithm MD5（中文名为<a href="http://baike.baidu.com/view/2313810.htm" target="_blank">消息摘要算法</a>第五版）为计算机安全领域广泛使用的一种散列函数，用以提供消息的完整性保护。该算法的文件号为RFC 1321（R.Rivest,MIT Laboratory for Computer Science and RSA Data Security Inc. April 1992）。</p><p><b>MD5</b>即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致。是计算机广泛使用的杂凑算法之一（又译<a href="http://baike.baidu.com/view/10961371.htm" target="_blank">摘要算法</a>、<a href="http://baike.baidu.com/view/273836.htm" target="_blank">哈希算法</a>），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、<a href="http://baike.baidu.com/view/2535629.htm" target="_blank">MD3</a>和<a href="http://baike.baidu.com/view/444142.htm" target="_blank">MD4</a>。</p><p>知识点三：serialize()和unserialize()</p><p>serialize — Generates a storable representation of a value</p><p>serialize — 产生一个可存储的值的表示</p><p>unserialize — Creates a PHP value from a stored representation</p><p>unserialize — 从已存储的表示中创建 PHP 的值</p><hr><p>思路：web(题)第一看源码</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-79055621b4e269c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-79055621b4e269c2.png?imageMogr2/auto-orient/strip" data-image-slug="79055621b4e269c2" data-width="556" data-height="345"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-eb9d84c3dfb44bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-eb9d84c3dfb44bc1.png?imageMogr2/auto-orient/strip" data-image-slug="eb9d84c3dfb44bc1" data-width="520" data-height="469"><br><div class="image-caption"></div>
+</div><p>1，变量test等于获取的username。</p><p>2，变量test，对它赋值，值为变量testMD5加密后的值。这里注意=，是赋值运算符。这意味着右侧赋值表达式会为左侧运算数设置值。</p><p>3，如果变量test等于0，则返回true。（“==”是等于）</p><p>这说明网页中的usename，经过MD5加密，要等于0.</p><p>百度以0e开头的MD5值，然后检查下，发现没错可以用。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-9a36b0fa65c716d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-9a36b0fa65c716d0.png?imageMogr2/auto-orient/strip" data-image-slug="9a36b0fa65c716d0" data-width="622" data-height="433"><br><div class="image-caption"></div>
+</div><p>用户名输入，s878926199a</p><p>然后得到一个hint。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-7a77578ddf539b0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-7a77578ddf539b0b.png?imageMogr2/auto-orient/strip" data-image-slug="7a77578ddf539b0b" data-width="405" data-height="333"><br><div class="image-caption"></div>
+</div><hr><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-48ca920036d2b9e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><p>结合提示代码，这意思也就是数组了，password应该是已序列化的代码，并且经过unserialize()函数过后，参数user以及pass都应该是满足if语句的值，也就是“1”，这样的话，构造序列化的变量：</p><p>a:2:{s:4:"user";b:1;s:4:"pass";b:1;}</p><p>意思是数组a中有两个元素，长度为4的user元素的bool值为1，长度为4的pass元素的bool值为1.</p><p>这样，经过反序列化后的user以及pass都是1，满足if语句，则会print出flag</p><p>上面这段是抄的，对php不是很熟啊。。。。。。。。。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

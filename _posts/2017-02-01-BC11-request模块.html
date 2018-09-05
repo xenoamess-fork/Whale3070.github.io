@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC11 request模块</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC11 request模块</h1>
+        <div class="show-content">
+          <p><a href="http://www.wechall.net/challenge/training/programming1/index.php" target="_blank">题目</a> 在一个url上获取内容，并提交到另外一个url网页，给你的时间是1.337秒。</p><p><a href="http://www.python-requests.org/en/master/" target="_blank">requests模块使用</a></p><p>先尝试获取内容吧。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-52e2ebab398ff9cb.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-52e2ebab398ff9cb.PNG?imageMogr2/auto-orient/strip" data-image-slug="52e2ebab398ff9cb" data-width="950" data-height="268"><br><div class="image-caption"></div>
+</div><p>网页返回的内容，提示要在http头上带cookies。</p><p>原来是这样~ 在实验吧，是获取flag答案，然后在题目的网页上手动提交。</p><p>                     而在wechall，并不需要手动提交，而是用cookie识别你的身份，这样服务器就能知道是哪个账号提交的。</p><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-d109b64bea319644.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-d109b64bea319644.PNG?imageMogr2/auto-orient/strip" data-image-slug="d109b64bea319644" data-width="653" data-height="340"><br><div class="image-caption">F12查看</div>
+</div><p>带上cookie，very good !<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-cf2ffa8664e41847.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-cf2ffa8664e41847.PNG?imageMogr2/auto-orient/strip" data-image-slug="cf2ffa8664e41847" data-width="963" data-height="258"><br><div class="image-caption"></div>
+</div><hr><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-863f08a247fb33d1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-863f08a247fb33d1.PNG?imageMogr2/auto-orient/strip" data-image-slug="863f08a247fb33d1" data-width="998" data-height="632"><br><div class="image-caption"></div>
+</div><p>好像成功了，但是打开网页后，好像我没有提交过一样，怎么回事，好像哪里不对。</p><p>！很明显的答案是<b>get提交</b>，而不是post提交。</p><p>http://www.wechall.net/challenge/training/programming1/index.php<b>?answer=the_message</b></p><p>观察这个url，后面 <b>？参数</b>，是get提交的特点。。。下回还是要好好观察题目才行。</p><p>所以需要计算出获取到的网页内容，与第二个网页url组合，编码，用浏览器自动打开编码后的url（要带上cookie）。</p><hr><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2fee22d1162bcf21.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2fee22d1162bcf21.PNG?imageMogr2/auto-orient/strip" data-image-slug="2fee22d1162bcf21" data-width="1050" data-height="857"><br><div class="image-caption"></div>
+</div><p>哇，好感动我居然做对了。<br></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

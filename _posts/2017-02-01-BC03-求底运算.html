@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC03-求底运算</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC03-求底运算</h1>
+        <div class="show-content">
+          <p>已知K ^ N = P, 给定N为7,和P为4357186184021382204544，求K。</p><p>     又是一个算术题。。</p><p>知识点一：break，就是一直循环，如果达到条件，就退出循环。注意，因为达到条件立即退出，所以不会执行后面的print，所以答案是1234。<br></p><div class="image-package">
+<img data-height="650" data-width="494" data-image-slug="fc31d6a4f80267ba" src="http://upload-images.jianshu.io/upload_images/2883590-fc31d6a4f80267ba.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-fc31d6a4f80267ba.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div><hr><p>好不容易做出了答案，再看看别人写的。</p><p>知识点二：**表示幂运算。<br></p><p>分析：K ^ N = P，n、p已知，求K。既然K不知道，那么可以给K一个可能的范围，迭代K。<br></p><div class="image-package">
+<img data-height="126" data-width="309" data-image-slug="7029ea9e229e64cf" src="http://upload-images.jianshu.io/upload_images/2883590-7029ea9e229e64cf.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-7029ea9e229e64cf.PNG?imageMogr2/auto-orient/strip"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

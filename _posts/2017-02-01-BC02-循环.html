@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC02-循环</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC02-循环</h1>
+        <div class="show-content">
+          <p><b>给出一个循环公式，对于一个整数n，当n为奇数时，n=3n+1，当n为偶数时，n=n/2，如此循环下去直到n=1时停止。<br></b></p><p>现要求对两个整数i = 900、j = 1000，输出i、j之间（包括i、j）的所有数进行上述循环时的最大循环次数（包括n和1）</p><p><b>分析：<br></b></p><p><b>知识点一</b>：while 循环。它默认执行后面的语句，直到不符合条件（为False）就退出。</p><p>                     要注意条件的设置，不然会一直循环。</p><p><b>知识点二</b>：内建函数MAX（）的使用</p><p>一般用法：max(1,2,3)求元素最大值</p><p>列表求最大值：max([xdd])  xdd是一个列表，max取列表中的最大值</p><p>max（[xdd]，[wtf]），xdd和wtf是两个列表，取两个列表中的最大值</p><p><b>知识点三：</b>列表解析，是python参考某编程语言，可以很方便地建立列表，如12行。</p><p>用法是   <b> [对象的操作  for  对象  in  列表]</b><br></p><p>下面12行的用法</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-6d5d43393c84391f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-6d5d43393c84391f.PNG?imageMogr2/auto-orient/strip" data-image-slug="6d5d43393c84391f" data-width="614" data-height="407"><br><div class="image-caption"></div>
+</div><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

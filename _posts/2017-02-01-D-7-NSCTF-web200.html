@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.7.NSCTF web200</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.7.NSCTF web200</h1>
+        <div class="show-content">
+          <p><i><b>知识点一</b></i>：substr() 函数返回字符串的一部分。语法：substr(<i>string</i>,<i>start</i>,<i>length</i>)</p><p>substr($_o,$_0,1)即将$_o从$_0开始剪切，减去一个字符，然后输出减的这个字符。$_0是从0开始，所以我们从头开始减。</p><p>所以$_c就是将$str最后一个字符减去，然后输出它。我们假设这个字符为X</p><p><i><b>知识点二</b></i>：ord（）将字符串的第一个字符变为ASCII码。</p><p>$_ _是将字符X的ASCII码（一个数字）加1.</p><p><i><b>知识点三</b></i>：chr(),与ord()相反，它将ASCII码返回为字符。</p><p><i><b>知识点四</b></i>：strlen()，返回字符串的长度。</p><hr><p><i><b>问题一</b></i>：<b><i>$_</i></b>是多少？详见步骤一。</p><p>这就需要解密key密文，题目先base64编码再反转再凯撒加密，所以我们倒着解密。</p><p><i><b>问题二</b></i>：$_o即$str的字符串长度到底是多少位？详细见步骤二。</p><hr><p>分析：这个for循环，是$_0从0开始，每次循环加1，当循环的数字不小于“$_o的长度“时，就输出。</p><p>而$_o是将$str反转一下，不会改变字符串长度。</p><p>反转完了之后，我们剪切一个字符下来，ASCII码和字符换来换去的。</p><p>于是又赋值给$_c, 最后让输出的$_末尾加上$_c这个值。</p><p>$_是循环45次的$_c拼起来的，而$_c是每次截取$_o的第一位，也就是$str的最后一位。</p><p>假设$str为abcd, $_o为dcba, $_c依次截取d,c,b,a;将它们变为ASCII码然后减一再变为字符串</p><p>所以$_要转换为ASCII码</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-ec9429a327ee2128.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><p>步骤一，求for循环结束后，还未加密的$_值。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a8ca826e63b235d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-1273d8d4254428a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-1273d8d4254428a1.png?imageMogr2/auto-orient/strip" data-image-slug="1273d8d4254428a1" data-width="607" data-height="297"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-fd6937ccba55e9d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-fd6937ccba55e9d1.png?imageMogr2/auto-orient/strip" data-image-slug="fd6937ccba55e9d1" data-width="835" data-height="457"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-73aa5f41ac749b0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-73aa5f41ac749b0e.png?imageMogr2/auto-orient/strip" data-image-slug="73aa5f41ac749b0e" data-width="509" data-height="121"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-91aa2db964511192.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-91aa2db964511192.png?imageMogr2/auto-orient/strip" data-image-slug="91aa2db964511192" data-width="560" data-height="384"><br><div class="image-caption"></div>
+</div><p>所以$_=~88:36e1bg8438e41757d:29cgeb6e48c`GUDTO|;hbmg</p><hr><p>步骤二：</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e2a1708d038ab7bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e2a1708d038ab7bb.png?imageMogr2/auto-orient/strip" data-image-slug="e2a1708d038ab7bb" data-width="719" data-height="476"><br><div class="image-caption"></div>
+</div><hr><p>php脚本尝试了很多，但还是欠缺了，不能做到想要的效果。</p><p>就这样吧。20161127</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

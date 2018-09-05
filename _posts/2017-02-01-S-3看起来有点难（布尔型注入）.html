@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.3看起来有点难（布尔型注入）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">S.3看起来有点难（布尔型注入）</h1>
+        <div class="show-content">
+          <p>工具：sqlmap</p><p>分析：http://ctf5.shiyanbar.com/basic/inject/index.php?admin=&amp;pass=&amp;action=login</p><p>              参数有三个，用户名和密码加上login.</p><p>如果是错误的的用户名，则提示数据库连接失败，用户名会显示在网页上。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-8bedd224e80018d1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>加单引号，没有用报错，但数据库连接失败也没有显示了。</p><p>输入admin，显示错误的用户名和密码，，，，不同的反馈说明，admin是存在的。</p><p>如果输入的用户名存在，那么就会显示“数据库连接失败！”</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-e0f06a3bec70bc59.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><blockquote><p>python sqlmap.py -u "ctf5.shiyanbar.com/basic/inject/index.php?admin=admin&amp;pass=admin&amp;action=login" -technique B --dbs --level 3</p></blockquote><p>检测布尔盲注</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-bdbbae71d5a2808a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>参考页面：<a href="http://wooyun.jozxing.cc/static/drops/tips-143.html" target="_blank">http://wooyun.jozxing.cc/static/drops/tips-143.html</a></p><h4>探测等级（参数：--level）</h4><p>共有五个等级，默认为1，sqlmap使用的payload可以在xml/payloads.xml中看到，你也可以根据相应的格式添加自己的payload。</p><p>这个参数不仅影响使用哪些payload同时也会影响测试的注入点，GET和POST的数据都会测试，HTTP Cookie在level为2的时候就会测试，HTTP User-Agent/Referer头在level为3的时候就会测试。</p><p>总之在你不确定哪个payload或者参数为注入点的时候，为了保证全面性，建议使用高的level值。</p><h4>
+
+测试是否是注入参数：-technique</h4><p>这个参数可以指定sqlmap使用的探测技术，默认情况下会测试所有的方式。支持的探测方式如下：B: Boolean-based blind SQL injection（布尔型注入）
+E: Error-based SQL injection（报错型注入）
+U: UNION query SQL injection（可联合查询注入）
+S: Stacked queries SQL injection（可多语句查询注入）
+T: Time-based blind SQL injection（基于时间延迟注入）</p><hr><p>下面用的命令和上一题差不多。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-aa57c0af381385cb.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p><br></p><div class="image-package  " data-index="3">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-b832e6a4403d8688.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" style="min-height:200px;min-width:200px;" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>输入用户名和密码即可得到key.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

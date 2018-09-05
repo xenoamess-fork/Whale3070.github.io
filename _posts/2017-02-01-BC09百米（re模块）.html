@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC09百米（re模块）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC09百米（re模块）</h1>
+        <div class="show-content">
+          <p>和上一题类似，正则搜索字符串，处理数据计算出答案，提交.</p><p><a href="http://ctf5.shiyanbar.com/jia/" target="_blank">题目</a> <br></p><p>知识点一：regular expression ，我倾向于把它翻译为<b>通用匹配规则</b>，它的通常翻译 正则表达式，不够通俗易懂，听起来像是二次互反律、混沌动力学、豫解核、单纯剖分、共轭泛函、拓扑…… 对于初学者来说，名字就给你吓尿了，这么难还学个屁啊~啊摔！……实际上一点都不复杂2333，就是为了<b>描述字符串的形式</b>的规定而已。</p><p>通用匹配规则，有两种符号，一种是普通符号，一种是特殊符号。</p><p>普通符号：a就是a，b就是b，T就是T，App就是App，不是aPP 也不是Spp。</p><p>特殊符号：\d   表示0，1，2，3，4，5，6，7，8，9</p><p>                  \w  表示A 、B、 C…… X 、Y 、Z …… a 、b、 c……  x、y、z…… 0、1、2…… 9</p><p>                  \s  表示  空白</p><p>                  \b  用法是      \bapp\b  表示app这个单词是单独的，不是sapp，不是apple。</p><p>                 | 表示或者</p><p>             <b>    .    点</b> 代表任何字符，除了<b>\n 换行符</b><br></p><p>                 *  + ？ {}  这四个符号代表数量，a* 表示<b>a不存在</b>或者<b>有很多a（aaaaaaaa）,a数量&gt;1 |  =0<br></b></p><p><b>                 a+ </b>表示有一个a 或者有很多a<b>，a数量 &gt;=1</b></p><p><b>                 ? </b>表示<b>a数量 =0 | = 1</b></p><p><b>                 { }</b> 花括号里面是数字，表达了出现的次数</p><p>                 [ ] 用法是表示可选项，2[1256 ] 表示 21、22、25或者26。<br></p><p>                 ^  …… $ 这里<b>开头和结尾</b>的符号 就表示字符串开始和结尾。^ 、$可以单独用，也可以一起用。</p><p>               [ ^    ] 还表示排除，用法是[ ^ \d] 表示除了数字以外的字符。</p><hr><p>先写出框架</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-0114e8afab8c1a57.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-0114e8afab8c1a57.PNG?imageMogr2/auto-orient/strip" data-image-slug="0114e8afab8c1a57" data-width="461" data-height="461"><br><div class="image-caption"></div>
+</div><p>实验一下，表达式找出4位数字，19行：myre = '\d{4}'  <br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-3bba63f900e99e00.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-3bba63f900e99e00.PNG?imageMogr2/auto-orient/strip" data-image-slug="3bba63f900e99e00" data-width="329" data-height="86"><br><div class="image-caption">发现几次都是1999，没有找到题目</div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e96949452fe62cde.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e96949452fe62cde.PNG?imageMogr2/auto-orient/strip" data-image-slug="e96949452fe62cde" data-width="446" data-height="338"><br><div class="image-caption">发现是找到第一个四位数就输出了</div>
+</div><p>更改表达式为 myre = '\(\d{4}' 用反斜杠转义左括号，实验成功匹配</p><p>再次更改表达式myre = '\(\d{4}+'，实验失败。。发现忘记了空格符号。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-5691468001ff8b2d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-5691468001ff8b2d.PNG?imageMogr2/auto-orient/strip" data-image-slug="5691468001ff8b2d" data-width="780" data-height="45"><br><div class="image-caption"></div>
+</div><p>后面加\s表达空格符号，之后是   '.{46}'  <br></p><p>点号表示任意符号，46表示有46个该符号。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-f91c7632ed21b480.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-f91c7632ed21b480.PNG?imageMogr2/auto-orient/strip" data-image-slug="f91c7632ed21b480" data-width="455" data-height="88"><br><div class="image-caption"></div>
+</div><hr><p>知识点二：字符替换，由于搜索出来的数字运算式子，其中的 x  ，是英文小写字母而不是乘法*，所以要替换一下，再运算。</p><p>re.sub('原字符'，'替换字符串','要搜查TXT')<br></p><p>知识点三：效率提升，将正则表达式预编译，可以提升搜查效率。</p><p>myre = re.compile(''\(\d{4}\s+.{46}'')</p><hr><p>查看要提交的post，参数是pass_key，用计算出的答案提交<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a15d5d33f938c9bd.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-a15d5d33f938c9bd.PNG?imageMogr2/auto-orient/strip" data-image-slug="a15d5d33f938c9bd" data-width="669" data-height="449"><br><div class="image-caption"></div>
+</div><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e6d5c6b7b3db716e.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e6d5c6b7b3db716e.PNG?imageMogr2/auto-orient/strip" data-image-slug="e6d5c6b7b3db716e" data-width="523" data-height="601"><br><div class="image-caption"></div>
+</div><p>还是失败了。思考了半响，明白了，这是由于第一次urllib获取HTML到本地，第二次request提交，每一次的题目都是不一样的。</p><p>也就是说我们把第一次的题目的答案给了第二次的题目，所以会出错。</p><p>用requests 获取网页内容，提交</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-b7b829bd4d64dbea.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-b7b829bd4d64dbea.PNG?imageMogr2/auto-orient/strip" data-image-slug="b7b829bd4d64dbea" data-width="687" data-height="572"><br><div class="image-caption"></div>
+</div><p>然而并没有什么卵用。。。。</p><p>我数了一下，十多秒…… 果然还是太慢了吗？</p><p>将第六行   char.content  改成 char.text ，因为content是逐字节读取，所以速度会慢。（已经成功在三秒之内了，但还是失败）</p><hr><p>看别人答案。。。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-8f3934d84e42eb86.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-8f3934d84e42eb86.PNG?imageMogr2/auto-orient/strip" data-image-slug="8f3934d84e42eb86" data-width="255" data-height="120"><br><div class="image-caption"></div>
+</div><p>用session保持网页交互，使得题目和答案匹配，不会将第一次题目答案交给第二次访问的题目。</p><hr><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-cc562fd5de92fad7.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-cc562fd5de92fad7.PNG?imageMogr2/auto-orient/strip" data-image-slug="cc562fd5de92fad7" data-width="423" data-height="259"><br><div class="image-caption"></div>
+</div><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

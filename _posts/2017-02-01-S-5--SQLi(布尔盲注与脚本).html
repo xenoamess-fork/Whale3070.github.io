@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.5--SQLi(布尔盲注与脚本)</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">S.5--SQLi(布尔盲注与脚本)</h1>
+        <div class="show-content">
+          <p>打开题目<a href="https://www.ichunqiu.com/battalion" target="_blank">链接</a>，是一个登录表单。</p><p>经过测试，输入错误的用户名，提示“username error! ”</p><p>输入正确的用户名和错误的密码，提示“password error! "</p><p>用户名admin貌似是存在的。</p><p>１．测试单引号，没有报错。看来不是基于报错类型的注入。</p><p>２．经过十多分钟的探测，all tested parameters appear to be not injectable.</p><blockquote><p>sqlmap -u　"http://08d205bc93194b6198b7e4939a6b6d0b68358ed1e4fc4b46.game.ichunqiu.com/"  --data="username=admin&amp;password=admin" --dbs --level 3</p></blockquote><p>３．测试admin and 1=1，发现‘空格’被替换为‘+’</p><p>于是将空格替换为/**/注释，admin/**/and/**/1=1，提示，username error!</p><p>看来也不是布尔型注入，而且有ｗａｆ的说（特殊符号被替换/转义）</p><hr><p>估计我的水平是绕不过ｗａｆ了，然后看看<a href="https://www.ichunqiu.com/writeup/detail/157" target="_blank">答案</a></p><p>我前面判断错误，没有waf，而且是布尔型注入ORZ，只不过注入条件有点奇怪，以前没见过。</p><p>用burp检测下，网页对于waf字典的反应</p><p>发现网页对于%报错了。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-0881a85c7a10d04e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>参考：<a href="https://www.cnblogs.com/test404/p/7821884.html" target="_blank">sprintf( )格式化字符串</a></p><p>简单的说，就是使用该函数，会将格式化的字符串写入变量中。</p><p>%符号是格式化字符串符号，例如：%s表示转换为string类型，%d表示转换为double float双精度浮点型。</p><p>于是可以用%1$s，表示第一个替换位置是字符串类型。原理可以看<a href="http://php.net/manual/en/function.sprintf.php" target="_blank">php手册sprintf()</a></p><p>如果我们写入%1$\，因为sql会自动加单引号，于是\'，单引号被转义，于是<b>闭合了前面第一个引号</b>，然后就可以写入其他语句了。</p><p>如果我们写入如下语句，那么就会认为是正确的用户名。</p><blockquote>
+<p><br></p>
+<p>admin%1$\' or 1=1#</p>
+<p><br></p>
+<p>admin%1$\' or 1=2#</p>
+<p><br></p>
+</blockquote><p>两个语句返回值不一样，说明是布尔型盲注</p><hr><p>参考文章：<a href="http://www.freebuf.com/articles/web/120985.html" target="_blank">http://www.freebuf.com/articles/web/120985.html</a></p><blockquote>
+<p><br></p>
+<p>admin%1$\' or length(database())&gt;2#    正确</p>
+<p><br></p>
+<p>admin%1$\' or length(database())&gt;3#　错误</p>
+<p><br></p>
+<p>说明数据库名称长度为３</p>
+<p><br></p>
+<p>参考文章中已经讲的很清楚了，就不赘述了。</p>
+<p><br></p>
+<p>最后通过脚本，用代码代替手工即可快速得出ｆｌａｇ.</p>
+<p><br></p>
+</blockquote><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-4d29ccc14a42442e.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>问题：第9行，python中\'转义了单引号，导致我查错误查了半天！！！</p><p>admin%1$' or xxx就相当于admin or 1=2 因为前面是正确的，于是整条语句都是正确的，导致结果一直都是password errror......</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-302c32f15f0afe49.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

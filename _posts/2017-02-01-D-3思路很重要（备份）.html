@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.3思路很重要（备份）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.3思路很重要（备份）</h1>
+        <div class="show-content">
+          <p>知识点一：extract(<i>array</i>,<i>extract_rules</i>,<i>prefix</i>)，extract函数用来将一个数字分解成多个变量直接使用，这个在从<b><i>数据库中取得一行数据</i></b>的时候很好用</p><p>二：trim(）移除字符串两侧的空白字符或其他预定义字符。</p><p>三：file_get_contents() 读取文件输出为字符串</p><p>四：变量覆盖漏洞http://blog.csdn.net/hitwangpeng/article/details/45972099</p><p>五：凯撒加密，在线解密网址http://www.mxcz.net/tools/rot13.aspx</p><p>参考资料：http://taoshi.blog.51cto.com/1724747/1165499</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-3ab7ef211204fd60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><p><br></p><p>F12查看源代码，发现http状态码200，网页是正常显示的。也就是说404页面是装出来的，还有js来达到，一点右键就显示禁止查看源代码的对话框。</p><p>然而并没有什么卵用，查看源代码。发现那是什么鬼？代码写完也不删。。。。。。。。so?</p><hr><p>听别人说有备份文件，格式是这样的。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-3b1f88ec40f5c537.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"></div>
+</div><p>我们分析一下，这段代码是if{    if{},else{}   }这种样子的，最外层，需要满足shiyan变量不为空。</p><p>最重要的是满足里面的if语句，要使得，变量shiyan和变量content值相等。使变量content <br>等于 ’将flag文件输出为字符串‘ 的值。</p><p>那么shiyan变量要为多少？</p><p>表示要覆盖变量，否则你必须知道flag是多少，才能让content变量等于shiyan变量，从而echo出flag。。。这不是搞笑么？</p><p>看不懂2333</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-c5d92e62597c6c06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-c5d92e62597c6c06.png?imageMogr2/auto-orient/strip" data-image-slug="c5d92e62597c6c06" data-width="740" data-height="264"><br><div class="image-caption"></div>
+</div><hr>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

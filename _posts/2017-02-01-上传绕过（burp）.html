@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传绕过（burp）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">上传绕过（burp）</h1>
+        <div class="show-content">
+          <p>先传txt，提示需要jpg；</p><p>再传jpg,，提示需要php（见下图）</p><p>再传php，提示需要jpg。</p><p>em...........到底需要上传jpg还是php呢？</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-c7f83f373903c8e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-c7f83f373903c8e4.png?imageMogr2/auto-orient/strip" data-image-slug="c7f83f373903c8e4" data-width="463" data-height="235"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e13a60c24516aa20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e13a60c24516aa20.png?imageMogr2/auto-orient/strip" data-image-slug="e13a60c24516aa20" data-width="486" data-height="180"><br><div class="image-caption"></div>
+</div><blockquote>
+<p>分析：首先，知道题目只允许jpg,gif,png，如果是其他名称就会显示“不被允许的文件类型.....................”。</p>
+<p>           如果要用上传漏洞获取webshell，那么应该让服务器把我们的文件当作php脚本执行。</p>
+<p>           末尾只能以.jpg（或.gif、.png）结尾，无法用大小写绕过、特别文件名构造等方式。</p>
+</blockquote><p>看writeup，利用了00（php是由C写的，C语言中%00是截断符，一旦看到%00，就停止执行）</p><p>参考：<a href="http://www.cnblogs.com/cyjaysun/p/4439058.html" target="_blank">上传验证绕过全解析</a></p><p>可以知道，这个是<b>服务端验证方式</b>（通过在服务端<b>查看上传的文件是否符合要求</b>）</p><blockquote>
+<p><b> 0x00 截断绕过</b> -  这个是基于一个组合逻辑漏洞造成的</p>
+<p>给个简单的伪代码</p>
+<p>name = getname(http request) //假如这时候获取到的文件名是 help.asp .jpg(asp 后面为 0x00)</p>
+<p>type = gettype(name) //而在 gettype()函数里处理方式是<b>从后往前扫描扩展名</b>，所以判断为 jpg if (type == jpg)</p>
+<p>SaveFileToPath(UploadPath.name, name) //但在这里却是以 0x00 作为文件名截断</p>
+<p>//最后以 help.asp 存入路径里</p>
+</blockquote>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

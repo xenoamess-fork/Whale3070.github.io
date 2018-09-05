@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验吧编程题BC01-生日蜡烛0427</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">实验吧编程题BC01-生日蜡烛0427</h1>
+        <div class="show-content">
+          <p>分析一下题目，编程解决的问题无非两类，一类计算、一类操作数据。</p><p>这是关于计算的题目。</p><p>题目大概是这样的：从（n 、n+1、 n+2 、n+3、 n+4 、.....n+t）其中n、t都为100以内的正整数，这个数组之和为318，求n的值。</p><p>。。有一种做小学数学题的感觉</p><p>这是要让计算机列举一下的意思，鄙人还不会用什么好的算法。想到了用循环，但半天写出的程序老是出错。。因为最近学C语言，就用C写，写又写不出来，又把Python给丢了。</p><p>看了答案发现代码确实简洁优美。</p><p><b>知识点一：for循环</b></p><p>在python 里，for循环是用来迭代序列的</p><p>一般用法<br></p><p>=================</p><p>for 变量 in 序列</p><p>每次循环完了干嘛的语句</p><p>=================</p><p>变量的作用是在每次循环的时候，序列中的值会依次赋值给变量。然后你就可以用赋值了的变量做爱做的事了。</p><p>迭代序列的方式分为：</p><p>如果不想建立序列，只是想重复</p><p>==============</p><p>for i in range(重复数字)：</p><p>print("hello")</p><p>==============</p><p>知识点二：range()是python提供的函数，该函数的参数是（<b>开始</b>--默认从0开始，<b>结束</b>，每次循环<b>跳过多少数</b>--默认为1）第一个参数和第三个参数可以省略。</p><p>如果只给一个参数，默认是结束的数，例如range(5) = [0,1,2,3,4,]</p><p>如果给两个参数，默认是开始和结束的数，例如range(3,5) = [3,4]</p><p>给三个参数，例如range(2,10,2) = [2,4,6,8]<br></p><hr><p>下面用编程来描述题目：建立一个累加值（常量）为318，取名为sum</p><p>有变量V每次逐渐递增，从0递增到某个数X，每次递增1。</p><p>有变量Z每次都加上变量V</p><p>有变量add值每次都加上（自身add加变量V的值）</p><p>这里用到for循环，循环到某次（所以要用到while语句），变量等于常量318的时候，循环结束</p><hr><p>for start in range(100): #显然开始的年龄不会大于100岁，序列就取个最大值100好了</p><p> v=0</p><p>end=0</p><p>add=0</p><p> while add&lt;318</p><p>  v=v+1   #变量V每次都地址1</p><p>  start+=v    #start每次都加上递增后的变量</p><p>   add+=s       #总数add是（start ,start+1, start+2, start+3....)的和</p><p> if add==318:<br></p><p>print s,v,end</p><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2c9f90bccde07234.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2c9f90bccde07234.PNG?imageMogr2/auto-orient/strip" data-image-slug="2c9f90bccde07234" data-width="612" data-height="251"><br><div class="image-caption"></div>
+</div><p>验证下，77+78+79+80+81=395 出问题了，不等于318</p><p>是V变量的问题，初始化的时候V=0，第一次循环v=1，这就不对了，应该从0开始。</p><hr><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-70a5a699b3997863.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-70a5a699b3997863.PNG?imageMogr2/auto-orient/strip" data-image-slug="70a5a699b3997863" data-width="394" data-height="353"><br><div class="image-caption"></div>
+</div><p>这就尴尬了。。78+79+80+81=318，没有问题。21*12+ 6*（12-1）=318</p><p>和答案也不一样答案是，start=13，end=28,不知道28算进去没有，是这次就不插了，还是28岁插生日蜡烛以后就不插了。算一下吧，不算28岁生日：13*（28-13）+ 7*15=195+105=300</p><p>算28岁生日，13*（28-13+1） + 8*16 =  13*16+ 120=208+136=328</p><p>题目记错了，是328不是318。。</p><hr>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC13-ASCII艺术</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC13-ASCII艺术</h1>
+        <div class="show-content">
+          <p><a href="http://ctf5.shiyanbar.com/ppc/acsii.php" target="_blank">题目</a>：两秒提交由xx拼接的数值。</p><p>分析：一开始我想岔了，以为要用到opencv等图形库来判断图形，类似验证码识别。</p><p>           方向错了，验证码识别是图形判断。但这个题目里，其实这还是文字么。。。然后看源码。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-bb2b180c1d88fb5d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>html：超文本标记语言。$nbsp代表空格的意思，&lt;br /&gt;代表换行。</p><p>于是我们可以搜集到各个数字对应的源代码。</p><p>通过编程，将源代码输出为对应的数字，提交给题目即可。</p><p>知识点一：requests模块，post提交参数</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-9c75896946da5605.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><blockquote>
+<p>url = 'http://ctf5.shiyanbar.com/ppc/acsii.php'</p>
+<p>s = requests.Session()</p>
+<p>a=s.get(url)</p>
+<p>post = {'inputNumber':result}       post是我们要提交的表单参数，result是我们计算出的结果。</p>
+<p>r = s.post(url,data=post)             提交结果</p>
+<p>print r.content   输出提交后网页内容</p>
+</blockquote><p>知识点二：re.sub()可以将源码替换为相应的数字。<a href="https://github.com/Whale3070/chapter7/blob/master/ascii" target="_blank">python源码1</a></p><p>通过复制源代码，然后在本地建立html文件，用浏览器打开的方式，可以最终建立数字与源码的对应关系。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-bb9cc484b7882f20.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-a7e81e4cf82def0a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>知识点三：re.findall('\d&lt;br/&gt;','文本')  查找字符串是<b>数字后接换行号</b>的。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-b6e0e7df903a1adc.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>知识点四：join函数，将列表元素进行组合。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-0302ada530b54b83.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><blockquote>
+<p>Str1 = ''.join(result1)     result1是一个序列</p>
+<p>print Str1</p>
+</blockquote><p>然后提交就得到了flag。哦，对了，<a href="https://github.com/Whale3070/chapter7/blob/master/ascii2" target="_blank">源码</a>。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

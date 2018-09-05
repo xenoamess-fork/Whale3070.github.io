@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D.8邀请码</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">D.8邀请码</h1>
+        <div class="show-content">
+          <p><a href="https://www.hackthebox.eu/invite" target="_blank">有个页面</a>，需要邀请码，那么该如何hack进入呢？</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-43f858cb79bc2c27.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>sql尝试绕过，无效。。那么，分析下源代码吧！</p><p>邀请码是post提交，提交参数是code，，这个源代码太丧尸了，居然没有排版，看都看不清</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-e72cb6f0e156e060.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">这种</div>
+</div><p>首先，我认为，邀请码一般都是这样吧？要跟别人要邀请码，然后再post提交，然后服务器核对本地的数据，如果不存在，则返回the invite code is invalid.</p><p><a href="https://www.jianshu.com/p/68923420af83" target="_blank">类似的登陆表单</a>：搜索源代码，没有发现处理表单数据的脚本，如xx.php之类的。</p><p>发现源码有很多javascript代码，注意到一行token，说明它防御了csrf攻击。然后分析不出来了，然后去看writeup。</p><p>通过搜索（ctrl + F）关键字invite，定位到/js/inviteapi.min.js一个脚本。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-94a114cb54672efc.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>通过访问http://xx.com/js/inviteapi.min.js，得到js代码，还是没有排版。</p><p>我给他稍微排了下，发现一个生成邀请码，，(⊙﹏⊙)原来invite code是在本地生成的。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-86432bc3fd7d7e44.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption">注意倒数第二行，log|console</div>
+</div><p>知识点一：c<a href="https://segmentfault.com/a/1190000002511877" target="_blank">onsole控制台的使用</a>。</p><p><b>console.log</b> 用于输出普通信息。</p><p>至于怎么知道要在控制台输入，makeInviteCode()，我缺少调试js的经验，也不清楚。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-be596603f1cf1419.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>知识点二：</p><p>data:"SW4gb3JkZXIgdG8gZ2VuZXJhdGUgdGhlIGludml0ZSBjb2RlLCBtYWtlIGEgUE9TVCByZXF1ZXN0IHRvIC9hcGkvaW52aXRlL2dlbmVyYXRl"</p><p>enctype:"BASE64"</p><p>将获得的data，解码base64。这个还是很简单的以前做过。可以通过hackbar或者网上在线解码。。</p><blockquote><p>In order to generate the invite code, make a POST request to /api/invite/generate</p></blockquote><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-cbf99a23a0e75cd8.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>再把code解码一次，即可获得邀请码。</p><p>居然说我的ip不能使用这个邀请码？吓得我赶紧吧vps代理给关了。。</p><div class="image-package">
+<img class="uploaded-img" src="http://upload-images.jianshu.io/upload_images/2883590-0d4dac63cda8f8b2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" width="auto" height="auto"><br><div class="image-caption"></div>
+</div><p>2018.2.20，发现一个插件：<a href="https://chrome.google.com/webstore/detail/javascript-and-css-code-b/iiglodndmmefofehaibmaignglbpdald" target="_blank">JavaScript and CSS Code Beautifier</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

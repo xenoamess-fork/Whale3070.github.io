@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC12速度爆破（request模块）</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC12速度爆破（request模块）</h1>
+        <div class="show-content">
+          <p>两秒钟提交答案。这里就需要写一个python脚本，用到web交互模块。</p><p>先看看题目中是用POST，还是GET提交答案。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-47a4aa6c23dbed79.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-47a4aa6c23dbed79.PNG?imageMogr2/auto-orient/strip" data-image-slug="47a4aa6c23dbed79" data-width="1001" data-height="426"><br><div class="image-caption">用firebug，F12打开</div>
+</div><p>多点几次会发现，每次获取到的sha1值都是不一样的,so…… <br></p><p><b>知识点一</b>：自动获取该链接，导入到本地<b>生成HTML文件</b>。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-98cd9b7c6712f2d1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-98cd9b7c6712f2d1.PNG?imageMogr2/auto-orient/strip" data-image-slug="98cd9b7c6712f2d1" data-width="460" data-height="211"><br><div class="image-caption">照猫画虎写出代码<br>
+</div>
+</div><p>知识点二：在获取到的html文件中<b>找到sha1值</b>。</p><p><b>正则表达式模块re</b></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-b6fabb242fecfc92.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-b6fabb242fecfc92.PNG?imageMogr2/auto-orient/strip" data-image-slug="b6fabb242fecfc92" data-width="435" data-height="305"><br><div class="image-caption"></div>
+</div><p>知识点三：获取到该sha1值，<b>计算</b>出符合该sha1值的整数</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-9c30233894944cec.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-9c30233894944cec.PNG?imageMogr2/auto-orient/strip" data-image-slug="9c30233894944cec" data-width="490" data-height="217"><br><div class="image-caption"></div>
+</div><p>知识点四：用urllib、urllib2模块<b>提交</b>答案</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-6b83d492f1add0bf.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-6b83d492f1add0bf.PNG?imageMogr2/auto-orient/strip" data-image-slug="6b83d492f1add0bf" data-width="441" data-height="180"><br><div class="image-caption"></div>
+</div><p>将代码结合到一起，但是老是说时间超时。。。<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-61bc7454468b98be.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-61bc7454468b98be.PNG?imageMogr2/auto-orient/strip" data-image-slug="61bc7454468b98be" data-width="1012" data-height="444"><br><div class="image-caption"></div>
+</div><p>。。。还是看看答案吧。。。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-9f4f603a05b35f31.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-9f4f603a05b35f31.PNG?imageMogr2/auto-orient/strip" data-image-slug="9f4f603a05b35f31" data-width="564" data-height="260"><br><div class="image-caption"></div>
+</div><p>好简洁，，现在学习下request模块，它是http客户端库。</p><p><a href="http://cn.python-requests.org/zh_CN/latest/" target="_blank">官方文档</a> <br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-6f22f66e425f687a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-6f22f66e425f687a.PNG?imageMogr2/auto-orient/strip" data-image-slug="6f22f66e425f687a" data-width="745" data-height="282"><br><div class="image-caption">pip安装该模块</div>
+</div><p>第四行，session保存cookies，在这里<b>自动提供</b>服务端需要的数据π_π，好方便哇。。</p><p>第五行，获取url 的第580到620个字符，不用正则表达式搜索。</p><p>之后把数字取MD5值，再取sha1值，并进行对比。提交符合的值，然后打印出提交后的url内容。<br></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
