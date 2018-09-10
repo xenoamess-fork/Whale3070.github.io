@@ -29,19 +29,19 @@ tags:
 python是动态类型语言，它可以从变量定义推断出类型。
 主要使用tkinter模块，使用了titile属性——**标题**
 Lable属性——设置**标签内容**
-![1](1.PNG)
+![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/1.PNG)
 
 ---
 
 定义了一个函数，设置了点击后的行为
-![2]($res/2.PNG)
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/2.PNG)
 
 GUI是事件驱动的，点击就创建了一个事件。
 
 ---
 
 按键输入的属性：
-![3]($res/3.PNG)
+![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/3.PNG)
 
 ---
 
