@@ -46,22 +46,22 @@ GUI是事件驱动的，点击就创建了一个事件。
 ---
 
 添加下拉选择框，坐标（1，1）：
-![4]($res/4.PNG)
+![4](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/4.PNG)
 
 ---
 
 定义点击后的显示文本
-![5]($res/5.PNG)
+![5](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/5.PNG)
 
 ---
 
 添加选择（是/否）按钮
-![6]($res/6.PNG)
+![6](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/6.PNG)
 
 ---
 
 添加单选按钮
-![7]($res/7.PNG)
+![7](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0910/7.PNG)
 
 ## 总结：
 python图形化编程，一如python的风格，拿来即用地简单。通过使用tk库的不同属性，定义框框大小、按钮button的类型，字符串所在的位置。
