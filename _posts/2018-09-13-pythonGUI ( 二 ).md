@@ -14,7 +14,7 @@ tags:
 1. 给png图片批量添加水印，可以选择两种不同的水印。
 2. 给gif图批量添加水印。
 3. 提取word文档中的所有图片，添加水印。
-![1]($res/1.PNG)
+![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/1.PNG)
 ## 优化方案：
 - 优化前：该程序通过文件后缀，png、gif、docx决定不同的执行方案。但是每一次都需要选择打哪一种水印（i、e）
 - 优化后：现在用pythonGUI的单选按钮，默认水印i。
@@ -23,15 +23,15 @@ tags:
 ## 构建图形界面
 按照上一篇学到的知识，先画出图形化界面。
 此时点击start，并没有任何作用，后面再加点击后的行为。
-![2]($res/2.PNG)
-![3]($res/3.PNG)
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/2.PNG)
+![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/3.PNG)
 
 ## 添加点击后的效果
 运行前
-![4]($res/4.PNG)
+![4](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/4.PNG)
 
 运行后：
-![5]($res/5.PNG)
+![5](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/5.PNG)
 
 ## 替换点击后的效果
 上一步确认了点击是有效果的，然后定义几个函数，替换点击的效果。
@@ -60,19 +60,19 @@ def myzip(path,savepath):
 
 ---
 整理前（213行），居然还找出了两个定义了却没有使用到的函数╭（′▽‵）╭
-![6]($res/6.PNG)
+![6](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/6.PNG)
 
 梳理后（174行），将变量名整理了，并且只用调用judgment函数，即可运行程序。
 这样方面了后面，再添加GUI的代码。
-![]($res/7.PNG)
+![](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/7.PNG)
 
 ---
 
 运行前
-![8]($res/8.PNG)
+![8](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/8.PNG)
 
 运行后
-![9]($res/9.PNG)
-![10]($res/10.PNG)
+![9](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/9.PNG)
+![10](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0913/10.PNG)
 
 添加图形化界面程序初步
