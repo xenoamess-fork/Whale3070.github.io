@@ -1,5 +1,4 @@
 ---
-
 title: SSH... Z is sleeping
 categories:
 - unresolved
