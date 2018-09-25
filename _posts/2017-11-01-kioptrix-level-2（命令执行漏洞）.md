@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+---
+categories:
+- training
+tags: 
+    - training
+---
 <html lang="en">
   <head>
     <meta charset="utf-8">
