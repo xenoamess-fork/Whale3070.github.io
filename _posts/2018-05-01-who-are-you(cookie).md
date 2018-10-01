@@ -1,6 +1,5 @@
 ---
 
-title: FourCTFQues
 categories:
 - CTF
 tags: 
