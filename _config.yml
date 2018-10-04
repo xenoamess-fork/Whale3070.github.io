@@ -370,7 +370,7 @@ mathjax:
 han: false
 
 # Swiftype Search API Key
-#swiftype_key: _st('install','H7wkR4dkzpJ1B6qKbzo_','2.0.0')
+swiftype_key: _st('install','H7wkR4dkzpJ1B6qKbzo_','2.0.0')
   
 
 # Baidu Analytics ID
