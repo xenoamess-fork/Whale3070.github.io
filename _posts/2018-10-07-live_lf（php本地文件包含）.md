@@ -6,7 +6,7 @@ tags:
     - web
 ---
 
-题目地址：http://www.wechall.net/challenge/warchall/live_lfi/index.php
+[题目地址](http://www.wechall.net/challenge/warchall/live_lfi/index.php)
 如题目所提示，是PHP文件包含漏洞。
 访问给出的题目地址，网页提示“网站正在建设中”
 
