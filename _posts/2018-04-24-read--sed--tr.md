@@ -1,6 +1,9 @@
-
-shell script（二）
-===
+---
+categories:
+- linux
+tags: 
+    - linux
+---
 续上篇。
 ## 案例三：用“read”，接受输入作为命令的变量。
 ![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/1.PNG)
