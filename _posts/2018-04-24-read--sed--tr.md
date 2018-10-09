@@ -3,7 +3,7 @@ shell script（二）
 ===
 续上篇。
 ## 案例三：用“read”，接受输入作为命令的变量。
-![1]($res/1.PNG)
+![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/1.PNG)
 一看到这么多没见过的命令，先别慌！其实很简单。
 和上一个案例中一样，read用于读取使用者的输入，然后作为上图倒数两行命令的参数使用。
 （解释：qcow2是一个虚拟机文件，这个命令的作用是压缩虚拟机的大小，方便在网络上传输）
@@ -47,9 +47,9 @@ nl /etc/passwd | sed '2,5d' 把passwd文件的2‐5行删除
 - 案例五
 有一些虚拟机，它们有各自的xml文档。但是虚拟机开机后，发现鼠标和物理机的不同步。
 于是修改xml文档，用bash脚本批量修改。
-![2]($res/2.PNG)
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/2.PNG)
 ## 案例五：用tr进行文本的替换
-![3]($res/3.PNG)
+![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/3.PNG)
 该脚本，将中文的左尖角替换为英文的，替换后，发现变成了三个英文左尖角。
 可能是字节长度不同的原因。
 于是再用‐s 参数压缩一下，把三个压缩为一个。
