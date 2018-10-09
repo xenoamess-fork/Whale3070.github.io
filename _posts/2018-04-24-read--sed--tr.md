@@ -4,7 +4,7 @@ categories:
 tags: 
     - linux
 ---
-续上篇。
+续[上篇](https://whale3070.github.io/linux/2016/01/01/shell%E5%85%A5%E9%97%A8/)。
 ## 案例三：用“read”，接受输入作为命令的变量。
 ![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/1.PNG)
 一看到这么多没见过的命令，先别慌！其实很简单。
