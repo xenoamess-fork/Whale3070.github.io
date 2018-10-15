@@ -1,0 +1,196 @@
+---
+
+title: code-网络编程-正则表达式
+categories:
+- code
+tags: 
+    - code
+---
+
+某个CTF的python编程题：
+![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1015/1.PNG)
+
+`nc 202.38.95.47 12009`
+连接后提示
+```
+You have only 30 seconds
+(((8-2)|(6&135))^((24*31)*(8+3)))
+```
+有个坑，从52题起，里面夹杂着命令。
+我不知道命令怎么计算，还以为是数据清洗，删除就好。
+感谢朋友帮助，根据以前的答案推算出命令和数字的对应关系，然后替换就好。
+
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1015/2.PNG)
+
+源代码：
+```
+#coding:utf-8
+
+import socket
+
+import re
+
+
+
+target_host = "202.38.95.47"
+
+target_port = 12009
+
+
+
+client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+
+
+client.connect((target_host,target_port))
+
+def pattern(Pattern,mystring): #delete pattern, out >>clean string
+
+	strip_list = {"exit":"exit\(\)", \
+
+	"find":"__import__\('os'\)\.system\('find ~'\)", \
+
+	"print":"print\('\\x1b\\x5b\\x33\\x3b\\x4a\\x1b\\x5b\\x48\\x1b\\x5b\\x32\\x4a'\)", \
+
+	"time":"__import__\('time'\)\.sleep\(100\)"}
+
+	myre = strip_list[Pattern] #把正则表达式作为字典的值
+
+	if Pattern == "find":
+
+		middle = re.sub(myre,"2",mystring)
+
+	elif Pattern == "print":
+
+		middle = re.sub(myre,"12",mystring)
+
+	elif Pattern == "time":
+
+		middle = re.sub(myre,"0",mystring)
+
+	elif Pattern == "exit":
+
+		middle = re.sub(myre,"0",mystring)
+
+	return middle
+
+def send_it(result):
+
+	result = eval(result.strip("\\n"))
+
+	print ("result "+": "+str(result))
+
+	print ("------------------")
+
+	client.send(bytes((str(result)+"\n"),encoding = 'utf-8'))
+
+def decide(response):
+
+	exist = [] # what pattern need to delete
+
+	find_exist=["exit","find","print","time"]
+
+	for i in find_exist:
+
+		if i in response:
+
+			exist.append(i)
+
+			exist = list(set(exist))			
+
+	print (exist)
+
+	len_exist = len(exist) # decide how many times need to delete
+
+
+
+	if len_exist == 1:
+
+		it_result=pattern(exist[0],response)	
+
+		print ("it_result:")
+
+		print (it_result)
+
+		send_it(it_result)
+
+	elif len_exist == 2:
+
+		one_result=pattern(exist[0],response)
+
+		two_result=pattern(exist[1],one_result)
+
+		print ("two_result")
+
+		print (two_result)
+
+		send_it(two_result)
+
+	else:
+
+		one_result=pattern(exist[0],response)
+
+		two_result=pattern(exist[1],one_result)
+
+		three_result=pattern(exist[2],two_result)
+
+		print (three_result)
+
+		send_it(three_result)
+
+
+
+n=0
+
+while 1:
+
+	response = client.recv(40000)
+
+	if str(response,encoding = 'utf-8') == "Timeout!\n":
+
+		print ("quiting...")
+
+		break
+
+	elif str(response,encoding = 'utf-8') == "Your answer is wrong!\n":
+
+		print (str(response,encoding = 'utf-8'))		
+
+		break
+
+	else:	
+
+		n+=1
+
+		print ("title"+str(n)+"\n"+str(response,encoding = 'utf-8'))
+
+		if not str(response,encoding = 'utf-8').startswith("You"):
+
+			if n >= 52:
+
+				find_exist=["exit","find","print","time"]
+
+				a=[i for i in find_exist if i in str(response,encoding = 'utf-8')]
+
+				if a== []:
+
+					send_it(str(response,encoding = 'utf-8'))
+
+				else:
+
+					decide(str(response,encoding = 'utf-8'))
+
+					continue
+
+			else:
+
+				result = eval(str(response,encoding = 'utf-8').strip("\\n"))
+
+				print ("result "+str(n)+": "+str(result))
+
+				print ("------------------")
+
+				client.send(bytes((str(result)+"\n"),encoding  = 'utf-8'))
+
+
+```
