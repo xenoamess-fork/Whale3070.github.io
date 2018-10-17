@@ -255,4 +255,4 @@ tmp是从g取出18位
 
 ![口令就是xBspsiONMSNXeVuiomF](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/TIM%E5%9B%BE%E7%89%8720181017151015.png)
 
-[wp](https://hackso.me/rotating-fortress-1.0.1-walkthrough/)贴这儿了，最近
+[wp](https://hackso.me/rotating-fortress-1.0.1-walkthrough/)贴这儿了，最近失恋了，所以不学了。再说吧，都行，hh...
