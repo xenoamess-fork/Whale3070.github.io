@@ -10,7 +10,7 @@
 除此之外没有任何可用页面（网站地图爬行过）
 
 #### unknown服务
-![1]($res/1.PNG)
+![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/1.PNG)
 先扫描这个端口，发现nmap扫不出什么服务，nc和浏览器得到一样的response，拒接连接。
 应该是我没有用正确的方式连接造成的。
 
@@ -51,7 +51,7 @@ Disallow: /icons/loki.bin
 Disallow: /eris.php
 ```
 /eris.php
-![2]($res/2.PNG)
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/2.PNG)
 
 初步判断是命令执行，在如图所示的exec command中可以反弹shell，但是需要用户名和密码，如果错误就会提示`ACCESS_DENIED`
 ```
@@ -89,13 +89,13 @@ access_denied
 ```
 ## 二进制分析
 通过一样的access_denied，说不定是让我们分析这个bin文件，获得口令后，就可以执行命令。
-![3]($res/3.PNG)
+![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/3.PNG)
 web狗拿起键盘就是干！
-![4]($res/4.PNG)
+![4](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/4.PNG)
 ida分析，elf格式64位的程序，可以看到分支跳转密码。
 
 首先，分析下，密码是不是明文写在程序中的。
-![5]($res/5.PNG)
+![5](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/5.PNG)
 看来不是。
 
 静态分析了一下，但是ollydbg是windows平台的，不能运行linux可执行程序，这下就犯愁了。
@@ -104,7 +104,7 @@ kali搜索一下db (debugger)，还真找到了edb，没用过。。
 #### EDB
 A Linux equivalent of the famous Olly _debugger_ on the Windows platform.
 貌似和ollydbg差不多，先找到输入密码后的跳转地址。
-![6]($res/6.PNG)
+![6](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/6.PNG)
 jnz结果不为零（或不相等）则转移。
 jz=jump if zero，一般与cmp连用，用以判断两数是否相等。
 在这里，绿色的是条件符合继续执行（不跳转），红色是不符（跳转）。
@@ -210,9 +210,9 @@ buffer.c，strcmp
 这个程序应该是用c语言写的，strcmp是复制函数，典型的用不好就会导致溢出。
 
 输入超长密码，显示段错误。
-![Screenshot from 2018-10-14 00-54-50]($res/Screenshot%20from%202018-10-14%2000-54-50.png)
+![Screenshot from 2018-10-14 00-54-50](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/Screenshot%20from%202018-10-14%2000-54-50.png)
 
-![Screenshot from 2018-10-14 01-01-05]($res/Screenshot%20from%202018-10-14%2001-01-05.png)
+![Screenshot from 2018-10-14 01-01-05](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/Screenshot%20from%202018-10-14%2001-01-05.png)
 
 #### IDA Pro
 F5反编译（ida专业版才有这个功能。。）
@@ -251,8 +251,8 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 tmp是从g取出18位
 
 双击g这个数组，因为tmp从这里取值，18位。目的是定位，然后查看对应的hex view面板，十六进制
-![7]($res/7.PNG)
+![7](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/7.PNG)
 
-![口令就是xBspsiONMSNXeVuiomF]($res/TIM%E5%9B%BE%E7%89%8720181017151015.png)
+![口令就是xBspsiONMSNXeVuiomF](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1017/TIM%E5%9B%BE%E7%89%8720181017151015.png)
 
 [wp](https://hackso.me/rotating-fortress-1.0.1-walkthrough/)贴这儿了，最近
