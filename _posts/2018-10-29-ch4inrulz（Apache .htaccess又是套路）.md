@@ -1,3 +1,10 @@
+---
+categories:
+- training
+tags: 
+    - training
+---
+
 [download](https://www.vulnhub.com/entry/ch4inrulz-101,247/)
 
 # scan
