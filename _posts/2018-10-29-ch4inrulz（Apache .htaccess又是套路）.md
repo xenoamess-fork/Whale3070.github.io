@@ -126,6 +126,20 @@ em。。？黑人问号
 
 - 新知识点2
 wfuzz的使用
+```
+-c 有颜色的输出
+-z 扫描模式，可以字典扫描，数字范围扫描。。。
+--hc 隐藏具体的响应代码，例如404,200之类的
+FUZZ 是需要爆破替换的地址。
+--basic 测试一个需要HTTP Basic Auth保护的内容
+```
+example:
+```
+wfuzz -c -z file,/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --basic "frank:frank!!!" --hc 404 "http://ip/development/uploader/FRANKFUZZ"
+```
+```
+wfuzz -c -z range,1-65535 --hl=2 http://ip:60000/url.php?path=http://localhost:FUZZ
+```
 
 ## 文件上传
 
