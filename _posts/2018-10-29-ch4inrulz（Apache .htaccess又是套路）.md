@@ -94,6 +94,7 @@ WRONG INPUT !!
 - nikto -h ip
 找到了一个备份文件
 http://192.168.1.132/index.html.bak
+
 ```
 <html><body><h1>It works!</h1>
 <p>This is the default web page for this server.</p>
@@ -102,13 +103,12 @@ http://192.168.1.132/index.html.bak
 <!-- I will use frank:$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0 as the .htpasswd file to protect the development path -->
 </body></html>
 ```
+
 ORZ，我爆破了那么久的口令，就藏在备份文件里了吗。。。
 当我尝试`$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0`作为口令登陆失败，我意识到这可能是一个路径，而不是口令。
 
-于是我找到了另一个登陆页面
-```
-http://192.168.1.132/development/$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0
-```
+于是我找到了另一个登陆页面`http://192.168.1.132/development/$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0`
+
 em。。？黑人问号
 
 - 新知识点1
