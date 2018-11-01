@@ -6,6 +6,10 @@ tags:
     - training
 ---
 
+[上一篇](https://whale3070.github.io/training/2017/12/03/mr-robot-SUID-%E6%8F%90%E6%9D%83/)
+
+通过这篇文章，学习shell脚本获取提权信息
+
 nikto -host 192.168.1.135
 
 ![1](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/1102/1.PNG)
