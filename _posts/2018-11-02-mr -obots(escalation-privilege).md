@@ -40,6 +40,7 @@ http://www.jamesandchey.net/wordpress-the-e-mail-could-not-be-sent-possible-reas
 好吧，就研究到这里，如果这个目标机有好好配置的话，是可以通过未授权密码重置，得到密码的。
 
 ---
+## 研究一下shell脚本SUID检查
 nmap并没有写在环境变量中，所以直接调用nmap是not found。
 在这个靶机中，nmap很鸡贼地藏在/usr/local/bin/路径下。
 nmap version 3.81，低版本的nmap可以以执行root
