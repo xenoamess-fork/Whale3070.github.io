@@ -8,10 +8,12 @@ tags:
 [download](https://www.vulnhub.com/entry/ch4inrulz-101,247/)
 
 # scan
+```
 21/tcp   open  ftp
 22/tcp   open  ssh
 80/tcp   open  http
 8011/tcp open  unknown
+```
 
 ## ftp
 21/tcp open  ftp     vsftpd 2.3.5
