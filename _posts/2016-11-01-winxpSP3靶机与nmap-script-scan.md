@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>winxpSP3靶机与nmap-script-scan</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">winxpSP3靶机与nmap-script-scan</h1>
+        <div class="show-content">
+          <p>nmap有一些高级扫描选项，比如使用nse脚本，我都没用过现在学习学习。<a href="https://www.jianshu.com/p/0fd905008d94" target="_blank">nmap简单使用</a></p><blockquote>
+<p>auth: 负责处理鉴权证书（绕开鉴权）的脚本</p>
+<p>broadcast: 在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务 </p>
+<p>brute: 提供暴力破解方式，针对常见的应用如http/snmp等 </p>
+<p>default: 使用-sC或-A选项扫描时候默认的脚本，提供基本脚本扫描能力 </p>
+<p>discovery: 对网络进行更多的信息，如SMB枚举、SNMP查询等 </p>
+<p>dos: 用于进行拒绝服务攻击 </p>
+<p>exploit: 利用已知的漏洞入侵系统 </p>
+<p>external: 利用第三方的数据库或资源，例如进行whois解析 </p>
+<p>fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方的IDS/IPS的记录或屏蔽 </p>
+<p>malware: 探测目标机是否感染了病毒、开启了后门等信息 </p>
+<p>safe: 此类与intrusive相反，属于安全性脚本 </p>
+<p>version: 负责增强服务与版本扫描（Version Detection）功能的脚本 </p>
+<p>vuln: 负责检查目标机是否有常见的漏洞（Vulnerability），如是否有MS08_067</p>
+</blockquote><hr><p><b>nmap --script=auth  192.168.1.107</b></p><p>该参数可以用来扫描有没有不需要密码登陆的服务</p><p>1433端口，微软sql数据库没有登陆验证</p><h1>一部分扫描结果：</h1><blockquote>
+<p>777/tcp  open  multiling-http?</p>
+<p>1433/tcp open  ms-sql-s        Microsoft SQL Server 2005 9.00.1399.00; RTM</p>
+<p>| ms-sql-dump-hashes:</p>
+<p>| [192.168.1.107:1433]</p>
+<p>|_  ERROR: <b>No login credentials</b></p>
+<p>| ms-sql-hasdbaccess:</p>
+<p>|   [192.168.1.107:1433]</p>
+<p>|_    ERROR: <b>No login credentials.</b></p>
+<p>2869/tcp open  http            Microsoft HTTPAPI httpd 1.0 (SSDP/UPnP)</p>
+<p>|_http-server-header: Microsoft-HTTPAPI/1.0</p>
+<p>3389/tcp open  ms-wbt-server   Microsoft Terminal Service</p>
+<p>…… 省略了一些扫描结果…… </p>
+</blockquote><hr><p><b>nmap --script=vuln</b> <b>-P0 -A -sT 192.168.1.107</b></p><blockquote>
+<p>80/tcp   open  http            Microsoft IIS httpd 5.1</p>
+<p>|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)</p>
+<p>|_http-csrf: Couldn't find any CSRF vulnerabilities.</p>
+<p>|_http-dombased-xss: Couldn't find any DOM based XSS.</p>
+<p>|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.</p>
+</blockquote><p>没有找到跨站脚本执行漏洞，没有找到存储型跨站漏洞，没有找到基于DOM的跨站 XSS (Cross Site Scripting)漏洞。</p><blockquote>
+<p>Host script results:</p>
+<p>_smb-vuln-ms10-061: ERROR: Script execution failed (use -d to debug)</p>
+<p>| smb-vuln-ms17-010:</p>
+<p><b>|   VULNERABLE:</b></p>
+<p>|   <b>Remote Code Execution vulnerability in Microsoft SMBv1 servers (ms17-010)</b></p>
+<p>|     State: VULNERABLE</p>
+<p>|     IDs:  CVE:CVE-2017-0143</p>
+<p>|     Risk factor: HIGH</p>
+<p>|       A critical remote code execution vulnerability exists in Microsoft SMBv1</p>
+<p>|        servers (ms17-010).</p>
+</blockquote><p>找到了smb远程漏洞执行漏洞（开放139、445端口的小心了）</p><hr><p>扫描ms-08-067，发现脚本不存在。</p><blockquote>
+<p>nmap -p 445 --script=smb-vuln-ms08-067.nse 192.168.1.110</p>
+<p>NSE: failed to initialize the script engine:</p>
+<p>/usr/bin/../share/nmap/nse_main.lua:801: 'smb-vuln-ms08-067.nse' did not match a category, filename, or directory</p>
+</blockquote><p>locate smb-vuln　　　　　得知nmap-script路径</p><p>wget https://svn.nmap.org/nmap/scripts/smb-vuln-ms08-067.nse &gt; /usr/share/nmap/scripts/smb-vuln-ms08-067.nse　　　下载脚本</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
