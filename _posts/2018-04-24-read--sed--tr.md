@@ -50,6 +50,8 @@ nl /etc/passwd | sed '2,5d' 把passwd文件的2‐5行删除
 - 案例五
 有一些虚拟机，它们有各自的xml文档。但是虚拟机开机后，发现鼠标和物理机的不同步。
 于是修改xml文档，用bash脚本批量修改。
+![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/2.PNG)
+
 - 案例六（插入）
 批量给文件首行插入以下的数据。
 
@@ -66,7 +68,7 @@ tags:
 ```
 
 `sed -i '1i---\ncategories:\n- code\ntages:\n- code\n---' 2017-02-01-BC*`
-![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/2.PNG)
+
 
 
 ## 案例五：用tr进行文本的替换
