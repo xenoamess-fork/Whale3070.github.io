@@ -4,7 +4,7 @@ categories:
 tags: 
 - training
 - port 80
-- linux
+- linux os
 ---
 
 [download](https://www.vulnhub.com/entry/ch4inrulz-101,247/)
