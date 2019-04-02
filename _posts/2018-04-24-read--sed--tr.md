@@ -69,7 +69,8 @@ tags:
 
 `sed -i '1i---\ncategories:\n- code\ntages:\n- code\n---' 2017-02-01-BC*`
 
-
+- 案例七（删除所有空格）
+![4](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/4.png)
 
 ## 案例五：用tr进行文本的替换
 ![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/3.PNG)
