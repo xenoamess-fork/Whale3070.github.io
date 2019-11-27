@@ -31,10 +31,11 @@ d‐‐delete
 i‐‐insert
 p‐‐print
 ```
-- 案例一（删除）
-nl /etc/passwd | sed '2,5d' 把passwd文件的2‐5行删除
+### 案例一（删除）
+`nl /etc/passwd | sed '2,5d'`
+把passwd文件的2‐5行删除
 但是它只会更改后输出，不会更改原文件。
-- 案例二（替换）
+### 案例二（替换）
 `sed 's/hello/world' input.txt > output.txt`
  把hello替换为world，输出到output.txt文件
 `sed ‐i 's/hello/world' input.txt` 把hello替换为world，修改原文件。
@@ -42,17 +43,17 @@ nl /etc/passwd | sed '2,5d' 把passwd文件的2‐5行删除
 `sed ‐i 's/hello/world/g' input.txt` 替换每一处匹配
 `sed ‐i 's/hello/world/2g' input.txt` 从第二处匹配开始，替换后面所有匹配（忽略第一
 处）
-- 案例三（删除）
+### 案例三（删除）
 `sed '/^$/d' file` 删除空白行
-- 案例四（替换）
+### 案例四（替换）
 `echo this is an example | sed 's/\w\+/[&]/g' \w+`匹配每个单词，用[&]替换它
 结果：[this] [is] [an] [example]
-- 案例五
+### 案例五
 有一些虚拟机，它们有各自的xml文档。但是虚拟机开机后，发现鼠标和物理机的不同步。
 于是修改xml文档，用bash脚本批量修改。
 ![2](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/2.PNG)
 
-- 案例六（插入）
+### 案例六（插入）
 批量给文件首行插入以下的数据。
 
 ```
@@ -69,8 +70,11 @@ tags:
 
 `sed -i '1i---\ncategories:\n- code\ntages:\n- code\n---' 2017-02-01-BC*`
 
-- 案例七（删除所有空格）
+### 案例七（删除所有空格）
 ![4](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/4.png)
+
+### 案例八（删除所有换行符）
+`sed ":a;N;s/\n//g;ta" a.txt`
 
 ## 案例五：用tr进行文本的替换
 ![3](https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/0424/3.PNG)
