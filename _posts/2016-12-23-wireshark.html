@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wireshark</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">wireshark</h1>
+        <div class="show-content">
+          <p>wireshark是网络封包分析软件。</p><p>基础：理解OSI七层模型</p><p>参考：http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html#who</p><p>这是我在暑假捕获邻居家wifi流量。当时看不懂，主要是不会用过滤器进行分析。下面我们结合题目进行过滤器的学习。<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-6fe75d412b62e83d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-6fe75d412b62e83d.png?imageMogr2/auto-orient/strip" data-image-slug="6fe75d412b62e83d" data-width="916" data-height="660"><br><div class="image-caption"><br></div>
+</div><p><br>1，黑客最终获得什么用户名和密码？</p><p>这是在网站攻防里，要分析大量数据包，找到黑客暴力破解登陆网站后台的痕迹。</p><p>由于暴力破解必定要用工具爆破发送大量http请求，用post方法</p><p>原始样本里还有很多tcp和ftp请求。。先将http协议挑出来<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a89068a5cf56f39c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-a89068a5cf56f39c.png?imageMogr2/auto-orient/strip" data-image-slug="a89068a5cf56f39c" data-width="877" data-height="401"><br><div class="image-caption"></div>
+</div><p>。。http里包含登陆login字符的挑出来<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-592fdaa3d0874f31.png" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-592fdaa3d0874f31.png" data-image-slug="592fdaa3d0874f31" data-width="-1" data-height="-1"><br><div class="image-caption"></div>
+</div><p>。。<b>用post提交用户名密码</b>的数据包，挑出来</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-4adc013a3578d2b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-4adc013a3578d2b6.png?imageMogr2/auto-orient/strip" data-image-slug="4adc013a3578d2b6" data-width="864" data-height="533"><br><div class="image-caption"></div>
+</div><p>。。将ip挑出来，就是大量发送登陆请求的那个</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-ea06778a93a23a3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-ea06778a93a23a3a.png?imageMogr2/auto-orient/strip" data-image-slug="ea06778a93a23a3a" data-width="1179" data-height="513"><br><div class="image-caption"></div>
+</div><p>这样我们就把，0.46个GB的pcap样本提取出了需要的部分。</p><p>根据第二列——时间，找到最后一组登陆的数据包，如上图所示，<i><b>用户名为root,密码为123456。</b></i></p><p>为了验证是否正确，我们追踪一下数据流，发现前面爆破的数据包，显示重定向回登陆页面（就是下面靠近底部的redirect，看见没）。显然前面的都是登陆失败的。<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-1209d989c191db46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-1209d989c191db46.png?imageMogr2/auto-orient/strip" data-image-slug="1209d989c191db46" data-width="886" data-height="560"><br><div class="image-caption"></div>
+</div><p>下图，左边是登陆成功的数据包显示乱码，，也不知道为什么。右边是未成功登陆的页面<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-61eddc16215cbf99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-61eddc16215cbf99.png?imageMogr2/auto-orient/strip" data-image-slug="61eddc16215cbf99" data-width="1180" data-height="650"><br><div class="image-caption"><br></div>
+</div><hr><p>2，黑客修改了什么文件？菜刀连接地址？连接密码？</p><p>打开第二个pcap文件，用http和ip过滤。</p><p>下图所示，表明一直在访问index.php，一般来说就是首页。访问了menuid=4...5...6等等，在最下面发现了访问一个可疑的参数a=edit_file，file=index.html。猜测修改的文件为index.html<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-51e38d156d3b5514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-51e38d156d3b5514.png?imageMogr2/auto-orient/strip" data-image-slug="51e38d156d3b5514" data-width="1166" data-height="339"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-386b53593042252f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><br><div class="image-caption"><br></div>
+</div><hr><p>一直没有发现什么踪迹，被包围在漫天遍野的数据包里，迷失了方向许久。。终于在第五个pcap文件里发现了痕迹。<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e288a5ad8418fba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e288a5ad8418fba3.png?imageMogr2/auto-orient/strip" data-image-slug="e288a5ad8418fba3" data-width="1167" data-height="573"><br><div class="image-caption"></div>
+</div><p>所以菜刀连接地址为http://172.16.61.210/index.php（格式为目标IP加上传的php文件地址）,连接密码为chopper<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-fe4c3fb1b9192d66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-fe4c3fb1b9192d66.png?imageMogr2/auto-orient/strip" data-image-slug="fe4c3fb1b9192d66" data-width="991" data-height="266"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
