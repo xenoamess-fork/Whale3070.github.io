@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC8两个最大子串和</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">BC8两个最大子串和</h1>
+        <div class="show-content">
+          <blockquote>
+<p>题目：对于一个包含负值的数字串array[1...n]，要找到它的两个子串</p>
+<p>array1[0...s1]（0&lt;=s1&lt;=i&lt;n）和array2[i &lt;s2...&lt;= n-1]<br></p>
+<p>使得array1[0...s1]和array2[s2...n]两个子串的和最大。<br></p>
+</blockquote><br><p>分析：<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-0688156adc8727da.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-0688156adc8727da.PNG?imageMogr2/auto-orient/strip" data-image-slug="0688156adc8727da" data-width="389" data-height="110"><br><div class="image-caption"></div>
+</div><p>给定的数字串里有正数、也有负数。子串的和最大，所以不考虑负数部分。</p><p>看了下子串的取值范围，要最大的话，子串1<b>从0到i</b>，子串2，从大于i的第一个数 到 n-1。那么key值就是数字串的正数和减去最大值（都是整数，不考虑小数）。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-539c36b75329e3a0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-539c36b75329e3a0.PNG?imageMogr2/auto-orient/strip" data-image-slug="539c36b75329e3a0" data-width="1053" data-height="513"><br><div class="image-caption"></div>
+</div><p>结果，提交答案是错的。</p><p>看答案：这题主要是题意没表述好，导致不少人理解错，以为第一个串必须从array[0]开始、第二个串必须以arrry[n-1]结束、两串没有交集，这样得到的结果就是2693。<br></p><p>其实理解为0&lt;=s1&lt;s2&lt;n。</p><p>我认输，这样的题目还有什么好说的。。<br></p><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
