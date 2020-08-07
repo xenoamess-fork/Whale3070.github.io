@@ -1,13 +1,16 @@
 ---
-title: 2018-01-01-做一个python简易木马（py2exe）
+title: 做一个python简易木马（py2exe）
 categories:
 - code-basic
-tags: - code-basic
-- myHistory
+tags:
+- MyHistoryArticle
+- code-basic
 ---
-
-
-initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>做一个python简易木马（py2exe）</title>
     <style type="text/css" media="all">
       body {

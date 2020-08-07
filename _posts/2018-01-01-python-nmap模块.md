@@ -1,13 +1,16 @@
 ---
-title: 2018-01-01-python-nmap模块
+title: python-nmap模块
 categories:
 - code-basic
-tags: - code-basic
-- myHistory
+tags:
+- MyHistoryArticle
+- code-basic
 ---
-
-
-="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>python-nmap模块</title>
     <style type="text/css" media="all">
       body {
