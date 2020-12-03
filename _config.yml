@@ -283,11 +283,11 @@ sidebar:
 
 
 # Blog rolls
-#links_title: Links
-#links_layout: block
+links_title: 友情链接
+links_layout: block
 #links_layout: inline
-#links:
-  #Title: http://example.com/
+links:
+  金箔哥: https://www.secice.cn/
 
 
 # ---------------------------------------------------------------
