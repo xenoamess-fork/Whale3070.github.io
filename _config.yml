@@ -284,8 +284,8 @@ sidebar:
 
 # Blog rolls
 links_title: 友情链接
-links_layout: block
-#links_layout: inline
+#links_layout: block
+links_layout: inline
 links:
   金箔哥: https://www.secice.cn/
 
