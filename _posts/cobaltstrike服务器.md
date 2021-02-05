@@ -1,0 +1,45 @@
+cobaltstrike通过域名上线（五）
+===
+## 匿名邮箱注册
+[https://mail.protonmail.com/login](https://mail.protonmail.com/login)
+
+## 注册免费域名
+[http://www.freenom.com/en/index.html](http://www.freenom.com/en/index.html)
+
+## 配置CDN
+注册一个cloudflare账号，将注册好的域名解析到ip
+
+https://dash.cloudflare.com/login
+
+![123]($res/123.PNG)
+
+具体怎么配置，查看这篇文章： [通过Cloudflare开启全站https](https://www.cnblogs.com/ichochy/p/11652961.html)
+
+## cobaltstrike域名上线
+
+botnet(https) -> cdn ->nginx(https) -> c2
+
+监听器配置为域名
+![1]($res/1.PNG)
+
+然后正常生成exe或者powershell一句话上线
+
+## 参考资料
+Trojan 共用 443 端口方案[https://www.chengxiaobai.cn/record/trojan-shared-443-port-scheme.html](https://www.chengxiaobai.cn/record/trojan-shared-443-port-scheme.html)
+
+担心VPS被墙？永不被墙IP的Trojan搭建教程[https://www.v2rayssr.com/trojan-go.html](https://www.v2rayssr.com/trojan-go.html)
+
+trojan教程[https://tlanyan.me/trojan-tutorial/](https://tlanyan.me/trojan-tutorial/)
+
+Trojan-Go https://github.com/p4gefau1t/trojan-go
+
+Nginx与Trojan共用443 https://www.jianshu.com/p/dd2307a6bf02
+
+- [永久免费域名申请](http://www.xinnet.com/xinnews/domain/40047.html)
+
+- [Cobalt Strike去特征：配置Nginx反向代理、CDN与Cloudflare Worker](https://myzxcg.com/20201213.html)
+
+- [Cobalt Strike 绕过流量审计](https://paper.seebug.org/1349/#_2)
+
+- [cs域名上线](https://www.c0bra.xyz/2019/12/17/Cobalt-Strike%E7%B3%BB%E5%88%9710/)
+
