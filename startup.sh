@@ -1,2 +1,25 @@
-bundler install
-bundle exec jekyll serve --livereload --host=0.0.0.0 --port=80
+#!/bin/sh
+
+nginx -s quit
+nginx
+
+# reference : https://cloud.tencent.com/developer/article/1177074
+
+while true
+  do
+    proc_name="jekyll"              #进程名
+
+    proc_num()                      #查询进程数量
+    {
+        num=`ps -ef | grep $proc_name | grep -v grep | wc -l`
+        return $num
+    }
+
+    proc_num
+    number=$?                       #获取进程数量
+    if [ $number -eq 0 ]            #如果进程数量为0
+    then                            #重新启动服务器，或者扩展其它内容
+        screen -dmS whale3070 bundle exec jekyll serve --livereload --host=0.0.0.0 --port=8080
+    fi
+  sleep 100
+done
