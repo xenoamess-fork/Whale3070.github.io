@@ -1,0 +1,459 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en" data-default-color-scheme=&#34;dark&#34; >
+  <style>
+    .text1
+    {
+    text-shadow: 0px 0px 2px #f2f3f2;
+    }
+    </style>
+
+  
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/null">
+  <link rel="icon" type="image/png" href="/null">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>小白Google nexus5 刷机步骤 - whale3070&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body>
+      <header style="height: 70vh;">
+        <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>InfoSec learning</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+          <div class="banner" id="banner" false
+            style="background: url('/img/default.png') no-repeat center center;
+              background-size: cover;">
+              <div class="full-bg-img">
+                <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+                  <div class="page-header text-center fade-in-up">
+                    <span class="h2 text1" id="subtitle" title="小白Google nexus5 刷机步骤">
+                      
+                        小白Google nexus5 刷机步骤
+                      
+                    </span>
+        
+                    
+                      <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2016-03-30 21:12" pubdate>
+        March 30, 2016 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      1
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+                    
+                  </div>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+      </header>
+
+      <main>
+        
+          
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">小白Google nexus5 刷机步骤</h1>
+            
+            <div class="markdown-body">
+              <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="Oh, these decrypted content cannot be verified, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="0b1b50e42aa1501aae0b511006ef7b756e6b3478856f0a75557dab0d6d6795f8">8857952509ef9895f61625fe2d594ef3c177035ccd5a725db71920a24ed7bd3957cd89294954ff877e7c52d46c0b4fd948f1409201d38d30c5b518494a0f5fae823628450c236c20edb4cd8c11a81e8f463e201b423b17f8f0cc5ac35d4542cb66bafde307d0d2ee00cbb3c4e370e209bae7a31bafd57876125e259c48aab49ee0d191627df2c9051cc88bc420711fad5cf8fbc7d2085812e35b742650740a52fd204f96cd3950161903eccbb0258757a4a2aaadb4a7c67b56246a1c757755a1d676bfaf7438a9a3f9c531e7d85d80472f8576b231ca60d340ceec45a72d6e5f18d3bbeb9c12240a3bc642ff290dbcb7e998d1232197a203515c7ab09ddecb9e89df093f7ee815acd9ecefb3aee072e629271af9744316cbea5e5ed49996425d7ea7de42f59c9bf109d45e0bfbcea3ed8c9fe42ddf22bc500fc5e2e78364e4822d00af786bbed3fe6af96c048f068e27cca2fe7fd797312e63dbd89ee131473a20230b22eff35de4bca1fdf6dc95560014efa0ba232070524ee3d9ad4b923c4228f48199418beae69de44976e0a313f79c80ae21c440ca0b893f7d5cd5a52a360360a906cae71f2cd65c01c37684305180d45cc29caec91852def307ea05a310d73fdb43b787a59d08945416821698dd62c6536ac828d382a0d63f0b4a465e5e472d829bd62227d51eead59fe4fe4f4218c73f5bffa8436eca55c4e7209e6602b84e4ad7b648c9f237b7891d11e5429b042d76b2e92bdf0b968d5d77ef25b29f017211bd8931b7b1deb09521c70aa614ef13a36157acfe45fbfa0ad83753368708f9ca93149eadcdc60f7d7e86a294294637fb64c8adffebb1974e2d2ba2717ae57285935bf414af98ccf63b99725c222f27a62d4f2808be50c07d804b1c285999c4f9e16c74b6092741d7eac83c382c40f8d587593b30089010c0c042e9be8252ffc10c9c1b1f38483cbf74a6a697c10fce58c0181856eb7954f1c54bbab1451264c56a3b3f305d6c09273f6498708fee27ae3dd6f57a43087da2fb3d85dcec363a706850e4d01cc61a76482e91907db423e153252e72369d15a3d34f9a04e5ebbdf570251fec2c22fa2533709c4834982b46a80decd90087d9858a215ee4925b92f74ca990a0eda06be7391529b97b6fba92e042218348d60ae30f5abdc6117e57a0f1b36cb3589032f10519eb7124183f9761d51f80aa9f63a8f2b587391af7b3153e16d135f1bb70706c962d5af9836024089d86ec29f4ec53f75a5059ccf981f0279ae94b84058a1fa5866518efc0d180be2470785460656035f83c7bd9cf19566e588af3eca59f1203339022a3a65ef331fc3f2da90dc72c29d04705658940b765d0d771c041e92e0de17512b280735d79223e06782366eb31a9cbb3861c538bfa24cddb5cbfdbda0971bf6286ad072d7054b9744489ad0a50589a8fce24cbd1e3f11df665a7fe9cf199b24afb50f167f9a4ac12991147bae0fe6ca62b3d888f42be331b2ac4171866e081b1ec440c791952520e9732b6206b1ba2927ce4c47ac0b69b3338c81bc5d338a651b038bddab77b1b460807ebe3f1a8c14cb35275aaf3f5dfbd51d805c4165cf1353ed8254ff39d29e8087a4b8e6b04710da9461d9da8cf52433e067ad9a2b73e52a253c4effec545d54601ca00241adc31618a3f9ef6ceed123111f508dd6449830a421421fe897ade1ac9f50d0436dfe4f81ae3324f1a73938196ff545b9ddee704e2242f2d1fe65f4e996f3dc1f47657f999d0cd5373d0cee97b84ca3efb5ef27ff36439fb47443ccdefeb0f3c915cb6b3acca3a5e5c619da5a30df648559bd1368b4bc12d95910ebf2925b02ef8b8309978cf5cad16b063c4ca82b428c68d4acd5dba83de2834ac24b1e516246bb349503df983f289815a3a8009ad6858c825a99a2f29e0c07125fe374a18693f94112e6ecb29183d545c8d4f8edb29c3863f795f64d744707758b436555d0a932398a71b8d44fc76de67cf21e150c306f6585c725fc3fdfbcccececc182e73c3fcdc9a0c974e69074e47b9f1a833a3e16264ee9fb84876658dbae8333c1432e0716460d07e5bc1d6b9803dbaf5ab39c3f5648e5e6629a866082d6bb2e8fe4c2a0d1bb24ff07398a2f3747f9dd868fd0ac4118ae21808d576ffcd3eb9a530bf271984224b44441124784d65b7926311071b4b8e738536d50cba31c591d415f8308792dab717827f6599753483741c7648e1ce5d44fd8f67bcbfc4bfabdb639e23790093485ea18d5fceaebf9afcc9356432c02e711319d90d07a5b1257ba0c997f35bb891c77215948a2112ec724b635ceddcaa776342c7c920ca74525e062dd4c5200a049f016634a7497f00060f2adc893dabedf132d90d69921f03a222e5e64021ea3b16c9e0d02d0077987a6cdfb5d733f39e763409f0abaf27bd4a04224fda4fdf5609d3464bd909a3f35be14608cb33494e42a4f555c37ea73ddb2f47ac01b083a15d76fce4443f217779bb49b286811e80129231aefd8badf0eb45eaaf7bf21335c991ebc94dcf0770e3ede2106bdb3cfb774b383215c953366fdd63a2b5ed7ccd9c3d5e1c7319d670d47c4c1e3a52b33a1e1341a31f10fb9bb02f73b98f899d04fb4e4074eed6d0611f41a31f1f93c7b1eb96a8680515ff6f6916c899d02b5482ea889b11aef299e7a65881ee37092acaa0c0a02f2a1df285a0cfb4b4d122119428da9975097a047e99b2bd8279099f78958cce4d13b3e9471a4aaa812e548d267bcad0fbf1e6e2f101aa4c71d7706dc8b651b5bfcdb28c8349ee393bfbab99ba95b74bd05ad3ac8093aa11e114dbac359810943e1042482c9cf2e146adb105ea6e937a134f09876c1bd07cf1e97df336a46f7bb2da86ab2b30bfcdcaa148eb6055b11e0886eb2b17b7543b193903bfa8e74e46b73e37ee3ab5c61a3e6e2447f34a67ef1f1232dbb13f6866d8633c4e14c2efecb6ae6ab84f144a978c84a0e5e769c1c51b2926dba6b9364a91538e1a38ea6f9e1524499911b1c256ec6389e1</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/smartphone/">smartphone</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/smartphone/">smartphone</a>
+                    
+                  </div>
+                
+              </div>
+              
+                
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/20/2016-01-01-%E7%BD%91%E5%8D%A1%E8%AE%BE%E7%BD%AE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+            
+
+                
+                  <a id="scroll-top-button" href="#" role="button">
+                    <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+                  </a>
+                  
+
+                    
+                      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+                        
+
+                          
+      </main>
+
+      <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://whale3070.github.io/" target="_blank" rel="nofollow noopener"><span>Whale3070</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+    </body>
+
+  </html>
