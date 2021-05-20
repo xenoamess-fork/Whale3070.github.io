@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>小白Google nexus5 刷机步骤</title>
+    <link href="/2021/05/20/10-x/"/>
+    <url>/2021/05/20/10-x/</url>
+    
+    <content type="html"><![CDATA[<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="https://download.chainfire.eu/363/CF-Root/CF-Auto-Root/CF-Auto-Root-hammerhead-hammerhead-nexus5.zip">https://download.chainfire.eu/363/CF-Root/CF-Auto-Root/CF-Auto-Root-hammerhead-hammerhead-nexus5.zip</a></p><h2 id="连接到电脑"><a href="#连接到电脑" class="headerlink" title="连接到电脑"></a>连接到电脑</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/4.PNG"><br>这里我选择连接的是kali虚拟机</p><h2 id="手机关机"><a href="#手机关机" class="headerlink" title="手机关机"></a>手机关机</h2><p>长按右侧电源键，手机关机<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/6.jpg"></p><p>长按右侧电源键+音量减，手机进入下图的模式<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/5.jpg"><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/7.jpg"></p><h2 id="kali执行脚本"><a href="#kali执行脚本" class="headerlink" title="kali执行脚本"></a>kali执行脚本</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/5.png"></p><p>然后等待<br>安卓图标变成一个红色的机器人<br>然后等待<br>手机重启开机<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/8.jpg"><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/9.jpg"><br>就发现有了root权限了</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.online-tech-tips.com/smartphones/how-to-root-a-nexus-5-5x-6-6p-7/">https://www.online-tech-tips.com/smartphones/how-to-root-a-nexus-5-5x-6-6p-7/</a></p><p><a href="https://www.youtube.com/watch?v=b6OfB6UDNdQ">https://www.youtube.com/watch?v=b6OfB6UDNdQ</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>smartphone</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>smartphone</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>反射式dll注入的演示</title>
     <link href="/2021/05/20/2021-03-10-07-x/"/>
     <url>/2021/05/20/2021-03-10-07-x/</url>
@@ -10043,31 +10068,6 @@
     <tags>
       
       <tag>linux</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>小白Google nexus5 刷机步骤</title>
-    <link href="/2021/05/15/10-x/"/>
-    <url>/2021/05/15/10-x/</url>
-    
-    <content type="html"><![CDATA[<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p><a href="https://download.chainfire.eu/363/CF-Root/CF-Auto-Root/CF-Auto-Root-hammerhead-hammerhead-nexus5.zip">https://download.chainfire.eu/363/CF-Root/CF-Auto-Root/CF-Auto-Root-hammerhead-hammerhead-nexus5.zip</a></p><h2 id="连接到电脑"><a href="#连接到电脑" class="headerlink" title="连接到电脑"></a>连接到电脑</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/4.PNG"><br>这里我选择连接的是kali虚拟机</p><h2 id="手机关机"><a href="#手机关机" class="headerlink" title="手机关机"></a>手机关机</h2><p>长按右侧电源键，手机关机<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/6.jpg"></p><p>长按右侧电源键+音量减，手机进入下图的模式<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/5.jpg"><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/7.jpg"></p><h2 id="kali执行脚本"><a href="#kali执行脚本" class="headerlink" title="kali执行脚本"></a>kali执行脚本</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/5.png"></p><p>然后等待<br>安卓图标变成一个红色的机器人<br>然后等待<br>手机重启开机<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/8.jpg"><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-15-11/9.jpg"><br>就发现有了root权限了</p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.online-tech-tips.com/smartphones/how-to-root-a-nexus-5-5x-6-6p-7/">https://www.online-tech-tips.com/smartphones/how-to-root-a-nexus-5-5x-6-6p-7/</a></p><p><a href="https://www.youtube.com/watch?v=b6OfB6UDNdQ">https://www.youtube.com/watch?v=b6OfB6UDNdQ</a></p>]]></content>
-    
-    
-    <categories>
-      
-      <category>smartphone</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>smartphone</tag>
       
     </tags>
     
