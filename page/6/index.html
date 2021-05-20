@@ -174,21 +174,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-04-09-x/">域渗透入门（四）Kerberoasting服务票据离线爆破密码</a>
+        <a href="/2021/05/20/2018-12-21-x/">Waldo（php代码审计-用户输入过滤不严）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-04-09-x/">
+        <a href="/2021/05/20/2018-12-21-x/">
           
           
             
           
-          域渗透入门（四）Kerberoasting服务票据离线爆破密码
-参考资料
-域渗透——Kerberoasting
-什么是kerberoasting
-https://blog.stealthbits.com/extracting-service-account-passwords-with-kerberoasting/
-https://blog.stealthbits.com/discovering-
+          info enum1222/tcp open  ssh     syn-ack ttl 63 OpenSSH 7.5 (protocol 2.0)80/tcp open  http    syn-ack ttl 63 nginx 1.12.2
+web该web，很简单，有4个php script，分别用来读、写、删除文件。
+1http://10.10.10.87/fileWrite.php
+
+Try
         </a>
       </p>
 
@@ -205,7 +204,7 @@ https://blog.stealthbits.com/discovering-
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/WindowsDomain/">WindowsDomain</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -213,7 +212,7 @@ https://blog.stealthbits.com/discovering-
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/WindowsDomain/">WindowsDomain</a>
+              <a href="/tags/training/">training</a>
             
           </div>
         
@@ -227,20 +226,127 @@ https://blog.stealthbits.com/discovering-
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-06-11-x/">理财入门</a>
+        <a href="/2021/05/20/2018-12-23-x/">waldo（docker虚拟机-linux capabilities提权）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-06-11-x/">
+        <a href="/2021/05/20/2018-12-23-x/">
           
           
             
           
-          理财入门风险越大利润越大。
-无风险银行活期利率1234567891.中国银行：0.35%；2.农业银行：0.3%；3.广发银行：0.3%；4.浙商银行：0.35%；5.恒丰银行：0.35%；
-银行定期利率整存整取定期存款：三个月为1.10%、半年为1.30%、一年为1.50%、二年为2.10%、三年为2.75%
-支付宝12余额宝：七日年化- 1.6040%南方天天利货币A- 1.9940%
-京东金
+          续上篇
+拿到一个ssh shell，准备提权。
+trying112uname -aLinux waldo 4.9.0-6-amd64 
+无gcc
+
+212cat /etc/passwd | grep homenobody:x:65534:65534:nobody:/home/nobody:/bin/sh
+普通用户就一个
+12345sudo -l-sh: sudo: not foundsu root
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 15:27" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/2018-12-26-x/">jerry（apache tomcat的暴力破解方式）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/2018-12-26-x/">
+          
+          
+            
+          
+          info enum1238080/tcp open  http    Apache Tomcat/Coyote JSP engine 1.1Apache Tomcat/7.0.88
+apache登陆，以前遇到过
+当时采取的方式是，通过python脚本，将字典处理为“admin:admin”类似的形式，然后再编码一次。
+方（偷）便（懒）起见，用burp intruder模块爆破。
+缺点：如果字典过大
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 15:27" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/2018-12-27-x/">浅析老龄化社会对年轻一代的影响</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/2018-12-27-x/">
+          
+          
+            
+          
+          由形教课期末要交论文，而产生了这篇文字
+摘要：参考了国外对于老龄化现象采取的措施，调查了2018年中国老龄化现状，结合查阅的资料和文献，对国家采取的政策，进行浅要解读。
+并对年轻一代，面临着社会压力，需要进行的准备提供了一些建议。
+关键词：二胎政策、老龄化社会、抚养比、经济与文化现象
+正文：  从开放二胎说起，2015年年底，全国人大常委会表决通过了人口与计划生育法修正案，全面二孩定于2016年1
         </a>
       </p>
 
@@ -279,21 +385,25 @@ https://blog.stealthbits.com/discovering-
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-10-09-x/">域渗透入门（五）金票据、银票据</a>
+        <a href="/2021/05/20/2019-01-03-x/">lame（samba）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-10-09-x/">
+        <a href="/2021/05/20/2019-01-03-x/">
           
           
             
           
-          域渗透入门（五）金票据、银票据
-参考资料
-https://ldapwiki.com/wiki/Golden%20Ticket
-https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html#introduction-3
-https://www.cnblogs.com/wuxinmengyi/p/11768481.html
-ht
+          10.10.10.3
+scan139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+linux os
+
+这个training应该很简单，以前做过：139端口——smbclient
+kiotrix靶机（139端口samba）
+
+得知服务版本Samba 3.0.20-Debian
+trying 1
+123456789
         </a>
       </p>
 
@@ -310,7 +420,7 @@ ht
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/WindowsDomain/">WindowsDomain</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -318,7 +428,11 @@ ht
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/WindowsDomain/">WindowsDomain</a>
+              <a href="/tags/training/">training</a>
+            
+              <a href="/tags/linux-os/">linux os</a>
+            
+              <a href="/tags/port-139/">port 139</a>
             
           </div>
         
@@ -332,57 +446,18 @@ ht
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-11-01-x/">攻防测试书籍推荐（持续更新）</a>
+        <a href="/2021/05/20/2019-01-04-x/">Popcorn（文件上传）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-11-01-x/">
+        <a href="/2021/05/20/2019-01-04-x/">
           
           
             
           
-          
-
-
-序列号
-分类
-书名
-出版时间
-
-
-
-1
-web
-《白帽子讲web 安全》
-2014年
-
-
-2
-渗透实战
-The Hacker Playbook 3（红队版）中文版
-2019年
-
-
-3
-渗透实战
-《黑客攻防技术宝典：Web 实战篇 ( 第 2版 )》
-2012年
-
-
-4
-渗透实战
-《黑客攻防技术宝典系统实战篇》
-2010年
-
-
-5
-工具类
-《渗透测试实践指南：必知必会的工具与方法》
-
-
-
-6
-
+          scan12322/tcp open  ssh     OpenSSH 5.1p1 Debian 6ubuntu2 (Ubuntu Linux; protocol 2.0)80/tcp open  http    Apache httpd 2.2.12 ((Ubuntu))PHP/5.2.10-2ubuntu6.10
+web先检查破壳漏洞，然后检查/test目录泄露的信息
+123456789101
         </a>
       </p>
 
@@ -399,7 +474,7 @@ The Hacker Playbook 3（红队版）中文版
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/backup/">backup</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -407,7 +482,11 @@ The Hacker Playbook 3（红队版）中文版
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/backup/">backup</a>
+              <a href="/tags/training/">training</a>
+            
+              <a href="/tags/port-80/">port 80</a>
+            
+              <a href="/tags/linux-os/">linux os</a>
             
           </div>
         
@@ -421,18 +500,20 @@ The Hacker Playbook 3（红队版）中文版
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-12-04-x/">论我国的35岁中年危机</a>
+        <a href="/2021/05/20/2019-01-06-x/">Grandpa（msf栈溢出）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-12-04-x/">
+        <a href="/2021/05/20/2019-01-06-x/">
           
           
             
           
-          论我国的35岁中年危机事实一：劳动法规定在公司满十年，就很难开除。
-劳动者不存在过失的，用人单位需要提供补偿金。假如工作10年，1个月工资2万，那么一次性补偿20万。在公司工作满十年，公司辞退员工，需要法定条件，即员工存在过错，或者经上方协商仍不能确定员工职责的，或者因经营困难需裁员的，公司可以辞退；
-但是，若员工有因患职业病或者因工负伤并被确认丧失或者部分丧失劳动能力的或患病或者负伤，在规定的医
+          10.10.10.14
+scan80/tcp open  http    Microsoft IIS httpd 6.0
+只开了一个80端口，iis 6.0让我想到了文件解析漏洞
+os scan:Running (JUST GUESSING): Microsoft Windows 2003|2008|2000|XP (91%)
+webanyway，先扫一下web目录吧~~只有一个images目录，
         </a>
       </p>
 
@@ -449,7 +530,7 @@ The Hacker Playbook 3（红队版）中文版
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/View/">View</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -457,108 +538,9 @@ The Hacker Playbook 3（红队版）中文版
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/View/">View</a>
+              <a href="/tags/training/">training</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2020-05-13-04-x/">应届生的面试原题（二）二进制安全/web安全面试题</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-13-04-x/">
-          
-          
-            
-          
-          启**辰的面试题 
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Interview/">Interview</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Interview/">Interview</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2020-05-15-11-x/">粘滞键后门</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-15-11-x/">
-          
-          
-            
-          
-          参考资料
-https://blog.compass-security.com/2018/02/no-need-to-break-in-use-the-backdoor/
-https://mochazz.github.io/2017/07/29/shift/#%E5%81%B7%E5%A4%A9%E6%8D%A2%E6%97%A5
-2020年5月11日，确定该方法有效。粘滞键后门详述
-
-失败的操作1
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
+              <a href="/tags/port-80/">port 80</a>
             
               <a href="/tags/windows/">windows</a>
             
@@ -574,20 +556,74 @@ https://mochazz.github.io/2017/07/29/shift/#%E5%81%B7%E5%A4%A9%E6%8D%A2%E6%97%A5
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-17-01-x/">信息安全行业现状</a>
+        <a href="/2021/05/20/2019-01-07-x/">Joker（http-proxy）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-17-01-x/">
+        <a href="/2021/05/20/2019-01-07-x/">
           
           
             
           
-          信息安全行业现状1994年4月20日，中国正式接入因特网。
-至今2020年，历史短短26年。
-国内信息安全企业成立时间长的，哪怕是大企业，也就十多年历史。国内院校培养的信息安全人才远远落后于市场要求。而拥有数十年经验的信息安全人才屈指可数。
-院校中能够教授信息安全领域渗透测试方向的老师，可以说是几乎没有。
-从2018年开始在信息安全领域打杂以来，看到的Sec的博士也很年轻，不过二三十岁。不是鄙视年
+          10.10.10.21  
+scan1222/tcp   open  ssh        OpenSSH 7.3p1 Ubuntu 1ubuntu0.1 (Ubuntu Linux; protocol 2.0)3128/tcp open  http-proxy Squid http proxy 3.5.12
+web目录扫描，连接时间异常，没有找到任何页面
+trying1:缓冲区溢出searchs
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-05-20 15:27" pubdate>
+              2021-05-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+              <a href="/tags/linux-os/">linux os</a>
+            
+              <a href="/tags/port-unusual/">port unusual</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/05/20/2019-01-08-x/">论传销</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/05/20/2019-01-08-x/">
+          
+          
+            
+          
+          论传销写这篇文章的起因。
+最近苹果手机电池不行了，一到百分之30就噌噌噌往下掉。于是我上班的间歇，就找了个手机维修店。店主把我的手机拆开，然后让我等十多分钟，还拿着吹风机吹。然后就出门了，让我等一会儿。
+我百无聊赖的也不知道干什么，盯了一会儿拆下来的电池。电池居然是软的，被掰弯了==
+期间，有一个搞推销的青年走了进来。一开始给店员推销，店员拼命拒绝。他的脖子上很明显的钴蓝色带子，挂着的应该是证件，
         </a>
       </p>
 
@@ -626,18 +662,20 @@ https://mochazz.github.io/2017/07/29/shift/#%E5%81%B7%E5%A4%A9%E6%8D%A2%E6%97%A5
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2020-05-19-11-x/">应届生的面试题（三）</a>
+        <a href="/2021/05/20/2019-01-09-x/">masscan结合python快速枚举批量主机端口</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2020-05-19-11-x/">
+        <a href="/2021/05/20/2019-01-09-x/">
           
           
             
           
-          引子有空再写，没空就自己找答案吧。。
-TCP 为什么三次握手而不是两次握手https://blog.csdn.net/lengxiao1993/article/details/82771768
-为了实现可靠数据传输， TCP 协议的通信双方， 都必须维护一个序列号， 以标识发送出去的数据包中， 哪些是已经被对方收到的。为了实现可靠传输，发送方和接收方始终需要同步( SYNchronize )序号。
+          还记得当时360电话面试的时候，问我互联网上最快的扫描器是什么，我回答的zenmap？
+
+最近渗透测试的实习，给了很多主机，记录一下。
+python去重
+123456789ips = []write_ips = open(&#x27;ips.txt&#x27;,&#x27;a&#x27;)with open(&#x27;1.txt&#x27;) as f:	for line in f:		ips.
         </a>
       </p>
 
@@ -654,65 +692,10 @@ TCP 为什么三次握手而不是两次握手https://blog.csdn.net/lengxiao1993
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Interview/">Interview</a>
+              <a href="/categories/scan/">scan</a>
             
           </div>
         
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Interview/">Interview</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2020-06-08-07-x/">公司培训内容笔记</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2020-06-08-07-x/">
-          
-          
-            
-          
-          git1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556git代码版本管理工具ci工具链的使用版本工具出现钱1. 成员沟通效率低有哪些代码管理工具1. git 分布式（可以在客户端修改。每一台存在的数据，都是服务器，数据是一模一样的）2. sv
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/unsorted/">unsorted</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/unsorted/">unsorted</a>
-            
-          </div>
         
       </div>
     </article>
