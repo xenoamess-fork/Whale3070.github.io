@@ -174,17 +174,29 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-19-x/">Blocky（源码泄露、java反编译）</a>
+        <a href="/2020/12/27/04-x/">01-msf的exp模块</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-19-x/">
+        <a href="/2020/12/27/04-x/">
           
           
             
           
-          10.10.10.37 
-123421/tcp    open  ftp       ProFTPD 1.3.5a22/tcp    open  ssh       OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)80/tcp    open  http      Apache httpd 2.4.18 ((Ubuntu))2
+          分为4个部分
+
+class 定义类，导入的msf的类，叫mixins
+
+ include 导入函数库
+
+初始化，定义参数，模块的值
+
+定义要执行的exp
+
+
+如果语法写错了，可以在日志里看: /root/.msf4/logs/framework.log
+
+写的demo，作用是调用tcp模块，进行ftp连接12345678910111213141516171819202122232425262728
         </a>
       </p>
 
@@ -192,8 +204,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-27 00:00" pubdate>
+              2020-12-27
             </time>
           </div>
         
@@ -201,7 +213,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/training/">training</a>
+              <a href="/categories/metasploit/">metasploit</a>
             
           </div>
         
@@ -209,11 +221,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/linux-os/">linux os</a>
-            
-              <a href="/tags/cms/">cms</a>
+              <a href="/tags/metasploit/">metasploit</a>
             
           </div>
         
@@ -227,19 +235,17 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-20-ssh/">SSH... Z is sleeping</a>
+        <a href="/2020/12/27/10-x/">02-建立一个新的session</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-20-ssh/">
+        <a href="/2020/12/27/10-x/">
           
           
             
           
-          题目地址：http://www.wechall.net/challenge/warchall/ssssh/index.php
-Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目要求：窃取Z的ssh密钥，以用户level8登陆
-
-查看backups，其中有authorized_keys.backup
+          msf 建立一个新的sessionnew_session.rb作用是建立一个新的meterpreter session
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747
         </a>
       </p>
 
@@ -247,8 +253,8 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-27 00:00" pubdate>
+              2020-12-27
             </time>
           </div>
         
@@ -256,7 +262,7 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/unresolved/">unresolved</a>
+              <a href="/categories/metasploit/">metasploit</a>
             
           </div>
         
@@ -264,7 +270,7 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/CTF/">CTF</a>
+              <a href="/tags/metasploit/">metasploit</a>
             
           </div>
         
@@ -278,24 +284,20 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-13-pythonGUI%20(%20%E4%BA%8C%20)/">pythonGUI ( 二 )</a>
+        <a href="/2020/12/22/11-x/">03-msf报错（SESSION may not be compatible）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-13-pythonGUI%20(%20%E4%BA%8C%20)/">
+        <a href="/2020/12/22/11-x/">
           
           
             
           
-          继续上一篇。我前些日子在某公司实习时候，负责writeup等文档的处理，需要批量给收到的文档打水印，因此写了一个python脚本。现在把该脚本从命令行执行，添加图形化界面。
-该程序的功能有：
-
-给png图片批量添加水印，可以选择两种不同的水印。
-给gif图批量添加水印。
-提取word文档中的所有图片，添加水印。优化方案：
-
-
-优化前：该程序通过文件后缀，png、gif、docx决定不同的执行方案。
+          起因：sudo -s提权在msf上一直报错，但是在靶机上是可以成功提权的。msf有一个模块，叫做post/multi/manage/sudo
+看过这个模块的源码，就是使用sudo -s来提权的。
+为什么会提权失败呢？
+环境配置复现，debug设置msf监听handler -H 192.168.123.123 -P 6677 -p cmd/unix/reverse_bash
+生成反弹shell的载荷
         </a>
       </p>
 
@@ -303,8 +305,8 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-22 00:00" pubdate>
+              2020-12-22
             </time>
           </div>
         
@@ -312,7 +314,7 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/code/">code</a>
+              <a href="/categories/metasploit/">metasploit</a>
             
           </div>
         
@@ -320,7 +322,7 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/code/">code</a>
+              <a href="/tags/metasploit/">metasploit</a>
             
           </div>
         
@@ -334,19 +336,19 @@ Z is sleeping, if you hurry you can steal his SSH key and log in as level8题目
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-21-CTF--ASCII%E7%A0%81/">FourCTFQues</a>
+        <a href="/2020/12/20/11-x/">linux提权-msf提权插件编写中</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-21-CTF--ASCII%E7%A0%81/">
+        <a href="/2020/12/20/11-x/">
           
           
             
           
-          ascii解码http://www.wechall.net/challenge/training/encodings/ascii/index.php
-url解码http://www.wechall.net/challenge/training/encodings/url/index.php
-
-Limited Access说穿了就很简单，学一下curl post用法http://www.wechal
+          linux提权-msf提权插件编写中
+bob / secret
+docker组提权1docker run -v /:/linsecurity -i -t chrisfosterelli/rootplease
+nsf提权12345678910111213141516171819202122232425查看并挂载目录showmount -e 192.168.1.140mount 192.168.1.1
         </a>
       </p>
 
@@ -354,125 +356,8 @@ Limited Access说穿了就很简单，学一下curl post用法http://www.wechal
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/code/">code</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CTF/">CTF</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2018-09-22-%E6%B1%87%E7%8E%87%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F/"></a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-22-%E6%B1%87%E7%8E%87%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F/">
-          
-          
-            
-          
-          写一个有图形界面的，汇率转换程序。要求：
-
-使用类 
-至少三个国家自由计算兑换后的货币数额。
-
-
-定义了两个类，人民币转三种货币、美元转三种货币。
-画一个图形界面
-定义点击“Convert”之后执行的函数
-源码Calculate_money.py
-convert.py
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/code/">code</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/code/">code</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2018-09-23-kali%E9%87%8D%E5%90%AF%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94%E2%80%94%E5%A4%87%E4%BB%BD%EF%BC%81/"></a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-23-kali%E9%87%8D%E5%90%AF%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94%E2%80%94%E5%A4%87%E4%BB%BD%EF%BC%81/">
-          
-          
-            
-          
-          死机之后于是进入单用户模式在如图所示的行，末尾加上init=/bin/bashF10，保存并重启
-检查磁盘
-
-
-Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
-扩展磁盘空间发现要扩展磁盘，需要先删除所有快照
-
-编辑虚拟机设置——硬盘——扩展确认后，开机，等到虚拟机又卡住了，按alt+F2
-
-可以看到sda已经从20GB变为40GB
-可以看到/dev/sda1分区为100%利用率，所以
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-20 00:00" pubdate>
+              2020-12-20
             </time>
           </div>
         
@@ -502,19 +387,17 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-28-Poison%EF%BC%88%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB+%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89/"></a>
+        <a href="/2020/12/13/02-x/">cobaltstrike的脚本（四）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-28-Poison%EF%BC%88%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB+%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%EF%BC%89/">
+        <a href="/2020/12/13/02-x/">
           
           
             
           
-          1. 端口扫描ip: 10.10.10.84
-123456722/tcp   open  ssh80/tcp   open  http5802/tcp open  vnc-http-25902/tcp open  vnc-25903/tcp open  vnc-36002/tcp open  X11:26003/tcp open  X11:3
-嗯，确认是linux系统
-2. web探测一看到浏览器
+          linux上线插件CrossC2录制的视频： CobaltStrike的插件
+1234567891. src目录下，修改cna$CC2_PATH$CC2_BIN2. 添加证书.cobaltstrike.beacon_keys3. ./genCrossC2.Linux 18.163.137.185 6677 /root/tool/cobaltstrike/CrossC2-master/.cobalt
         </a>
       </p>
 
@@ -522,8 +405,8 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-13 00:00" pubdate>
+              2020-12-13
             </time>
           </div>
         
@@ -531,7 +414,7 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/training/">training</a>
+              <a href="/categories/cobaltstrike/">cobaltstrike</a>
             
           </div>
         
@@ -539,7 +422,7 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/training/">training</a>
+              <a href="/tags/cobaltstrike/">cobaltstrike</a>
             
           </div>
         
@@ -553,20 +436,20 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-29-%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E8%A1%8C%E4%B8%9A%E4%BB%8E%E4%B8%9A%E6%8C%87%E5%8D%972.0/"></a>
+        <a href="/2020/12/12/01-x/">2021年学习计划</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-29-%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E8%A1%8C%E4%B8%9A%E4%BB%8E%E4%B8%9A%E6%8C%87%E5%8D%972.0/">
+        <a href="/2020/12/12/01-x/">
           
           
             
           
-          作者：赵彦整理者：whale
-编辑引言：在网上看到赵彦前辈的这篇文章（2014年发布），但是通篇文字下来，一个小标题都没有，看得实在累得慌。
-但内容对于新人来说，很有参考价值，所以斗胆编辑整理。
-
-正文：为了减少篇幅有些东西就略过不写了，可以参考我以前写的《信息安全从业参考》《信息安全的职业生涯》《CSO的生存艺术》等老文章，或者我记得在安言的论坛上有人对我写的话题展开和补充并重新成文，具体记不太
+          引子业精于勤荒于嬉，行成于思毁于随
+开篇还有不到一个月，就要进入2021年了。废话不多说。总结一下去年计划完成情况，以及列一下2021年的学习计划。
+2020年年度复盘2020年的上半年我是很闲的。众所周知的黑天鹅事件——一场温柔又致命的virus袭击了全球。在死亡人数到达百万之众的情况下，我还留着一条小命。不知道该不该感到庆幸。
+总之还活着呢，最近几年也还要活下去。
+2020计划考oscp，因为
         </a>
       </p>
 
@@ -574,8 +457,8 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-12 00:00" pubdate>
+              2020-12-12
             </time>
           </div>
         
@@ -583,7 +466,7 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/View/">View</a>
+              <a href="/categories/experience/">experience</a>
             
           </div>
         
@@ -591,7 +474,7 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/View/">View</a>
+              <a href="/tags/experience/">experience</a>
             
           </div>
         
@@ -605,20 +488,19 @@ Alt+F2，快捷键进入tty2发现是操作系统没有磁盘空间了
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-10-01-%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E7%94%BB/"></a>
+        <a href="/2020/12/05/11-x/">Warchall  Live RFI 远程文件包含</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-10-01-%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E7%94%BB/">
+        <a href="/2020/12/05/11-x/">
           
           
             
           
-          参考：图片转字符画
-BadApple视频转字符动画
-依赖python3 + PIL模块
-程序分析该程序可以定义生成字符画的类型（html、txt）、画的尺寸
-pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y = pic.sizeout = pic.resize((x,y),Image.NEAREST) out.save(&quot
+          题目地址
+访问http://rfi.warchall.net/。
+web目录fuzz，以及index.php查看源码
+远程命令执行漏洞查看文件123456789http://rfi.warchall.net/temp/payload.php?cmd=lsconf.txtindex.php.baklive_rfi.config.php.bakpayload.phpsol.php~sol.txtsol
         </a>
       </p>
 
@@ -626,8 +508,8 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-12-05 00:00" pubdate>
+              2020-12-05
             </time>
           </div>
         
@@ -635,7 +517,7 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/code/">code</a>
+              <a href="/categories/CTF/">CTF</a>
             
           </div>
         
@@ -643,7 +525,7 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/code/">code</a>
+              <a href="/tags/CTF/">CTF</a>
             
           </div>
         
@@ -657,22 +539,21 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2018-09-30-vmware%E7%9B%B8%E5%85%B3/"></a>
+        <a href="/2020/11/30/11-x/">linux内核升级&amp;降级</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2018-09-30-vmware%E7%9B%B8%E5%85%B3/">
+        <a href="/2020/11/30/11-x/">
           
           
             
           
-          问题一，无法访问htb内网？要怎样配置，才能让kali虚拟机访问htb内网。
-相关（也许不相关）知识点：
-端口转发，也可以叫静态端口映射你必须将你的服务端的内网ip的端口转发到外网才能访问，这就是端口转发。
+          引子这一切都要从开发不支持docker容器的检测开始说起…… 
+正文linux内核升级
+下载deb安装包https://kernel.ubuntu.com/~kernel-ppa/mainline/v3.4-precise/
+执行安装
 
-动态端口映射（NAT，网络地址转换），两个主机，将a主机的1端口映射到b主机的1端口。于是访问b:1就等于访问a:1。
-
-静态和动态端口映射的区别，当连接关闭后，内网和公网端口的映射就关闭了
+123456789cd /tmp/wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8/amd6
         </a>
       </p>
 
@@ -680,17 +561,133 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-11-30 00:00" pubdate>
+              2020-11-30
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/linux/">linux</a>
+            
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/tools/">tools</a>
+              <a href="/tags/linux/">linux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/11/29/09-x/">linux计划任务提权</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/11/29/09-x/">
+          
+          
+            
+          
+          123靶机地址ssh user@192.168.28.131password123
+计划任务中的相对路径&amp;绝对路径制作的视频教程：https://www.bilibili.com/video/BV1wA411Y79Q/
+12345678910#查看计划任务cat /etc/crontabcat #查找sh脚本find / -name &quot;overwrite.sh&quot; 2&g
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-29 00:00" pubdate>
+              2020-11-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/linux/">linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/11/14/12-x/">linux反弹shell</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/11/14/12-x/">
+          
+          
+            
+          
+          linux系统40多种不同类型的反弹shell
+
+linux比windows反弹shell的手法要多得多
+
+msf的shellcode加载器msfvenommsfvenom -l payload |grep  cmd/unix如何查找自己需要的shellcode类型
+
+40多种linux反弹shell的手法
+
+反弹shell攻击的防御
+
+
+msfvenom一句话反弹shell12345678910
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-14 00:00" pubdate>
+              2020-11-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/linux/">linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
             
           </div>
         
@@ -702,7 +699,7 @@ pil的image类1234pic = Image.open(&#x27;路径&#x27;) #创建一个类实例x,y
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/8/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
