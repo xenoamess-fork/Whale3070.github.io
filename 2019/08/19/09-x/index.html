@@ -226,24 +226,24 @@
 <p>现在我就来学习一下tmux的使用。</p>
 <h2 id="开启新终端"><a href="#开启新终端" class="headerlink" title="开启新终端"></a>开启新终端</h2><p>tmux</p>
 <h2 id="新建自定义名称的终端"><a href="#新建自定义名称的终端" class="headerlink" title="新建自定义名称的终端"></a>新建自定义名称的终端</h2><p>tmux new -s myteminal</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-09/21.PNG" srcset="/img/loading.gif" alt="21"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-09/21.PNG" srcset="/img/loading.gif" alt="21"></p>
 <h2 id="退出tmux"><a href="#退出tmux" class="headerlink" title="退出tmux"></a>退出tmux</h2><p>虽然退出了，但是在后台依然在运行<br><code>ctrl + b</code> + <code>d</code></p>
 <h2 id="查看tmux终端"><a href="#查看tmux终端" class="headerlink" title="查看tmux终端"></a>查看tmux终端</h2><p>tmux ls</p>
-<p>图中显示有两个终端，编号为0和1<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-09/22.PNG" srcset="/img/loading.gif" alt="22"></p>
+<p>图中显示有两个终端，编号为0和1<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-09/22.PNG" srcset="/img/loading.gif" alt="22"></p>
 <h2 id="打开终端"><a href="#打开终端" class="headerlink" title="打开终端"></a>打开终端</h2><p>tmux attach-session -t 0<br>打开编号为0的终端</p>
 <h2 id="tmux-快捷键"><a href="#tmux-快捷键" class="headerlink" title="tmux 快捷键"></a>tmux 快捷键</h2><ul>
 <li>  <code>Ctrl+b</code> <code>c</code> 新建窗口</li>
 <li>  <code>Ctrl+b</code> <code>w</code> 选择开启的某窗口，通过数字编号</li>
 <li>  <code>Ctrl+b</code> <code>0</code> 切换到窗口0，数字0可以自定义</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-09/23.PNG" srcset="/img/loading.gif" alt="23"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-09/23.PNG" srcset="/img/loading.gif" alt="23"></p>
 <ul>
 <li>  <code>Ctrl+b</code> <code>,</code> 为当前窗口重命名</li>
 <li>  <code>Ctrl+b</code> <code>%</code> 将当前窗口分割为左右两部分</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-09/25.PNG" srcset="/img/loading.gif" alt="25"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-09/25.PNG" srcset="/img/loading.gif" alt="25"></p>
 <ul>
-<li><p>  <code>Ctrl+b</code> <code>&quot;</code> 将当前窗口分割为上下两部分<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-09/24.PNG" srcset="/img/loading.gif" alt="24"></p>
+<li><p>  <code>Ctrl+b</code> <code>&quot;</code> 将当前窗口分割为上下两部分<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-09/24.PNG" srcset="/img/loading.gif" alt="24"></p>
 </li>
 <li><p>  <code>Ctrl+b</code> <code>o</code> 切换到另一个窗口</p>
 </li>

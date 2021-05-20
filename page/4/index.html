@@ -174,25 +174,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-03-x/">lame（samba）</a>
+        <a href="/2020/11/30/11-x/">linux内核升级&amp;降级</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-03-x/">
+        <a href="/2020/11/30/11-x/">
           
           
             
           
-          10.10.10.3
-scan139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
-linux os
+          引子这一切都要从开发不支持docker容器的检测开始说起…… 
+正文linux内核升级
+下载deb安装包https://kernel.ubuntu.com/~kernel-ppa/mainline/v3.4-precise/
+执行安装
 
-这个training应该很简单，以前做过：139端口——smbclient
-kiotrix靶机（139端口samba）
-
-得知服务版本Samba 3.0.20-Debian
-trying 1
-123456789
+123456789cd /tmp/wget -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8/amd6
         </a>
       </p>
 
@@ -200,8 +196,8 @@ trying 1
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-11-30 00:00" pubdate>
+              2020-11-30
             </time>
           </div>
         
@@ -209,7 +205,7 @@ trying 1
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/training/">training</a>
+              <a href="/categories/linux/">linux</a>
             
           </div>
         
@@ -217,11 +213,7 @@ trying 1
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/linux-os/">linux os</a>
-            
-              <a href="/tags/port-139/">port 139</a>
+              <a href="/tags/linux/">linux</a>
             
           </div>
         
@@ -235,18 +227,18 @@ trying 1
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-04-x/">Popcorn（文件上传）</a>
+        <a href="/2020/11/29/09-x/">linux计划任务提权</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-04-x/">
+        <a href="/2020/11/29/09-x/">
           
           
             
           
-          scan12322/tcp open  ssh     OpenSSH 5.1p1 Debian 6ubuntu2 (Ubuntu Linux; protocol 2.0)80/tcp open  http    Apache httpd 2.2.12 ((Ubuntu))PHP/5.2.10-2ubuntu6.10
-web先检查破壳漏洞，然后检查/test目录泄露的信息
-123456789101
+          123靶机地址ssh user@192.168.28.131password123
+计划任务中的相对路径&amp;绝对路径制作的视频教程：https://www.bilibili.com/video/BV1wA411Y79Q/
+12345678910#查看计划任务cat /etc/crontabcat #查找sh脚本find / -name &quot;overwrite.sh&quot; 2&g
         </a>
       </p>
 
@@ -254,8 +246,8 @@ web先检查破壳漏洞，然后检查/test目录泄露的信息
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-11-29 00:00" pubdate>
+              2020-11-29
             </time>
           </div>
         
@@ -263,7 +255,7 @@ web先检查破壳漏洞，然后检查/test目录泄露的信息
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/training/">training</a>
+              <a href="/categories/linux/">linux</a>
             
           </div>
         
@@ -271,11 +263,7 @@ web先检查破壳漏洞，然后检查/test目录泄露的信息
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/port-80/">port 80</a>
-            
-              <a href="/tags/linux-os/">linux os</a>
+              <a href="/tags/linux/">linux</a>
             
           </div>
         
@@ -289,20 +277,27 @@ web先检查破壳漏洞，然后检查/test目录泄露的信息
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-06-x/">Grandpa（msf栈溢出）</a>
+        <a href="/2020/11/14/12-x/">linux反弹shell</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-06-x/">
+        <a href="/2020/11/14/12-x/">
           
           
             
           
-          10.10.10.14
-scan80/tcp open  http    Microsoft IIS httpd 6.0
-只开了一个80端口，iis 6.0让我想到了文件解析漏洞
-os scan:Running (JUST GUESSING): Microsoft Windows 2003|2008|2000|XP (91%)
-webanyway，先扫一下web目录吧~~只有一个images目录，
+          linux系统40多种不同类型的反弹shell
+
+linux比windows反弹shell的手法要多得多
+
+msf的shellcode加载器msfvenommsfvenom -l payload |grep  cmd/unix如何查找自己需要的shellcode类型
+
+40多种linux反弹shell的手法
+
+反弹shell攻击的防御
+
+
+msfvenom一句话反弹shell12345678910
         </a>
       </p>
 
@@ -310,8 +305,8 @@ webanyway，先扫一下web目录吧~~只有一个images目录，
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-11-14 00:00" pubdate>
+              2020-11-14
             </time>
           </div>
         
@@ -319,7 +314,7 @@ webanyway，先扫一下web目录吧~~只有一个images目录，
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/training/">training</a>
+              <a href="/categories/linux/">linux</a>
             
           </div>
         
@@ -327,66 +322,122 @@ webanyway，先扫一下web目录吧~~只有一个images目录，
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/training/">training</a>
+              <a href="/tags/linux/">linux</a>
             
-              <a href="/tags/port-80/">port 80</a>
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/24/09-x/">零组镜像导航页</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/24/09-x/">
+          
+          
+            
+          
+          零组文库：https://www.ddosi.com/b442/#%E9%9B%B6%E7%BB%84%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80
+为什么要录视频，视频和文章有什么区别
+
+你自己都不会，你拿什么给别人讲懂呢？
+
+避免自己遗忘，加深理解
+
+交到同行业的朋友（目前已达成大部分目标，粉丝1500+）
+
+
+123wget ht
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-24 00:00" pubdate>
+              2020-10-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/18/10-x/">sc远程服务横向移动</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/18/10-x/">
+          
+          
+            
+          
+          横向移动手法介绍教程
+https://www.bilibili.com/video/BV1Hz4y1Z7pJ
+https://www.bilibili.com/video/BV1Hz4y1Z7pJ?p=2
+https://www.bilibili.com/video/BV1Hz4y1Z7pJ?p=3
+
+smbmap信息搜集远程管理必须使用Admin$
+查看远程共享
+123smbmap -H 192
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-18 00:00" pubdate>
+              2020-10-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/windows/">windows</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
               <a href="/tags/windows/">windows</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2019-01-07-x/">Joker（http-proxy）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-07-x/">
-          
-          
-            
-          
-          10.10.10.21  
-scan1222/tcp   open  ssh        OpenSSH 7.3p1 Ubuntu 1ubuntu0.1 (Ubuntu Linux; protocol 2.0)3128/tcp open  http-proxy Squid http proxy 3.5.12
-web目录扫描，连接时间异常，没有找到任何页面
-trying1:缓冲区溢出searchs
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/linux-os/">linux os</a>
-            
-              <a href="/tags/port-unusual/">port unusual</a>
+              <a href="/tags/lateral-movement/">lateral-movement</a>
             
           </div>
         
@@ -400,19 +451,21 @@ trying1:缓冲区溢出searchs
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-08-x/">论传销</a>
+        <a href="/2020/10/07/11-x/">《房思琪的初恋乐园》读后感</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-08-x/">
+        <a href="/2020/10/07/11-x/">
           
           
             
           
-          论传销写这篇文章的起因。
-最近苹果手机电池不行了，一到百分之30就噌噌噌往下掉。于是我上班的间歇，就找了个手机维修店。店主把我的手机拆开，然后让我等十多分钟，还拿着吹风机吹。然后就出门了，让我等一会儿。
-我百无聊赖的也不知道干什么，盯了一会儿拆下来的电池。电池居然是软的，被掰弯了==
-期间，有一个搞推销的青年走了进来。一开始给店员推销，店员拼命拒绝。他的脖子上很明显的钴蓝色带子，挂着的应该是证件，
+          是谁把贞操牢牢刻在每个人的思想里面？
+封建社会已经过去了一百多年了，封建思想在这片土地上统治了有几千年。与此同时，女性的地位也深受压迫了几千年。在以前，一个女性要是失去了丈夫，那么她就成了一个寡妇，寡妇要为了丈夫守贞。
+我不知道该怎么描述房思琪的事情。
+我有一种深深的无力感。因为我知道什么也改变不了。
+改变不了人们对儿童性教育假性遗忘，改变不了猥亵儿童的犯罪者将手伸向豆蔻之年的花朵。
+总之，这个由
         </a>
       </p>
 
@@ -420,8 +473,8 @@ trying1:缓冲区溢出searchs
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-10-07 00:00" pubdate>
+              2020-10-07
             </time>
           </div>
         
@@ -451,20 +504,20 @@ trying1:缓冲区溢出searchs
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-09-x/">masscan结合python快速枚举批量主机端口</a>
+        <a href="/2020/10/04/11-x/">windows反弹shell</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-09-x/">
+        <a href="/2020/10/04/11-x/">
           
           
             
           
-          还记得当时360电话面试的时候，问我互联网上最快的扫描器是什么，我回答的zenmap？
-
-最近渗透测试的实习，给了很多主机，记录一下。
-python去重
-123456789ips = []write_ips = open(&#x27;ips.txt&#x27;,&#x27;a&#x27;)with open(&#x27;1.txt&#x27;) as f:	for line in f:		ips.
+          引子以你现在的速度你只能逗留原地。如果你要抵达另一个地方，你必须以双倍于现在的速度奔跑。
+思维导图和教程
+一句话反弹shell&amp;Reverse Shell In Windows
+Koadic过defender上线
+windowsmshta.exe成功的操作12345678use exploit/windows/misc/hta_serverset srvhost 10.100.19.19s
         </a>
       </p>
 
@@ -472,8 +525,8 @@ python去重
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-10-04 00:00" pubdate>
+              2020-10-04
             </time>
           </div>
         
@@ -481,10 +534,17 @@ python去重
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/scan/">scan</a>
+              <a href="/categories/windows/">windows</a>
             
           </div>
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/reverse-shell/">reverse shell</a>
+            
+          </div>
         
       </div>
     </article>
@@ -496,18 +556,17 @@ python去重
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/05/20/2019-01-10-x/">Devel（ftp匿名登陆可读可写）</a>
+        <a href="/2020/08/26/07-x/">suid提权的三种思路</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-10-x/">
+        <a href="/2020/08/26/07-x/">
           
           
             
           
-          10.10.10.5
-12321/tcp open  ftp     Microsoft ftpd80/tcp open  http    Microsoft IIS httpd 7.5
-ftp12345678910111213141516171819ftp 10.10.10.5anonymous03-18-17  01:06AM       &lt;DIR&gt;          aspnet
+          制作的视频教程https://www.bilibili.com/video/BV1ok4y1m75p
+方法一：shared object注入12345678910111213141516find / -type f -perm -04000 -ls 2&gt;/dev/nullstrace /usr/local/bin/suid-so 2&gt;&amp;1 | grep -i -E &quot;
         </a>
       </p>
 
@@ -515,8 +574,109 @@ ftp12345678910111213141516171819ftp 10.10.10.5anonymous03-18-17  01:06AM       &
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
+            <time datetime="2020-08-26 00:00" pubdate>
+              2020-08-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/linux/">linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/08/26/08-x/">基于ruby的jekyll博客搭建踩坑记录</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/08/26/08-x/">
+          
+          
+            
+          
+          一件事，只要是有价值的，花再长的时间去做也是值得的。
+遇到问题使用某些地区的网络就能访问，有些地区就不能。挂梯子也访问不了了。（不知道是被墙了还是什么原因）
+本地测试12345678ruby -vsqlite3 --versiongem install railsgem install jekyll确保ruby环境已安装，数据库已安装。bundle install开始安装
+好像不能用root权限执
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-26 00:00" pubdate>
+              2020-08-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/blog/">blog</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/blog/">blog</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/08/05/10-x/">实验域渗透（一）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/08/05/10-x/">
+          
+          
+            
+          
+          实验域渗透（一）域环境下载地址
+12345nmap scan report for 192.168.28.10Host is up (0.00027s latency).MAC Address: 00:0C:29:85:19:D4 (VMware)Nmap scan report for 192.168.28.20Host is up (0.00043s latency).
+信息搜集失败的尝试（可
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-05 00:00" pubdate>
+              2020-08-05
             </time>
           </div>
         
@@ -533,168 +693,6 @@ ftp12345678910111213141516171819ftp 10.10.10.5anonymous03-18-17  01:06AM       &
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/training/">training</a>
-            
-              <a href="/tags/windows/">windows</a>
-            
-              <a href="/tags/port-21/">port 21</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2019-01-11-x/">Access（port:23-telnet登入反弹cmd）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-11-x/">
-          
-          
-            
-          
-          123456789101112Nmap scan report for 10.10.10.98Host is up (0.13s latency).Not shown: 997 filtered portsPORT   STATE SERVICE21/tcp open  ftp23/tcp open  telnet80/tcp open  httpnmap -sV -p 21,23,80 10.1
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/windows/">windows</a>
-            
-              <a href="/tags/port-23/">port 23</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2019-01-15-x/">Active（windows smb共享硬盘）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-15-x/">
-          
-          
-            
-          
-          参考资料：smbclient
-scan1234567891011121314151617181920212223242526272853/tcp    open  domain        Microsoft DNS 6.1.7601| dns-nsid: |_  bind.version: Microsoft DNS 6.1.7601 (1DB15D39)88/tcp    open  ker
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/windows/">windows</a>
-            
-              <a href="/tags/port-445/">port 445</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/20/2019-01-19-x/">Blocky（源码泄露、java反编译）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/20/2019-01-19-x/">
-          
-          
-            
-          
-          10.10.10.37 
-123421/tcp    open  ftp       ProFTPD 1.3.5a22/tcp    open  ssh       OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)80/tcp    open  http      Apache httpd 2.4.18 ((Ubuntu))2
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-20 15:27" pubdate>
-              2021-05-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-              <a href="/tags/linux-os/">linux os</a>
-            
-              <a href="/tags/cms/">cms</a>
             
           </div>
         

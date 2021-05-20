@@ -232,10 +232,10 @@
 <p>iptables拥有三个默认的table, filter、nat、mangle</p>
 <p>filter是最常用的，针对本机的table。</p>
 <h2 id="input、output、filter"><a href="#input、output、filter" class="headerlink" title="input、output、filter"></a>input、output、filter</h2><p>在iptables中，分为输入规则input、输出规则output，顾名思义，就是在接受数据包时候<strong>哪种数据包允许，哪种不允许</strong>，这就是输入规则input，以此类推output。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-23-12/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-23-12/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <p>可以使用以下命令查看已有的规则：</p>
 <figure class="highlight stata"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stata">iptables -<span class="hljs-keyword">nL</span> <span class="hljs-keyword">INPUT</span><br>iptables -<span class="hljs-keyword">nL</span> OUTPUT<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-23-12/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-23-12/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 <p>上图中的Chain可以理解为规则链，就像一条链子一样，规则是依次向下进行判断的。</p>
 <p>举个例子，第一条规则是允许所有ip的数据包，第二条规则是不允许ip为10.10.10.1的数据包。</p>
 <p>由于规则是依次向下判断，那么规则一允许所有数据包，第二条规则就会无效。</p>

@@ -222,18 +222,18 @@
             
             <div class="markdown-body">
               <p>电脑有线宽带共享给手机无线上网，优点：只需要一台电脑，不需要买其他硬件。</p>
-<h2 id="开启wifi"><a href="#开启wifi" class="headerlink" title="开启wifi"></a>开启wifi</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<h2 id="开启wifi"><a href="#开启wifi" class="headerlink" title="开启wifi"></a>开启wifi</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 <h2 id="确认电脑网卡支持承载网络"><a href="#确认电脑网卡支持承载网络" class="headerlink" title="确认电脑网卡支持承载网络"></a>确认电脑网卡支持承载网络</h2><p>netsh wlan show drivers</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/3.PNG" srcset="/img/loading.gif" alt="3"><br>你的网卡必须支持承载网络，如果网卡不支持承载网络，就无法共享wifi给手机上网。</p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/3.PNG" srcset="/img/loading.gif" alt="3"><br>你的网卡必须支持承载网络，如果网卡不支持承载网络，就无法共享wifi给手机上网。</p>
 <p>确认windows已经开启防火墙，否则wifi数据传输可能出错</p>
 <h2 id="cmd命令配置热点名称和密码"><a href="#cmd命令配置热点名称和密码" class="headerlink" title="cmd命令配置热点名称和密码"></a>cmd命令配置热点名称和密码</h2><figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">netsh wlan <span class="hljs-builtin-name">set</span> hostednetwork <span class="hljs-attribute">mode</span>=allow <span class="hljs-attribute">ssid</span>=你自己的热点名称 <span class="hljs-attribute">key</span>=热点密码<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <p>如果遇到一个问题：</p>
 <figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs">无法启动承载网络。<br>连到系统上的设备没有发挥作用。<br><br>返回第一步，开启wifi即可<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/10.PNG" srcset="/img/loading.gif" alt="10"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/10.PNG" srcset="/img/loading.gif" alt="10"></p>
 <h2 id="开启热点"><a href="#开启热点" class="headerlink" title="开启热点"></a>开启热点</h2><figure class="highlight crmsh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs crmsh">开启WIFI：netsh wlan <span class="hljs-literal">start</span> hostednetwork<br><br>如果需要关闭wifi，需要在手机上关闭<br>关闭WIFI：netsh wlan <span class="hljs-literal">stop</span> hostednetwork<br></code></pre></div></td></tr></table></figure>
-<h2 id="将宽带共享给热点"><a href="#将宽带共享给热点" class="headerlink" title="将宽带共享给热点"></a>将宽带共享给热点</h2><p>选中已经连接互联网的有线网卡，右键——属性——共享，选中设置好的wifi名称。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/4.PNG" srcset="/img/loading.gif" alt="4"></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/01-02-02/5.PNG" srcset="/img/loading.gif" alt="5"></p>
+<h2 id="将宽带共享给热点"><a href="#将宽带共享给热点" class="headerlink" title="将宽带共享给热点"></a>将宽带共享给热点</h2><p>选中已经连接互联网的有线网卡，右键——属性——共享，选中设置好的wifi名称。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/4.PNG" srcset="/img/loading.gif" alt="4"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/01-02-02/5.PNG" srcset="/img/loading.gif" alt="5"></p>
 <h2 id="现在可以使用手机连接已经设置好的可上网的wifi了。"><a href="#现在可以使用手机连接已经设置好的可上网的wifi了。" class="headerlink" title="现在可以使用手机连接已经设置好的可上网的wifi了。"></a>现在可以使用手机连接已经设置好的可上网的wifi了。</h2>
             </div>
             <hr>

@@ -229,12 +229,12 @@
 <h2 id="安装compose"><a href="#安装compose" class="headerlink" title="安装compose"></a>安装compose</h2><figure class="highlight ada"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ada">pip install -U docker-compose<br>docker-compose <span class="hljs-comment">--version</span><br></code></pre></div></td></tr></table></figure>
 <p>compose 是组成的意思</p>
 <h2 id="python-flask案例"><a href="#python-flask案例" class="headerlink" title="python flask案例"></a>python flask案例</h2><p>源码下载地址：<a target="_blank" rel="noopener" href="https://github.com/guanwei/dockerbook-code/tree/master/7/composeapp">https://github.com/guanwei/dockerbook-code/tree/master/7/composeapp</a></p>
-<p>第一步，构建新的image。图中的文件都可以在上面的链接中进行下载。<br><code>docker build -tjamtur01/composeapp .</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/1.PNG" srcset="/img/loading.gif" alt="1"></p>
-<p>第二步，需要一个yml文件<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p>第一步，构建新的image。图中的文件都可以在上面的链接中进行下载。<br><code>docker build -tjamtur01/composeapp .</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<p>第二步，需要一个yml文件<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <p>使用<code>docker-compose up</code>，组合容器。<code>docker-compose up -d</code> 可以后台模式运行。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/6.PNG" srcset="/img/loading.gif" alt="6"></p>
-<p>访问浏览器本地的5000端口，即可。ctrl+c 关闭正在运行的服务<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/5.PNG" srcset="/img/loading.gif" alt="5"></p>
-<p><code>docker-compose ps</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/7.PNG" srcset="/img/loading.gif" alt="7"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/6.PNG" srcset="/img/loading.gif" alt="6"></p>
+<p>访问浏览器本地的5000端口，即可。ctrl+c 关闭正在运行的服务<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/5.PNG" srcset="/img/loading.gif" alt="5"></p>
+<p><code>docker-compose ps</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/7.PNG" srcset="/img/loading.gif" alt="7"></p>
 <p>可以看到正在运行的所有服务，刚刚开启的redis服务器以及flask web服务。</p>
 <h2 id="compose命令"><a href="#compose命令" class="headerlink" title="compose命令"></a>compose命令</h2><h3 id="compose日志"><a href="#compose日志" class="headerlink" title="compose日志"></a>compose日志</h3><p><code>docker-compose logs</code></p>
 <h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><p><code>docker-compose stop</code></p>
@@ -243,7 +243,7 @@
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>当遇到<code>Cannot connect to the Docker daemon... </code>的错误时</p>
 <p>运行<code>service docker start</code> 开启docker服务</p>
 <h2 id="vulhub使用指南"><a href="#vulhub使用指南" class="headerlink" title="vulhub使用指南"></a>vulhub使用指南</h2><p>好了，刚刚我们已经介绍了docker compose的使用，那么用vulhub来搭建漏洞环境也是得心应手的事情了<br><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/blob/master/README.zh-cn.md">vulhub使用指南</a></p>
-<p>按照上述链接中，下载该项目，切换到项目，用docker-compose下载必须的容器运行，即可。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-25-06/8.PNG" srcset="/img/loading.gif" alt="8"></p>
+<p>按照上述链接中，下载该项目，切换到项目，用docker-compose下载必须的容器运行，即可。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-25-06/8.PNG" srcset="/img/loading.gif" alt="8"></p>
 
             </div>
             <hr>

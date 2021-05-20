@@ -226,11 +226,11 @@
 <li><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=EfqJCKWtGiU&feature=youtu.be">https://www.youtube.com/watch?v=EfqJCKWtGiU&amp;feature=youtu.be</a></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://hashcat.net/hashcat/">https://hashcat.net/hashcat/</a></p>
-<h2 id="kali-vm"><a href="#kali-vm" class="headerlink" title="kali vm"></a>kali vm</h2><p>kali vm自带hashcat，但是该软件需要使用GPU，缺少一些驱动还是什么原因，无法直接使用。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-31-11/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<h2 id="kali-vm"><a href="#kali-vm" class="headerlink" title="kali vm"></a>kali vm</h2><p>kali vm自带hashcat，但是该软件需要使用GPU，缺少一些驱动还是什么原因，无法直接使用。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-31-11/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 </li>
 </ul>
 <p>查找了一些解决办法，在虚拟机下使用hashcat不是不可以，只是太繁琐了。于是我们直接在windows上安装hashcat吧。</p>
-<h2 id="download-in-windows"><a href="#download-in-windows" class="headerlink" title="download in windows"></a>download in windows</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-31-11/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<h2 id="download-in-windows"><a href="#download-in-windows" class="headerlink" title="download in windows"></a>download in windows</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-31-11/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <h3 id="先查找hash的类型"><a href="#先查找hash的类型" class="headerlink" title="先查找hash的类型"></a>先查找hash的类型</h3><p>根据这个<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example_hashes">表</a></p>
 <p><code>$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/</code> 查到Hash-Mode编号为500</p>
 <h3 id="hashcat破解格式"><a href="#hashcat破解格式" class="headerlink" title="hashcat破解格式"></a>hashcat破解格式</h3><figure class="highlight diff"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff"><span class="hljs-deletion">-m hash类型</span><br><span class="hljs-deletion">-a 攻击类型</span><br>文件名<br>字典<br></code></pre></div></td></tr></table></figure>
@@ -240,9 +240,9 @@
 <h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>hashcat -m 500 -a 0 whatpass.txt /usr/wordlists/rockyou.txt </p>
 <p>同样报错了，但是加–force参数，就可以正常运行了，不知道是为什么。</p>
 <p> 破解过程会显示“[s]tatus[p]ause [r]esume [b]ypass [q]uit =&gt;”，键盘输入“s”显示破解状态，输入“p”暂停破解，输入“r”继续破解，输入“b”表示忽略破解，输入“q”表示退出，所有成功破解的结果都会自动保存在 “hashcat.pot” 文件中。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-31-11/3.PNG" srcset="/img/loading.gif" alt="3"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-31-11/3.PNG" srcset="/img/loading.gif" alt="3"></p>
 <p>在目录下直接打开hashcat.potfile，就可以看到密码了。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-31-11/4.PNG" srcset="/img/loading.gif" alt="4"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-31-11/4.PNG" srcset="/img/loading.gif" alt="4"></p>
 
             </div>
             <hr>

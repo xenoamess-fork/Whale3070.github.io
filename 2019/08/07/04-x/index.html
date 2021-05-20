@@ -225,10 +225,10 @@
 <p><a target="_blank" rel="noopener" href="https://www.exploit-db.com/docs/english/33859-searching-shodan-for-fun-and-profit.pdf">https://www.exploit-db.com/docs/english/33859-searching-shodan-for-fun-and-profit.pdf</a></p>
 <h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><figure class="highlight stata"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stata">msfconsole<br><span class="hljs-keyword">use</span> auxiliary/gather/shodan_search<br><span class="hljs-keyword">set</span> shodan_apikey xxx<br><span class="hljs-keyword">set</span> <span class="hljs-keyword">QUERY</span> webcamxp  <span class="hljs-comment">//webcamXP是一款国外软件,使用广泛的私人和专业用途的网络视频捕捉软件</span><br><span class="hljs-comment">//query是设置查询语句的意思</span><br>这个<span class="hljs-keyword">query</span>怎么用，可以参考上述链接2<br><br><span class="hljs-keyword">run</span> 运行搜索语法<br></code></pre></div></td></tr></table></figure>
 <h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>set QUERY webcamxp</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-07-04/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-07-04/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <hr>
 <p>set QUERY port:”21”</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-07-04/3.PNG" srcset="/img/loading.gif" alt="3"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-07-04/3.PNG" srcset="/img/loading.gif" alt="3"></p>
 <h2 id="搜索语法"><a href="#搜索语法" class="headerlink" title="搜索语法"></a>搜索语法</h2><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/121339.html">https://www.freebuf.com/sectool/121339.html</a></p>
 <p>参考上面这篇文章的搜索实例</p>
 <p>msf中输入以下的的搜索语句：<br><code>set query xx</code><br>这里的xx就是在网页版搜索的字符串。</p>

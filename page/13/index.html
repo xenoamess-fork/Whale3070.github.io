@@ -174,24 +174,27 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/11/03-x/">windows内核提权</a>
+        <a href="/2019/10/30/11-x/">sso登陆劫持漏洞</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/11/03-x/">
+        <a href="/2019/10/30/11-x/">
           
           
             
           
-          参考资料：
+          引子最近项目遇到这个漏洞，但是我没有发现。。
+正文参考资料：
 
-github项目lpeworkshop
-youtubu视频
+腾讯单点登录系统跨域劫持漏洞
 
-【windows】
-123powershell -nop -ep bypassImport-Module C:\Users\whale\Desktop\Tools\Sherlock\Sherlock.ps1Find-AllVulns
-【kali】
-1234msfconsolehandler -H 192.168.1.100
+https://lvwei.me/passport.html#toc_8
+
+
+sso单点登陆，用户一次登陆，所有系统都可访问。
+sso设计目的是简化登陆方式，可能有很多系统，但是多个系统都是一个机构的，每个系统每次都要分别登陆就很复杂。
+举个例子，OpenID是一个很流行的sso框架，
+用户提交1. o
         </a>
       </p>
 
@@ -199,8 +202,8 @@ youtubu视频
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-11 00:00" pubdate>
-              2020-02-11
+            <time datetime="2019-10-30 00:00" pubdate>
+              2019-10-30
             </time>
           </div>
         
@@ -208,7 +211,7 @@ youtubu视频
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/web/">web</a>
             
           </div>
         
@@ -216,7 +219,7 @@ youtubu视频
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/web/">web</a>
             
           </div>
         
@@ -230,23 +233,17 @@ youtubu视频
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/07/09-x/">查找与修改exp</a>
+        <a href="/2019/10/27/09-x/">Europa(php rce)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/07/09-x/">
+        <a href="/2019/10/27/09-x/">
           
           
             
           
-          本地查找exp123searchsploit slmaillocate /643.c
-互联网上查找exp可靠的经过验证的公开exp来源：
-
-https://www.exploit-db.com/
-https://www.securityfocus.com/
-
-exp debug由于软件版本等问题，exp可能会执行不成功。
-要搭建对应的操作系统版本和有漏洞的软件，作为目标环境，来测试exp。测试ex
+          引子一天可以当两天用，可是当十天不行。不要低估日积月累的作用。
+scan1234567891011121314151617181922/tcp  open  ssh      OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)| ssh-hostkey: |   2048 6b:55:42:0a:f7:06:8c:67:c0:e
         </a>
       </p>
 
@@ -254,8 +251,310 @@ exp debug由于软件版本等问题，exp可能会执行不成功。
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-07 00:00" pubdate>
-              2020-02-07
+            <time datetime="2019-10-27 00:00" pubdate>
+              2019-10-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/10/26/07-x/">Sneaky(snmp默认口令泄露敏感信息)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/10/26/07-x/">
+          
+          
+            
+          
+          enum1234567Discovered open port 161/udp on 10.10.10.20                                    Discovered open port 80/tcp on 10.10.10.20 80/tcp  open   http    Apache httpd 2.4.7 ((Ubuntu))|_http-server-h
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-26 00:00" pubdate>
+              2019-10-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/10/11/05-x/">应届生的面试题</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/10/11/05-x/">
+          
+          
+            
+          
+          网络协议TCP和UDP有什么区别？TCP是面向连接的，UDP无连接、不可靠
+举例一些常见的协议以及对应的端口tcp/ip协议有哪4层？tcp/ip协议包括网络接口层、网络层（ARP、ICMP）、传输层(tcp、udp)、应用层
+cookie和session的区别？12345678910它们都是web服务器用来区别不同客户的。cookie是一串小文本字符串存储在客户端，而session的形式和大小没
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-11 00:00" pubdate>
+              2019-10-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Interview/">Interview</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Interview/">Interview</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/10/02/11-x/">zipper docker容器靶机渗透</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/10/02/11-x/">
+          
+          
+            
+          
+          你越功利，世界对你越神秘。废话不说，开始紧张刺激的渗透吧！
+scan1234567891011121314151617181920212223242522/tcp    open  ssh        OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)| ssh-hostkey: |   2048 59:20:a3:a0:98:f2:a7:14
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-02 00:00" pubdate>
+              2019-10-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/09/29/04-x/">weblogic ssrf</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/09/29/04-x/">
+          
+          
+            
+          
+          参考资料：https://github.com/vulhub/vulhub/tree/master/weblogic/ssrf
+docker空间管理1234du -h --max-depth=1 寻找当前目录，哪个文件夹占用空间最大docker system prune -a  删除镜像docker system df    查看磁盘使用情况docker-compose down -v 删除正在用
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-09-29 00:00" pubdate>
+              2019-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/web/">web</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/web/">web</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/09/21/10-x/">第三次实习</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/09/21/10-x/">
+          
+          
+            
+          
+          不知不觉暑假已经过去了，而我混入安全圈的目标，也悄悄达成了。估计毕业以后应该能做渗透测试吧。
+安全服务大致分为三部分的工作内容，应急响应+渗透测试+安全培训
+应急响应，就是客户被黑了然后去客户现场恢复系统等等；渗透测试，就是找找客户系统漏洞，然后写一份报告；安全培训，就是给客户做安全意识、安全技能等方面的培训。
+
+19年9月20日晨今早呆立半响，写下这段文字。
+我内推无果，觉得转正无望，但是仍然没
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-09-21 00:00" pubdate>
+              2019-09-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/experience/">experience</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/experience/">experience</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/09/18/11-x/">aws与vulhub（五）</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/09/18/11-x/">
+          
+          
+            
+          
+          参考资料：https://vulhub.org/#/docs/
+上一篇：docker compose与vulhub（四）
+上一篇我们讲了在本地kali大家vulhub，但是受本地网速、硬盘存储空间所限，不能达到理想效果。
+而在亚马逊云使用vulhub，网速可以达到近20MB/s，可以在数秒之内完成docker实例的搭建，不可以不谓之理想。
+下载安装在之前讲过，这里省略。
+1234567891011
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-09-18 00:00" pubdate>
+              2019-09-18
             </time>
           </div>
         
@@ -273,56 +572,7 @@ exp debug由于软件版本等问题，exp可能会执行不成功。
             
               <a href="/tags/tools/">tools</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/05/09-x/">crossfire&amp;linux缓冲区溢出案例（四）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/05/09-x/">
-          
-          
-            
-          
-          参考资料：linux程序的常用保护机制
-上一篇：crossfire&amp;linux缓冲区溢出案例（三）
-生成shellcode上一篇找到了这些坏字符，在生成shellcode的时候必须避免这些字符出现\x00\x09\x0a\x20
-1234567[目标主机ip-linux] 192.168.67.128[攻击机ip]         192.168.67.1msfvenom -p linux
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-05 00:00" pubdate>
-              2020-02-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
+              <a href="/tags/docker/">docker</a>
             
           </div>
         
@@ -336,22 +586,25 @@ exp debug由于软件版本等问题，exp可能会执行不成功。
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/01/30/04-x/">brainpan（栈溢出）</a>
+        <a href="/2019/09/16/10-x/">Cobalt Strike （一）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/01/30/04-x/">
+        <a href="/2019/09/16/10-x/">
           
           
             
           
-          题外话：人生其实很简单，想要的就去争取，得到了就珍惜，失去了就忘记。
-192.168.67.130
-123PORT      STATE SERVICE9999/tcp  open  abyss 10000/tcp open  snet-sensor-mgmt
-http://192.168.67.130:10000
-nc 192.168.67.130 9999
+          参考资料： 
 
-根据nc连接结果来看，brainp
+cs官网
+csmanual314 PDF
+https://xz.aliyun.com/t/3975
+Cobaltstrike系列教程
+
+
+这个软件是内网渗透、APT的软件，基于服务端/客户端构架，适用于多人合作。
+安装java环境Use Oracle’s Java implementation for the best Cobalt Strike experience.最好使用Or
         </a>
       </p>
 
@@ -359,8 +612,8 @@ nc 192.168.67.130 9999
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-30 00:00" pubdate>
-              2020-01-30
+            <time datetime="2019-09-16 00:00" pubdate>
+              2019-09-16
             </time>
           </div>
         
@@ -368,7 +621,7 @@ nc 192.168.67.130 9999
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
+              <a href="/categories/cobaltstrike/">cobaltstrike</a>
             
           </div>
         
@@ -376,7 +629,7 @@ nc 192.168.67.130 9999
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
+              <a href="/tags/cobaltstrike/">cobaltstrike</a>
             
           </div>
         
@@ -390,19 +643,18 @@ nc 192.168.67.130 9999
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/01/30/06-x/">brainpan（suid溢出提权）</a>
+        <a href="/2019/09/13/12-x/">AWS亚马逊云服务器使用（二）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/01/30/06-x/">
+        <a href="/2019/09/13/12-x/">
           
           
             
           
-          参考资料：Sneaky（suid+缓冲区溢出提权）
-上一篇得到了一个普通权限的shell，通过suid的缓冲区溢出漏洞，得到shell。这也不是第一次遇到了类似情况了。
-文件传输whereis gdb结果显示客户机没有gdb，所以传输到kali上分析。
-12【目标机】nc -lnvp 8080 -w 5 &lt; /usr/local/bin/validate【kali】nc 192.168.67
+          上一篇：AWS亚马逊云服务器搭建与使用
+绑定弹性IP参考资料：https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html
+弹性IP是aws的一个特性，它可以分配给A实例，当你不想要A实例的时候，又可以分配给B实例。于是IP是不变的，但是IP对应的机器却变了。这样比较方便，使用者完全感
         </a>
       </p>
 
@@ -410,8 +662,8 @@ nc 192.168.67.130 9999
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-30 00:00" pubdate>
-              2020-01-30
+            <time datetime="2019-09-13 00:00" pubdate>
+              2019-09-13
             </time>
           </div>
         
@@ -419,7 +671,7 @@ nc 192.168.67.130 9999
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
+              <a href="/categories/tools/">tools</a>
             
           </div>
         
@@ -427,283 +679,7 @@ nc 192.168.67.130 9999
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/28/12-x/">crossfire&amp;linux缓冲区溢出案例（三）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/28/12-x/">
-          
-          
-            
-          
-          参考资料：kali linux之edb–CrossFire缓冲区溢出
-Crossfire 1.9.0在接受socket连接的时候，有着bof漏洞。
-搭建靶机12345678910111213141516171819mkdir /usr/games    #必须在该目录下运行crossfire，否则程序会报错#Cannot open bmaps file /usr/games/crossfire/s
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-28 00:00" pubdate>
-              2020-01-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/27/09-x/">一种断舍离的生活</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/27/09-x/">
-          
-          
-            
-          
-          引子一个爱好读书的人的笔记：）
-最近电视里到处都在播放冠状病毒的事情，为了安全，过年就是宅在家里了。
-起因起因是看到一个日剧，讲的是一个以前东西多的不得了的妹子，卧室跟狗窝一样，后来她跟前男友分手后想要自杀。然后发现自己的卧室脏乱差，死后被别人发现了该多丢人啊。于是她开始整理屋子，越整理发现心情越好。。。
-她的屋子跟我有的一拼。看了《断舍离》这本书，我好奇人最少需要多少东西就可以活下去。
-选择一个
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-27 00:00" pubdate>
-              2020-01-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/View/">View</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/View/">View</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/27/12-x/">可能是友链</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/27/12-x/">
-          
-          
-            
-          
-          同行的博客纯属记录，排名不分先后。放在chrome收藏夹里从来不看是不行的…… 
-
-
-
-序号
-向前辈学习…
-
-
-
-1
-https://klionsec.github.io/
-
-
-2
-https://introspelliam.github.io/
-
-
-3
-https://masterxsec.github.io/archives/
-
-
-4
-https://www.abatchy.com/
-
-
-5
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-27 00:00" pubdate>
-              2020-01-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/backup/">backup</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/backup/">backup</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/23/09-x/">各种系统的网卡配置</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/23/09-x/">
-          
-          
-            
-          
-          fedora重启修改密码https://docs.fedoraproject.org/en-US/quick-docs/reset-root-password/
-https://forums.fedoraforum.org/showthread.php?92959-cant-reset-root-passwd-Authentication-token-lock-busymount -o remou
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-23 00:00" pubdate>
-              2020-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/linux/">linux</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/linux/">linux</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/23/12-x/">iptables-配置防火墙规则</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/23/12-x/">
-          
-          
-            
-          
-          参考资料：《鸟哥的Linux私房菜服务器架设篇(第三版)》
-引言网络安全根本原因可能是由于信息不对称引起的。有些主机管理员，不知道自己开放了哪些服务，哪些是不安全的，哪些服务有漏洞，为什么不能因为好记而不使用弱密码。如果所有计算机使用者都知道的话，那么所有主机使用者都是网络安全专家了。
-防火墙不能防止所有病毒、木马、漏洞利用，但是它的作用是减少攻击面。
-举个例子，如果有一栋屋子，没有窗户，没有门，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-23 00:00" pubdate>
-              2020-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/linux/">linux</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/linux/">linux</a>
+              <a href="/tags/tools/">tools</a>
             
           </div>
         

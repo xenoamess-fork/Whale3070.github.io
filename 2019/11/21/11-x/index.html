@@ -235,12 +235,12 @@
 <h3 id="为什么要用ptf框架"><a href="#为什么要用ptf框架" class="headerlink" title="为什么要用ptf框架?"></a>为什么要用ptf框架?</h3><p>ptf是渗透测试框架，为了解决渗透工具的更新而使用的。举个例子，老版本的masscan工具在扫描结束后，不会自动结束，而是一直等待，这样就不能在扫描完一个ip后继续扫描。而这个错误只要更新到最新版本就可以解决。</p>
 <p>而更新软件是个复杂的差事，虽然用apt-get可以安装，但是软件名各种各样，甚至有的时候，你只知道需要什么功能的软件，但是你不知道软件的名字！这时候，使用ptf框架就十分方便</p>
 <h3 id="如何用ptf框架"><a href="#如何用ptf框架" class="headerlink" title="如何用ptf框架?"></a>如何用ptf框架?</h3><ol>
-<li><p>运行ptf<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-21-11/35.PNG" srcset="/img/loading.gif" alt="35"></p>
+<li><p>运行ptf<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-21-11/35.PNG" srcset="/img/loading.gif" alt="35"></p>
 </li>
 <li><p>输入？查看使用方式</p>
 </li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-21-11/36.PNG" srcset="/img/loading.gif" alt="36"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-21-11/36.PNG" srcset="/img/loading.gif" alt="36"></p>
 <figure class="highlight gauss"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs gauss"><span class="hljs-keyword">use</span> modules/ 加<span class="hljs-built_in">tab</span>按钮，自动补全命令<br>如果你不知道需要哪个软件，也可以使用上诉命令，<span class="hljs-built_in">tab</span>自动补全，会列出所有可以下载的软件，然后再挑选软件。<br><br>图中列出了很多模块，例如主动检测绕过、后渗透利用、代码审计、报告、逆向、漏洞分析等等。。<br></code></pre></div></td></tr></table></figure>
 
 <figure class="highlight stata"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stata"><br><span class="hljs-keyword">use</span> modules/exploitation/install_update_all<br>如果你想更新利用模块的所有软件，可以执行上述命令<br><br><span class="hljs-keyword">use</span> modules/install_update_all<br>不建议更新所有模块，因为等待时间长，占用磁盘空间，并且也不可能用上所有软件。<br><br>运用 <span class="hljs-keyword">cd</span> modules/xxx; <span class="hljs-keyword">update</span> 语法，即可更新某个模块的版本<br></code></pre></div></td></tr></table></figure>
@@ -248,7 +248,7 @@
 <li>所有已安装的tools都在/pentest目录</li>
 </ol>
 <p>先退出ptf模块，然后cd /pentest</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-21-11/37.PNG" srcset="/img/loading.gif" alt="37"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-21-11/37.PNG" srcset="/img/loading.gif" alt="37"></p>
 
             </div>
             <hr>

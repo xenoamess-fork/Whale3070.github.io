@@ -174,20 +174,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/01/21/12-x/">mantis（敏感信息泄露+445端口连接）</a>
+        <a href="/2019/08/31/10-x/">AWS亚马逊云服务器搭建与使用</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/01/21/12-x/">
+        <a href="/2019/08/31/10-x/">
           
           
             
           
-          10.10.10.52使用脚本扫描端口
+          上一篇：翻墙VPN
+参考资料：https://www.juelingzi.com/zb_users/upload/2019/06/201906051559734213487726.pdf
+亚马逊云设置防火墙
 
-cat 10.10.10.52.txt
-
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838
+VPS（Virtual Private Server）是虚拟专用服务器的缩写，渗透测试常常需要一个公网IP，用来反弹shell，或者用来部署awvs等扫描软件。所以让我们看看亚马逊云怎么使用
         </a>
       </p>
 
@@ -195,378 +195,8 @@ cat 10.10.10.52.txt
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-21 00:00" pubdate>
-              2020-01-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/17/06-x/">一个快速全端口扫描的bash脚本</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/17/06-x/">
-          
-          
-            
-          
-          1234567891011#!/bin/bashread -p &quot;which ip? &quot; ipmasscan -p1-65535,U:1-65535 $&#123;ip&#125; --rate=1000 -p1-65535,U:1-65535 -e tun0 &gt; ports  #修改这里的网卡名称tun0为你自己的联网的网卡what=$(awk &#x27;NR&lt;
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-17 00:00" pubdate>
-              2020-01-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/scan/">scan</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/scan/">scan</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/15/03-x/">slmail&amp;windows缓冲区溢出案例（二）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/15/03-x/">
-          
-          
-            
-          
-          上一篇：https://whale3070.github.io/buffer%20overflow/2019/12/13/08-x/
-准备一个虚拟机windows server 2008，安装好slmail、python环境、immunity debugger
-然后将开始调试之前，生成一个快照。该虚拟机环境可下载，购买点我
-关闭DEP保护 我们在命令提示符下运行不带有任何参数的bcdedit命令，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-15 00:00" pubdate>
-              2020-01-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/buffer-overflow/">buffer overflow</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/09/09-x/">Calamity（lxd之linux容器错误权限的提权）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/09/09-x/">
-          
-          
-            
-          
-          上一篇：Calamity（web rce）
-Calamity（lxd之linux容器错误权限的提权）参考资料：
-
-https://reboare.github.io/hackthebox/calamity.html
-https://www.youtube.com/watch?v=EloOaaGg3nA
-
-12ssh xalvas@10.10.10.2718547936..*
-得到一个用户权限的sh
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-09 00:00" pubdate>
-              2020-01-09
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/06/06-x/">Sneaky（suid+缓冲区溢出提权）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/06/06-x/">
-          
-          
-            
-          
-          上一篇：Sneaky(snmp默认口令泄露敏感信息)
-参考资料：
-
-缓冲区溢出案例（一）
-ippsec youtube video
-
-
-名词解释函数返回地址：保存当前函数调用前的信息，一边函数返回时能够回复到函数被调用前的代码区中继续执行指令。EIP: 指令寄存器，指向下一条等待执行的指令地址。
-
-找到suid权限的程序1find / -perm -4000 2&gt;/dev/null &gt;
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-06 00:00" pubdate>
-              2020-01-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/02/02-x/">电脑有线宽带共享给手机无线上网</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/02/02-x/">
-          
-          
-            
-          
-          电脑有线宽带共享给手机无线上网，优点：只需要一台电脑，不需要买其他硬件。
-开启wifi
-确认电脑网卡支持承载网络netsh wlan show drivers
-你的网卡必须支持承载网络，如果网卡不支持承载网络，就无法共享wifi给手机上网。
-确认windows已经开启防火墙，否则wifi数据传输可能出错
-cmd命令配置热点名称和密码1netsh wlan set hostednetwork mod
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-02 00:00" pubdate>
-              2020-01-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/problem/">problem</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/problem/">problem</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/01/01/08-x/">Traverxec（ssh2john爆破id_rsa对应密码）</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/01/01/08-x/">
-          
-          
-            
-          
-          参考资料：https://whale3070.github.io/training/2019/01/07/x/
-10.10.10.165
-12345678922/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)| ssh-hostkey: |   2048 aa:99:a8:16:68:cd:41:cc:f9:6c:8
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-01 00:00" pubdate>
-              2020-01-01
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/training/">training</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/training/">training</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2019/12/31/11-x/">hashcat</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2019/12/31/11-x/">
-          
-          
-            
-          
-          hashcat参考资料：
-
-https://www.youtube.com/watch?v=EfqJCKWtGiU&amp;feature=youtu.be
-
-https://hashcat.net/hashcat/
-kali vmkali vm自带hashcat，但是该软件需要使用GPU，缺少一些驱动还是什么原因，无法直接使用。
-
-
-查找了一些解决办法，在虚拟机下使用hashcat不是不可以，只
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-12-31 00:00" pubdate>
-              2019-12-31
+            <time datetime="2019-08-31 00:00" pubdate>
+              2019-08-31
             </time>
           </div>
         
@@ -596,23 +226,19 @@ kali vmkali vm自带hashcat，但是该软件需要使用GPU，缺少一些驱�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/12/25/07-x/">ssh端口转发</a>
+        <a href="/2019/08/25/06-x/">docker compose与vulhub（四）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/12/25/07-x/">
+        <a href="/2019/08/25/06-x/">
           
           
             
           
-          ssh端口转发参考资料：
-
-https://www.ssh.com/ssh/tunneling/example#remote-forwarding
-
-修改VPS ssh配置vi /etc/ssh/sshd_config
-与portForwarding相关的都改为yes.
-本地端口转发LPF当本地不能直接连接外部服务的时候，使用LPF
-案例一：两个机器12345678910-f 后台启用-g 启用网
+          https://whale3070.github.io/tools/2019/08/19/07-x/
+在上一篇中，我用kali安装了docker，使用了dockerfile来新建容器。这次学习一下docker compose。
+dockerfile与compose有什么区别dockerfile与build命令是从无到有构建新镜像
+而compose是组合多个镜像，例如需要构建一个python fla
         </a>
       </p>
 
@@ -620,8 +246,8 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-12-25 00:00" pubdate>
-              2019-12-25
+            <time datetime="2019-08-25 00:00" pubdate>
+              2019-08-25
             </time>
           </div>
         
@@ -629,7 +255,7 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/oscp/">oscp</a>
+              <a href="/categories/tools/">tools</a>
             
           </div>
         
@@ -637,7 +263,9 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/oscp/">oscp</a>
+              <a href="/tags/tools/">tools</a>
+            
+              <a href="/tags/docker/">docker</a>
             
           </div>
         
@@ -651,21 +279,24 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/12/24/04-x/">ssh允许密码登陆</a>
+        <a href="/2019/08/19/07-x/">docker安装踩坑指南（三）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/12/24/04-x/">
+        <a href="/2019/08/19/07-x/">
           
           
             
           
-          ubuntu因为安全机制，只允许密钥文件登入，现在修改为允许密码登入。
-1，允许密码登入sudo vi /etc/ssh/sshd_config
-找到passwordAuthentication项，修改成yes
-2，允许root登入继续修改sshd_config文件
-找到并用**#注释掉这行：PermitRootLogin prohibit-password**
-新建一行 添加：PermitRoo
+          本文只讲使用，不讲原理。原理请看《第一本docker书》
+参考资料：
+
+https://zhuanlan.zhihu.com/p/71775948
+https://github.com/vulhub/vulhub
+http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html
+
+
+docker镜像是什么？docker image是相当于工厂中
         </a>
       </p>
 
@@ -673,8 +304,8 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-12-24 00:00" pubdate>
-              2019-12-24
+            <time datetime="2019-08-19 00:00" pubdate>
+              2019-08-19
             </time>
           </div>
         
@@ -682,7 +313,7 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/problem/">problem</a>
+              <a href="/categories/tools/">tools</a>
             
           </div>
         
@@ -690,9 +321,368 @@ https://www.ssh.com/ssh/tunneling/example#remote-forwarding
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/problem/">problem</a>
+              <a href="/tags/tools/">tools</a>
+            
+              <a href="/tags/docker/">docker</a>
             
           </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/19/09-x/">tmux终端管理</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/19/09-x/">
+          
+          
+            
+          
+          参考资料：https://linuxize.com/post/getting-started-with-tmux/#installing-tmux-on-ubuntu-and-debian
+当关闭了一个终端，那么终端运行的命令也随之关闭了，为了达到关闭终端，但是后台仍然运行命令的目的，可以使用tmux。
+现在我就来学习一下tmux的使用。
+开启新终端tmux
+新建自定义名称的终端tmux new 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-19 00:00" pubdate>
+              2019-08-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/15/04-x/">docker（二）安装&amp;使用</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/15/04-x/">
+          
+          
+            
+          
+          上一篇：Docker（一）
+参考资料：
+
+https://www.runoob.com/docker/docker-tutorial.html
+
+https://www.ibm.com/developerworks/community/blogs/jfp/entry/running_ipython_notebooks_in_a_docker_container_on_windows?lang=en
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-15 00:00" pubdate>
+              2019-08-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+              <a href="/tags/docker/">docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/07/04-x/">shodan+msf</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/07/04-x/">
+          
+          
+            
+          
+          https://thor-sec.com/cheatsheet/shodan/shodan_cheat_sheet/
+https://www.exploit-db.com/docs/english/33859-searching-shodan-for-fun-and-profit.pdf
+命令12345678msfconsoleuse auxiliary/gather/shodan_searchs
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-07 00:00" pubdate>
+              2019-08-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/05/05-x/">Docker（一）什么是docker</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/05/05-x/">
+          
+          
+            
+          
+          参考：Docker 入门教程
+? 什么是docker它是一种虚拟化技术，是为了解决软件兼容问题而生的。
+会Linux的同学都知道，有时候你安装一个软件，它需要某个库，于是你就会输入“apt-get install xxx”，有时候它需要不止一个依赖，而且有时候会报各种各样的错误。有些软件需要python环境、有些软件需要java环境、有些需要.net框架。
+如果有一个系统，应用软件已经搭建好了。在
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-05 00:00" pubdate>
+              2019-08-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+              <a href="/tags/docker/">docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/02/05-x/">proxychains&amp;reGeorg</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/02/05-x/">
+          
+          
+            
+          
+          proxychains简介：linux平台，全局代理
+使用方法：kali teminallocate proxychainsleafpad /etc/proxychains.conf
+首先需要修改proxychains配置，然后使用代理。
+
+案例：proxychains firefox火狐浏览器用代理访问网络。
+
+reGeorg这是一个内网渗透软件，当拿到一个webshell的时候，就可以让目标服
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-02 00:00" pubdate>
+              2019-08-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/08/01/11-x/">记录一下vmware安装vmtools</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/08/01/11-x/">
+          
+          
+            
+          
+          记录一下vmware安装vmtools参考资料：https://docs.vmware.com/en/VMware-Workstation-Pro/15.0/com.vmware.ws.using.doc/GUID-08BB9465-D40A-4E16-9E15-8C016CC8166F.html
+remnux安装vmtools1234567891011121314cd /mnt/cdrommou
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-08-01 00:00" pubdate>
+              2019-08-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/07/31/11-x/">gobuster-web目录扫描</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/07/31/11-x/">
+          
+          
+            
+          
+          参考资料：https://github.com/OJ/gobuster
+由于vps有公网IP，在某些时候可以达到隐藏真实IP、（直接访问外网）网速更快等效果
+下面开始配置vps上的扫描器gobuster。
+安装：12345678wget http://ftp.br.debian.org/debian/pool/main/g/gobuster/gobuster_2.0.1-1_i386.debdpk
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-07-31 00:00" pubdate>
+              2019-07-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/scan/">scan</a>
+            
+          </div>
+        
         
       </div>
     </article>

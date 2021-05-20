@@ -231,7 +231,7 @@
 <p>后来想找个快一点的，就买了vultr，一个月3.5$，人民币25左右。这时候我除了用来翻墙还可以做辅助渗透的时候使用。</p>
 <p>再后来，要搭建awvs在服务器上，这样当本地计算机关机了，也可以在服务器日夜不休的扫描。我就入手的hostkvm。hostkvm远程连接控制台的速度，和vultr相比就像一个飞机、一个绿皮火车一样。当然，价格也是一样。一个月要七八十元。</p>
 <p>作为一个贫穷的青年，我琢磨着办个信用卡，蹭各大公司的云来使用。例如google云、aws云，首年免费。</p>
-<h2 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-31-10/9.PNG" srcset="/img/loading.gif" alt="9"></p>
+<h2 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h2><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-31-10/9.PNG" srcset="/img/loading.gif" alt="9"></p>
 <p>按照提示创建一个实例后，获得了一个xx.pem文件。</p>
 <p>点击EC2 Dashboard，复制实例ID和公有DNS，用ssh连入即可使用vps。</p>
 <p><code>chmod 400 xx.pem</code>修改ssh的权限为仅本人可写</p>
@@ -241,7 +241,7 @@
 <p>最后在aws控制面板，开放你设置ss的监听端口。因为aws默认只允许22端口ssh连入，不修改防火墙策略的话，外网就无法连接其他端口。</p>
 <h2 id="安装PTF渗透测试框架"><a href="#安装PTF渗透测试框架" class="headerlink" title="安装PTF渗透测试框架"></a>安装PTF渗透测试框架</h2><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/trustedsec/</span>ptf <span class="hljs-regexp">/opt/</span>ptf<br>cd <span class="hljs-regexp">/opt/</span>ptf &amp;&amp; ./ptf<br>use modules<span class="hljs-regexp">/exploitation/i</span>nstall_update_all<br>use modules<span class="hljs-regexp">/intelligence-gathering/i</span>nstall_update_all<br>use modules<span class="hljs-regexp">/post-exploitation/i</span>nstall_update_all<br>use modules<span class="hljs-regexp">/powershell/i</span>nstall_update_all<br>use modules<span class="hljs-regexp">/vulnerability-analysis/i</span>nstall_update_all<br><span class="hljs-keyword">exit</span>  退出ptf框架<br>cd /pentest 查看安装的modules<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-31-10/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-31-10/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 <p>安装渗透测试框架PTF完成后，最后建立一个快照，就ok了。<a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/ec2/snapshot/">亚马逊快照建立的方法</a></p>
 
             </div>

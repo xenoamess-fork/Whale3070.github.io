@@ -174,17 +174,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/23/05-x/">Frolic(CTF-like again)</a>
+        <a href="/2019/01/07/x/">Joker（http-proxy）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/23/05-x/">
+        <a href="/2019/01/07/x/">
           
           
             
           
-          10.10.10.111
-scan1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap 7.70 scan initiated Fri Mar 22 16:23:48 2019 as: nmap -Pn -sV -sC -p22,137,139,445,1880,9999 -oN nm
+          10.10.10.21  
+scan1222/tcp   open  ssh        OpenSSH 7.3p1 Ubuntu 1ubuntu0.1 (Ubuntu Linux; protocol 2.0)3128/tcp open  http-proxy Squid http proxy 3.5.12
+web目录扫描，连接时间异常，没有找到任何页面
+trying1:缓冲区溢出searchs
         </a>
       </p>
 
@@ -192,8 +194,8 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-23 00:00" pubdate>
-              2019-03-23
+            <time datetime="2019-01-07 00:00" pubdate>
+              2019-01-07
             </time>
           </div>
         
@@ -211,6 +213,10 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
             
               <a href="/tags/training/">training</a>
             
+              <a href="/tags/linux-os/">linux os</a>
+            
+              <a href="/tags/port-unusual/">port unusual</a>
+            
           </div>
         
       </div>
@@ -223,16 +229,20 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/22/04-x/">Valentine（CTF-like also）</a>
+        <a href="/2019/01/06/x/">Grandpa（msf栈溢出）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/22/04-x/">
+        <a href="/2019/01/06/x/">
           
           
             
           
-          12345Discovered open port 22/tcp on 10.10.10.79                                     Discovered open port 443/tcp on 10.10.10.79                                    Discovered open port 80/tcp on 10.10.
+          10.10.10.14
+scan80/tcp open  http    Microsoft IIS httpd 6.0
+只开了一个80端口，iis 6.0让我想到了文件解析漏洞
+os scan:Running (JUST GUESSING): Microsoft Windows 2003|2008|2000|XP (91%)
+webanyway，先扫一下web目录吧~~只有一个img目录，403
         </a>
       </p>
 
@@ -240,8 +250,8 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-22 00:00" pubdate>
-              2019-03-22
+            <time datetime="2019-01-06 00:00" pubdate>
+              2019-01-06
             </time>
           </div>
         
@@ -259,6 +269,10 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
             
               <a href="/tags/training/">training</a>
             
+              <a href="/tags/port-80/">port 80</a>
+            
+              <a href="/tags/windows/">windows</a>
+            
           </div>
         
       </div>
@@ -271,16 +285,18 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/21/06-x/">Apocalyst（CTF-like）</a>
+        <a href="/2019/01/04/x/">Popcorn（文件上传）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/21/06-x/">
+        <a href="/2019/01/04/x/">
           
           
             
           
-          1234567891022/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)| ssh-hostkey: |   2048 fd:ab:0f:c9:22:d5:f4:8f:7a:0a:29:11:b4:04:da:c9 (RSA)|   256 76:92:39:0a:57:bd:f0:03
+          scan12322/tcp open  ssh     OpenSSH 5.1p1 Debian 6ubuntu2 (Ubuntu Linux; protocol 2.0)80/tcp open  http    Apache httpd 2.2.12 ((Ubuntu))PHP/5.2.10-2ubuntu6.10
+web先检查破壳漏洞，然后检查/test目录泄露的信息
+123456789101
         </a>
       </p>
 
@@ -288,8 +304,8 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-21 00:00" pubdate>
-              2019-03-21
+            <time datetime="2019-01-04 00:00" pubdate>
+              2019-01-04
             </time>
           </div>
         
@@ -307,6 +323,10 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
             
               <a href="/tags/training/">training</a>
             
+              <a href="/tags/port-80/">port 80</a>
+            
+              <a href="/tags/linux-os/">linux os</a>
+            
           </div>
         
       </div>
@@ -319,20 +339,25 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2019/03/21/08-x/">shell-script（二）</a>
+        <a href="/2019/01/03/x/">lame（samba）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2019/03/21/08-x/">
+        <a href="/2019/01/03/x/">
           
           
             
           
-          案例三：写一个bash script，目的是扫描40台主机的全部端口，服务版本，生成以IP为目录的扫描结果。
-扫描网段内在线主机
-1234nmap -sn 10.10.10.0/24 -oA 123-oN 生成nmap类型扫描结果-oX-oG
-生成gnmap、nmap、xml类型扫描结果，查看后gnmap比较适合解析。
-123456789101112131415161718192021222324
+          10.10.10.3
+scan139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+linux os
+
+这个training应该很简单，以前做过：139端口——smbclient
+kiotrix靶机（139端口samba）
+
+得知服务版本Samba 3.0.20-Debian
+trying 1
+123456789
         </a>
       </p>
 
@@ -340,8 +365,8 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2019-03-21 00:00" pubdate>
-              2019-03-21
+            <time datetime="2019-01-03 00:00" pubdate>
+              2019-01-03
             </time>
           </div>
         
@@ -349,7 +374,7 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/linux/">linux</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -357,7 +382,11 @@ scan1234567891011121314151617181920212223242526272829303132333435363738394041424
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/linux/">linux</a>
+              <a href="/tags/training/">training</a>
+            
+              <a href="/tags/linux-os/">linux os</a>
+            
+              <a href="/tags/port-139/">port 139</a>
             
           </div>
         

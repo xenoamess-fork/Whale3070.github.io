@@ -226,23 +226,23 @@
 <li><a target="_blank" rel="noopener" href="https://www.ssh.com/ssh/tunneling/example#remote-forwarding">https://www.ssh.com/ssh/tunneling/example#remote-forwarding</a></li>
 </ul>
 <h2 id="修改VPS-ssh配置"><a href="#修改VPS-ssh配置" class="headerlink" title="修改VPS ssh配置"></a>修改VPS ssh配置</h2><p><code>vi /etc/ssh/sshd_config</code></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/1.PNG" srcset="/img/loading.gif" alt="1"><br>与portForwarding相关的都改为yes.</p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/1.PNG" srcset="/img/loading.gif" alt="1"><br>与portForwarding相关的都改为yes.</p>
 <h2 id="本地端口转发LPF"><a href="#本地端口转发LPF" class="headerlink" title="本地端口转发LPF"></a>本地端口转发LPF</h2><p>当本地不能直接连接外部服务的时候，使用LPF</p>
 <h3 id="案例一：两个机器"><a href="#案例一：两个机器" class="headerlink" title="案例一：两个机器"></a>案例一：两个机器</h3><figure class="highlight diff"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs diff"><span class="hljs-deletion">-f 后台启用</span><br><span class="hljs-deletion">-g 启用网关功能</span><br><span class="hljs-deletion">-N 不打开远程shell，处于等待状态</span><br><br>ssh -fgN -L 9000:127.0.0.1:80 root@VPS <br>这条命令中，使用的IP和端口含义如下<br><br>本地：127.0.0.1:9000<br>远程：VPS:80<br>一旦连接成功，访问以上两个地址效果相等。<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/2.PNG" srcset="/img/loading.gif" alt="2"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/2.PNG" srcset="/img/loading.gif" alt="2"></p>
 <p>访问本地地址 = 访问（原先访问不了的）外网地址</p>
 <h3 id="案例二：三个机器"><a href="#案例二：三个机器" class="headerlink" title="案例二：三个机器"></a>案例二：三个机器</h3><figure class="highlight dns"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dns">ssh -fgN -L <span class="hljs-number">9000:211.103</span>.<span class="hljs-number">214.132:80</span> root@VPS<br><br>该命令跟上一个案例不同的地方在于，从本地<span class="hljs-number">127.0.0.1</span>修改为了远程地址<span class="hljs-number">211.103.214.132</span><br><br>本地：<span class="hljs-number">127.0.0.1</span>:<span class="hljs-number">9000</span><br>远程：<span class="hljs-number">211.103.214.132</span>:<span class="hljs-number">80</span><br>VPS: 做代理使用，使用<span class="hljs-number">22</span>端口<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/3.PNG" srcset="/img/loading.gif" alt="3"></p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>只能使用IP，不能使用域名指代地址<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/4.PNG" srcset="/img/loading.gif" alt="4"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/3.PNG" srcset="/img/loading.gif" alt="3"></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>只能使用IP，不能使用域名指代地址<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/4.PNG" srcset="/img/loading.gif" alt="4"></p>
 <h2 id="远程端口转发RPF"><a href="#远程端口转发RPF" class="headerlink" title="远程端口转发RPF"></a>远程端口转发RPF</h2><p>当外网访问不了本地的服务的时候，使用RPF</p>
 <h3 id="案例一："><a href="#案例一：" class="headerlink" title="案例一："></a>案例一：</h3><p>首先，本地开启一个web服务</p>
 <figure class="highlight dns"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs dns">python -m SimpleHTTPServer <span class="hljs-number">889</span><br><br>ssh -fgN -R <span class="hljs-number">9000:127.0</span>.<span class="hljs-number">0.1:889</span> root@VPS<br><br>本地：<span class="hljs-number">127.0.0.1</span>:<span class="hljs-number">889</span><br>远程：VPS:<span class="hljs-number">9000</span><br><br>访问外网地址 = 访问（原先访问不了的）内网地址<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/6.PNG" srcset="/img/loading.gif" alt="6"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/6.PNG" srcset="/img/loading.gif" alt="6"></p>
 <h2 id="动态端口转发DPF"><a href="#动态端口转发DPF" class="headerlink" title="动态端口转发DPF"></a>动态端口转发DPF</h2><p>我们拥有一个内网机器A的root权限，可以通过DPF，是的机器A作为我们的跳板机，可以成功访问内网其他机器。</p>
 <p>ssh -fgN -D 本地代理端口888 -p ssh端口 目标ip</p>
 <p>本地配置浏览器代理，127.0.0.1，端口设置为本地代理端口888（设置为本地未使用的任意端口）</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-25-07/5.PNG" srcset="/img/loading.gif" alt="5"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-25-07/5.PNG" srcset="/img/loading.gif" alt="5"></p>
 <p>即可访问通过本地代理端口，访问内网主机</p>
 <h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ul>
 <li>本地端口转发和远程端口转发有什么区别？</li>

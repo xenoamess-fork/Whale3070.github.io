@@ -234,7 +234,7 @@
 <p><strong>nfs是网络文件系统的英文缩写，nsf协议能使user访问其他计算机犹如使用自己的计算机一样。更详细的资料请查看参考资料</strong></p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs mipsasm"><span class="hljs-keyword">showmount </span>命令用于查询nsf服务器<br><span class="hljs-keyword">showmount </span>-e IP 列出指定nsf服务器输出目录列表<br></code></pre></div></td></tr></table></figure>
 <h3 id="小实验"><a href="#小实验" class="headerlink" title="小实验"></a>小实验</h3><p>通过shodan查找nfs服务器，运用学到的命令查看服务器共享目录。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-06-02/1.PNG" srcset="/img/loading.gif" alt="1"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-06-02/1.PNG" srcset="/img/loading.gif" alt="1"></p>
 <p>mount.nfs: access denied by server 是什么原因。由于服务器经验不够，没遇到过类似的。也许是没有访问权限。</p>
 <h3 id="nfs协议可能的漏洞"><a href="#nfs协议可能的漏洞" class="headerlink" title="nfs协议可能的漏洞"></a>nfs协议可能的漏洞</h3><p>与此台机器类似的<a target="_blank" rel="noopener" href="https://whale3070.github.io/2017/12/04/Vulnix-nfs%E6%8F%90%E6%9D%83/">Vulnix——nfs提权</a>，总结一下nfs协议常见的漏洞。</p>
 <p>nsf协议默认开放端口是2049，并且还会随机开放小于1024的端口，用于文件传输等作用。也就说，文件传输协议会使用不止一个端口。</p>

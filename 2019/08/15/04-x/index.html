@@ -235,9 +235,9 @@
 <h1 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h1><p><a target="_blank" rel="noopener" href="https://linuxhint.com/install_docker_kali_linux/">https://linuxhint.com/install_docker_kali_linux/</a></p>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>参考资料：《第一本docker书》</p>
 <p>开启docker服务端，点击docker-machine.exe，会看到一个黑窗口一闪而过。不要担心，不是病毒。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-15-04/8.PNG" srcset="/img/loading.gif" alt="8"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-15-04/8.PNG" srcset="/img/loading.gif" alt="8"></p>
 <h2 id="运行一个容器"><a href="#运行一个容器" class="headerlink" title="运行一个容器"></a>运行一个容器</h2><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">docker run -i -t ubuntu <span class="hljs-regexp">/bin/</span>bash<br><br>-i   input<br>-t output<br> 开启<span class="hljs-regexp">/bin/</span>bash终端的输入输出功能。<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-15-04/9.PNG" srcset="/img/loading.gif" alt="9"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-15-04/9.PNG" srcset="/img/loading.gif" alt="9"></p>
 <p>现在创建了一个docker镜像。unable to find image，的意思是，本地没有这个镜像，于是从服务器上取得这个镜像到本地。</p>
 <p>运行hostname、ps -aux等命令，可以看到容器内的ubuntu成功执行了。</p>
 <h2 id="新建但是不运行容器"><a href="#新建但是不运行容器" class="headerlink" title="新建但是不运行容器"></a>新建但是不运行容器</h2><p><code>docker create xxx</code></p>
@@ -245,7 +245,7 @@
 <h2 id="开启容器"><a href="#开启容器" class="headerlink" title="开启容器"></a>开启容器</h2><p><code>docker start 容器的id</code></p>
 <p><code>docker restart 容器id</code> 重启</p>
 <h2 id="查看容器id"><a href="#查看容器id" class="headerlink" title="查看容器id"></a>查看容器id</h2><p><code>docker ps -a</code></p>
-<h2 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h2><p><code>docker rename 指定一个容器 指定名称</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-15-04/10.PNG" srcset="/img/loading.gif" alt="10"></p>
+<h2 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h2><p><code>docker rename 指定一个容器 指定名称</code><br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-15-04/10.PNG" srcset="/img/loading.gif" alt="10"></p>
 
             </div>
             <hr>

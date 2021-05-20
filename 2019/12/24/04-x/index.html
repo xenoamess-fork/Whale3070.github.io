@@ -223,7 +223,7 @@
             <div class="markdown-body">
               <p>ubuntu因为安全机制，只允许密钥文件登入，现在修改为允许密码登入。</p>
 <h2 id="1，允许密码登入"><a href="#1，允许密码登入" class="headerlink" title="1，允许密码登入"></a>1，允许密码登入</h2><p>sudo vi /etc/ssh/sshd_config</p>
-<p>找到passwordAuthentication项，修改成yes<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/12-24-04/10.PNG" srcset="/img/loading.gif" alt="10"></p>
+<p>找到passwordAuthentication项，修改成yes<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-24-04/10.PNG" srcset="/img/loading.gif" alt="10"></p>
 <h2 id="2，允许root登入"><a href="#2，允许root登入" class="headerlink" title="2，允许root登入"></a>2，允许root登入</h2><p>继续修改sshd_config文件</p>
 <p>找到并用**#注释<strong>掉这行：</strong>PermitRootLogin prohibit-password**</p>
 <p>新建一行 <strong>添加</strong>：<strong>PermitRootLogin yes</strong></p>

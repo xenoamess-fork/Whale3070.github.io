@@ -230,32 +230,32 @@
 </ul>
 <hr>
 <h1 id="docker镜像是什么？"><a href="#docker镜像是什么？" class="headerlink" title="docker镜像是什么？"></a>docker镜像是什么？</h1><p>docker image是相当于工厂中的原型。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/1.jpg" srcset="/img/loading.gif"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/1.jpg" srcset="/img/loading.gif"></p>
 <p>docker方便在可以在仓库中取回各种各样的原型，然后再修改配置，方便我们自己的使用。而且改完的配置，还可以给别人使用。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/2.jpg" srcset="/img/loading.gif"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/2.jpg" srcset="/img/loading.gif"></p>
 <h2 id="virtualBox"><a href="#virtualBox" class="headerlink" title="virtualBox"></a>virtualBox</h2><p><code>右ctrl</code>离开虚拟机输入<br><code>右ctrl + c</code> 切换视图，隐藏菜单到窗口模式</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/textboy/article/details/48293731">virtualbox增强功能</a>，可以自由扩展虚拟机的大小。如果没有安装，则虚拟机的大小是固定的，比较不方便。</p>
-<h2 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h2><p><code>docker images</code></p>
+<h2 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h2><p><code>docker img</code></p>
 <h2 id="下载服务器的镜像"><a href="#下载服务器的镜像" class="headerlink" title="下载服务器的镜像"></a>下载服务器的镜像</h2><p><code>docker pull ubuntu:12.04</code></p>
 <h2 id="查看服务器提供了哪些镜像"><a href="#查看服务器提供了哪些镜像" class="headerlink" title="查看服务器提供了哪些镜像"></a>查看服务器提供了哪些镜像</h2><p><code>docker search kali</code></p>
 <p>这条命令会查找仓库中所有可用的image</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/11.PNG" srcset="/img/loading.gif" alt="11"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/11.PNG" srcset="/img/loading.gif" alt="11"></p>
 <p>查找到以后，用<code>docker pull ctarwater/kali-msf</code>，即可下载一个想要的镜像到本地。</p>
 <h2 id="修改本地镜像"><a href="#修改本地镜像" class="headerlink" title="修改本地镜像"></a>修改本地镜像</h2><p>当从仓库中取回了镜像，就可以在本地修改镜像了。</p>
 <h3 id="docker-commit"><a href="#docker-commit" class="headerlink" title="docker commit"></a>docker commit</h3><p>commit是提交的意思，可以用该命令修改容器的配置。举个例子。</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">apt-get -y install apache2<br><span class="hljs-keyword">exit</span><br>docker commit 指定容器 自动逸新的容器名称<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/12.PNG" srcset="/img/loading.gif" alt="12"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/12.PNG" srcset="/img/loading.gif" alt="12"></p>
 <h3 id="dockerfile"><a href="#dockerfile" class="headerlink" title="dockerfile"></a>dockerfile</h3><p>dockerfile类似一个linux shell脚本，它使用的语法是被称为DSL的一种语言。暂时我们不涉及学习这种语言的编写。</p>
 <figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/vulhub/</span>vulhub<span class="hljs-regexp">/master/</span>base<span class="hljs-regexp">/weblogic/</span>Dockerfile<br><br>docker build -t myimg/ubuntu:v1 .<br><br>当前目录下有个名为Dockerfile的文件，用build -t命令，以tab标签新建一个自定义名称的容器。<br>注意最后的英文点号<br>注意，起容器名称的时候，长度不能太短，否则会报错<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/16.PNG" srcset="/img/loading.gif" alt="16"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/16.PNG" srcset="/img/loading.gif" alt="16"></p>
 <h2 id="dockerhub账号"><a href="#dockerhub账号" class="headerlink" title="dockerhub账号"></a>dockerhub账号</h2><p>dockerhub是之前一直说到的仓库，我们可以把它理解为github代码托管网站。<a target="_blank" rel="noopener" href="https://hub.docker.com/signup">注册</a></p>
 <p>注册以后，就有了私有仓库，叫做私有registry。可以将自己创建的image上传到私有仓库中。</p>
 <h1 id="kali安装docker"><a href="#kali安装docker" class="headerlink" title="kali安装docker"></a>kali安装docker</h1><p>昨天费心的装了半天，结果<strong>一重启就报错</strong>，逐渐失去耐心。。。才发现kali安装docker比windows方便多了。。。</p>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/13.PNG" srcset="/img/loading.gif" alt="13"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/13.PNG" srcset="/img/loading.gif" alt="13"></p>
 <p>参考资料： <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f386ee4c6203">https://www.jianshu.com/p/f386ee4c6203</a></p>
 <figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">apt</span>-key adv --keyserver hkp://p<span class="hljs-number">80</span>.pool.sks-keyservers.net:<span class="hljs-number">80</span> --recv-keys <span class="hljs-number">58118</span>E<span class="hljs-number">89</span>F<span class="hljs-number">3</span>A<span class="hljs-number">912897</span>C<span class="hljs-number">070</span>ADBF<span class="hljs-number">76221572</span>C<span class="hljs-number">52609</span>D<br><br><span class="hljs-attribute">echo</span> &#x27;deb https://apt.dockerproject.org/repo debian-stretch main&#x27; &gt; /etc/apt/sources.list.d/docker.list<br><br><span class="hljs-attribute">apt</span>-get -y install apt-transport-https ca-certificates<br><br><span class="hljs-attribute">apt</span>-get update &amp;&amp; sudo apt-get -y install docker-engine<br><br><span class="hljs-attribute">systemctl</span> start docker<br></code></pre></div></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/images/08-19-07/15.PNG" srcset="/img/loading.gif" alt="15"></p>
+<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/08-19-07/15.PNG" srcset="/img/loading.gif" alt="15"></p>
 
             </div>
             <hr>
