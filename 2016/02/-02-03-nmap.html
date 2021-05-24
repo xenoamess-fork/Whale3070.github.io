@@ -1,0 +1,76 @@
+---
+categories:
+- scan
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nmap</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">nmap</h1>
+        <div class="show-content">
+          <div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-2a5b26164178d71d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-2a5b26164178d71d.png?imageMogr2/auto-orient/strip" data-image-slug="2a5b26164178d71d" data-width="849" data-height="558"><br><div class="image-caption">-A 参数，全部扫描</div>
+</div><p>-A 是很激进的扫描，不推荐，容易被发现。</p><p><a href="http://blog.csdn.net/wufenghsk/article/details/69098677" target="_blank">参考资料</a></p><hr><p>-vv 对结果进行详细的输出。 </p><p>-sP 设置为ping扫描   </p><p><b>/24 扫描C段存活的主机，也可以使用*，例如192.168.0.*</b></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-3c3eb0d82a0f0e08.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-3c3eb0d82a0f0e08.PNG?imageMogr2/auto-orient/strip" data-image-slug="3c3eb0d82a0f0e08" data-width="474" data-height="347"><br><div class="image-caption"></div>
+</div><hr><p>-Pn （ping no)不事先进行ping扫描，默认主机在线并扫描。</p><p>-PR 使用ARP（地址解析协议）扫描。</p><p>--send-ip 跳过ARP地址解析，如果是同网段的扫描，可以使用该选项</p><p><b>-sS      Stealth TCP syn扫描，非常隐秘的扫描。（常使用）</b></p><p><b>-sT       Stealth TCP连接扫描，该参数最适合进行端口探测<br></b></p><p><b>-sU       UDP扫描<br></b></p><p>-PE     发送ICMP请求应答数据包</p><p>在互联网上，有些主机会忽略ping扫描，所以若执行ping扫描，就会误认为不回应的主机并不在线，其实可以是在线的只不过没有响应ping。</p><hr><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-808b3ce7bcdde441.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-808b3ce7bcdde441.png?imageMogr2/auto-orient/strip" data-image-slug="808b3ce7bcdde441" data-width="907" data-height="262"><br><div class="image-caption"></div>
+</div><p><br></p><p>-p 80 扫描80端口是否开放</p><p>-sn 只进行主机探测，<b>不扫描端口 （如果在root 权限下，不仅执行ICMP扫描，还在80和443端口执行tcp ping扫描）</b></p><p>-oX myscan.xml 将扫描结果生成扫描文档</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a585b726ff81a323.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-a585b726ff81a323.PNG?imageMogr2/auto-orient/strip" data-image-slug="a585b726ff81a323" data-width="601" data-height="317"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

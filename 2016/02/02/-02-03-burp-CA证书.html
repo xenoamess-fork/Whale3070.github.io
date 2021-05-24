@@ -1,0 +1,78 @@
+---
+categories:
+- tools
+tags: 
+    - tools
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>burp CA证书</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">burp CA证书</h1>
+        <div class="show-content">
+          <p>不安装证书不能抓取https的网页。</p><p>参考：http://blog.csdn.net/sinat_25449961/article/details/51585919<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-4ab91195acf53973.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-4ab91195acf53973.png?imageMogr2/auto-orient/strip" data-image-slug="4ab91195acf53973" data-width="1092" data-height="525"><br><div class="image-caption"></div>
+</div><hr><p>设置浏览器，用burp代理<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-60bf96a8869dcd12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-60bf96a8869dcd12.png?imageMogr2/auto-orient/strip" data-image-slug="60bf96a8869dcd12" data-width="1019" data-height="294"><br><div class="image-caption"></div>
+</div><p><br></p><hr><p>浏览一个网页，我们会发现打不开啊，因为burp截获了数据包<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-c7453f1f0b1348ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-c7453f1f0b1348ba.png?imageMogr2/auto-orient/strip" data-image-slug="c7453f1f0b1348ba" data-width="635" data-height="332"><br><div class="image-caption"></div>
+</div><hr><p>抓到了数据包<br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-e71a1a138aa263bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-e71a1a138aa263bc.png?imageMogr2/auto-orient/strip" data-image-slug="e71a1a138aa263bc" data-width="670" data-height="425"><br><div class="image-caption"></div>
+</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

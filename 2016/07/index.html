@@ -1,0 +1,72 @@
+---
+title: 安装软件apt
+categories:
+- tools
+tags:
+- tools
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安装软件apt、rpm、dpkg、yum</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">安装软件apt、rpm、dpkg、yum</h1>
+        <div class="show-content">
+          <p>软件包的版本有RMP、DEB的。</p><p>Red hat 等，用的是RMP；<b>Debian、Ubuntu系</b>的用的<b>DEB</b></p><hr><h2>Advanced package tool 高级软件包工具</h2><p>安装源，所在地址，/etc/apt/sources.list<br></p><p><b>apt-get update</b> 更新缓存里的软件信息</p><p>apt-get xxx install</p><p>卸载软件apt-get remove xxx</p><p>搜索软件包的名称  apt-cache search xxx<br></p><br><hr><p>软件包管理：其他linux----<b>RPM</b><br></p><h4>(RPM = red hat package manager)</h4><p>操作前要用su ，临时用管理员权限</p><p>安装rpm -ivh xxxxx.deb (-v查看正在进行的 -h打印安装进度)</p><p>查询完整软件名称rpm --query  xxxx</p><p>卸载 rmp -e xxxxx</p><p>-U升级一个软件包</p><p>sudo rpm -Uvh xxxx.rpm</p><p>-q 查询系统中已经安装的软件包：rpm -q 软件名</p><p>rpm -qa 列出所有已安装软件包</p><p>rpm -qa | grep xxxxxx 查找名字里有xxxx的软件包</p><p>可以使用高级软件包管理系统yum ，APT（adcanced package tool）</p><p>================================</p><p>debian+ubuntu--------.deb</p><h4>(dpkg = debian package)</h4><p>获取帮助 dpkg --help</p><p>安装     dpkg -i xxxx.deb</p><p>卸载      dpkg -l | grep xxxxx</p><p>查看已安装的软件包 dpkg -l | grep xxxxx</p><p>可以使用高级软件包管理系统APT</p><p>=================================</p><p>yum (<b>Y</b>ellow dog <b>U</b>pdater,<b> M</b>odified)<a href="http://blog.chinaunix.net/uid-23683795-id-3477603.html" target="_blank">  yum更新源</a> </p><p>使用的系统：<b>Fedora、RedHat、CentOS</b><br></p><p>使用方式和上面的差不多。</p><p>yum 软件名 install</p><p>yum 软件名 remove</p><hr><p>wget http://xxx</p><p>也可以从服务器下载软件，下载后的安装包通常是xxx.tar.gz格式的，要解压缩<br></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
