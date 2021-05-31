@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>CNVD漏洞提交计划</title>
+    <link href="/2021/05/31/CNVD%E6%BC%8F%E6%B4%9E%E6%8F%90%E4%BA%A4%E8%AE%A1%E5%88%92/"/>
+    <url>/2021/05/31/CNVD%E6%BC%8F%E6%B4%9E%E6%8F%90%E4%BA%A4%E8%AE%A1%E5%88%92/</url>
+    
+    <content type="html"><![CDATA[<h1 id="CNVD漏洞提交计划"><a href="#CNVD漏洞提交计划" class="headerlink" title="CNVD漏洞提交计划"></a>CNVD漏洞提交计划</h1><p>目标：一个月提交30个漏洞报告<br>时间：每周的周日（2021.5.30日开始）<br>行为： </p><ol><li>寻找poc</li><li>使用python编写批量验证脚本</li><li>通过fofa查找漏洞目标</li><li>编写漏洞报告并提交</li></ol><p>结果：</p><table><thead><tr><th>时间</th><th>完成情况</th><th align="right">提交数量</th><th align="right">Qty</th></tr></thead><tbody><tr><td>5月30日</td><td>蓝凌OA custom.jsp 任意文件读取漏洞</td><td align="right">30</td><td align="right">1</td></tr><tr><td>Phone</td><td>Plus</td><td align="right">$800</td><td align="right">2</td></tr><tr><td>Watch</td><td>Series 3</td><td align="right">$400</td><td align="right">3</td></tr><tr><td>Headphone</td><td>HD650</td><td align="right">$350</td><td align="right">2</td></tr></tbody></table><h2 id="自动生成docx"><a href="#自动生成docx" class="headerlink" title="自动生成docx"></a>自动生成docx</h2><p>此脚本只能运行在windows平台下。需要用到windows word软件。</p><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>pip install  python-docx</p><h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://python-docx.readthedocs.io/en/latest/">https://python-docx.readthedocs.io/en/latest/</a></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>plan</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>某培训学习计划</title>
     <link href="/2021/05/31/%E6%9F%90%E5%9F%B9%E8%AE%AD%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/"/>
     <url>/2021/05/31/%E6%9F%90%E5%9F%B9%E8%AE%AD%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/</url>
