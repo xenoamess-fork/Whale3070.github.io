@@ -221,8 +221,7 @@
             <h1 style="display: none">黑客学徒日记-傀儡进程过winDefender</h1>
             
             <div class="markdown-body">
-              <p><img src="https://i.imgur.com/f31P34r.jpg" srcset="/img/loading.gif"></p>
-<p>当你被我控制，你就不再是你了。<br>                                                   —— 鲁迅</p>
+              <p>当你被我控制，你就不再是你了。<br>                                                   —— 鲁迅<br><img src="https://i.imgur.com/f31P34r.jpg" srcset="/img/loading.gif"></p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>参考3gstudent的文章，傀儡进程要做的就是创建一个无害的进程，例如notepad.exe，然后将进程挂起，然后清空内存，然后将shellcode载入内存，最后重启这个挂起的进程。就达到了hollowing(中空，镂空进程）然后注入我们要执行的代码的效果。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span>  通过CreateProcess创建进程，传入参数CREATE<span class="hljs-emphasis">_SUSPENDED使进程挂起</span><br><span class="hljs-emphasis">2.  通过NtUnmapViewOfSection清空新进程的内存数据</span><br><span class="hljs-emphasis">3.  通过VirtualAllocEx申请新的内存</span><br><span class="hljs-emphasis">4.  通过WriteProcessMemory向内存写入payload</span><br><span class="hljs-emphasis">5.  通过SetThreadContext设置入口点</span><br><span class="hljs-emphasis">6.  通过ResumeThread唤醒进程，执行payload</span><br></code></pre></div></td></tr></table></figure>
 
